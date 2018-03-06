@@ -23,6 +23,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
+//const user_id = null;
 
 
 // uncomment after placing your favicon in /public
@@ -49,6 +50,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next){
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
 app.use('/', index);
 app.use('/users', users);
 
@@ -70,33 +75,46 @@ var con = mysql.createConnection({
     /*const db = require('../config/connection');*/
   con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected!");
-  con.query('SELECT password FROM user WHERE username = ?', [username], function(err,results,fields){
+
+  
+    console.log("Connected!");
+
+  con.query('SELECT password,user_id FROM user WHERE username = ?', [username], function(err,results,fields){
   if(err){
       done(err)
     }
+  
   if(results.length === 0){
         //return done(null,false,{message:'Unknow User'});
     done(null,false);
     }else{const hash = results[0].password.toString();
     bcrypt.compare(password,hash,function(err, response){
       if(response === true){
-        return done(null, {user_id: results[0].user_id});
+        //req.isAuthenticated= true;
+        //user_id = results[0].user_id;
+        return done(null,{user_id:results[0].user_id});
+        //return done(null, user);
+
       }else{
         return done(null,false);
       }
+
     })}
+  
     
    // return done(null,'btfbj');
       
       //console.log("loging sucefuly");
       
     });
+
     });
     
 
   }
 ));
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -109,6 +127,8 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
+  //res.locals.isAuthenticated = req.isAuthenticated();
+
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

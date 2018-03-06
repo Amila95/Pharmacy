@@ -25,11 +25,17 @@
 				</div>
 					<div class="account_desc">
 						<ul>
-							<li><a href="/register">Register</a></li>
-							<li><a href="/login">Login</a></li>
+							{{#if isAuthenticated}}
 							<li><a href="/deliver">Delivery</a></li>
+							<li><a href="/logout">Log Out</a></li>
 							<li><a href="#">Checkout</a></li>
 							<li><a href="#">My Account</a></li>
+							{{else}}
+							<li><a href="/register">Register</a></li>
+							<li><a href="/login">Login</a></li>
+							
+							{{/if}}
+							
 						</ul>
 					</div>
 				<div class="clear"></div>

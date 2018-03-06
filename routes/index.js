@@ -5,15 +5,19 @@ var LacalStrategy = require('passport-local').Strategy;
 var connection = require('../config/connection');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+//const user = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log(req.user);
   console.log(req.isAuthenticated());
-  res.render('index', { title: 'Express' });
+  //user = req.isAuthenticated();
+
+  res.render('index', { title: 'Express'});
 });
 router.get('/register', function(req, res, next) {
-  res.render('contact', { title: 'Express' ,title1:'Registration' });
+    console.log(req.isAuthenticated());
+
+  res.render('contact', { title: 'Express' ,title1:'Registration'});
 });
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' ,title1:'Registration'});
@@ -47,7 +51,7 @@ con.connect(function(err) {
     con.query('SELECT LAST_INSERT_ID() as user_id',function(err,results,fields){
     if(err) throw err;
     const user_id = results[0];
-    console.log(results[0]);
+    //console.log(results[0]);
     req.login(user_id,function(err){
     res.redirect('/');
   }
@@ -65,13 +69,17 @@ con.connect(function(err) {
 router.post('/login',passport.authenticate('local',{
 	successRedirect:'/',
 	failureRedirect:'/login',
-  failureFlash:true
+  //failureFlash:true
 }),
 function(req, res){
   res.redirect('/');
 }
 );
-
+router.get('/logout', function(req, res){
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
+});
 
 function authenticationMiddleware () {  
 	return (req, res, next) => {
