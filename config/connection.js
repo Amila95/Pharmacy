@@ -11,7 +11,7 @@ function connectionDatabase(){
 		db = mysql.createConnection(setting);
 		db.connect(function (err){
 			if(!err){
-				console.log("Databse connceted");
+				console.log("Databse connceted now");
 			}else{
 				console.log("Error connection");
 			}
@@ -20,4 +20,4 @@ function connectionDatabase(){
 	return db;
 }
 
-module.export = connectionDatabase();
+module.exports = connectionDatabase();

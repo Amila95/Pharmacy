@@ -10,6 +10,8 @@ var users = require('./routes/users');
 
 var app = express();
 var hbs  = require('express-handlebars');
+//var Validators = require('express-validators');
+
 
 // view engine setup
 app.engine('hbs', hbs({extname:'hbs',defaultLayout:'layout',layoutDir:__dirname+'/views/layouts/'}));
@@ -32,6 +34,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 var options ={
   host:'localhost',
@@ -58,8 +61,8 @@ app.use('/', index);
 app.use('/users', users);
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-  	console.log(username);
+  function(pharmacy_name, password, done) {
+  	console.log(pharmacy_name);
   	console.log(password);
 var mysql = require('mysql');
 
@@ -79,7 +82,7 @@ var con = mysql.createConnection({
   
     console.log("Connected!");
 
-  con.query('SELECT password,user_id FROM user WHERE username = ?', [username], function(err,results,fields){
+  con.query('SELECT password,user_id FROM users WHERE pharmacy_name = ?', [pharmacy_name], function(err,results,fields){
   if(err){
       done(err)
     }

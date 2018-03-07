@@ -4,6 +4,9 @@ var passport = require('passport');
 var LacalStrategy = require('passport-local').Strategy;
 var connection = require('../config/connection');
 var bcrypt = require('bcrypt');
+
+//var Validators = require('express-validators');
+
 const saltRounds = 10;
 //const user = false;
 /* GET home page. */
@@ -23,6 +26,27 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' ,title1:'Registration'});
 });
 
+router.get('/order', function(req, res, next) {
+  connection.query('SELECT * FROM company',function(err,rows){
+      console.log(rows);
+      res.render('order', {companys:rows});
+
+  })
+});
+
+router.get('/ordercompany/:id',function(req,res){
+  var userid = req.params.id;
+  connecton.query('SELECT * FROM products WHERE compay_id = ?'[user_id], function(err,rows){
+  if(err) throw err;
+  res.render('prean',{products:rows})
+  });
+  console.log(userid);
+  res.send("Id recevied");
+
+})
+
+
+
 router.post('/adduser',function(req,res){
 var mysql = require('mysql');
 
@@ -34,18 +58,20 @@ var con = mysql.createConnection({
 });
 
 
-const user_id = req.body.ID;
-const username = req.body.Name;
-const Owner = req.body.Owner;
-const Adderss = req.body.Adderss;
-const password= req.body.Password;
+const pharmacy_name = req.body.pharmacy_name;
+const address = req.body.address;
+const email = req.body.email;
+const tel_number = req.body.tel_number;
+const register_no= req.body.register_no;
+const register = req.body.register;
+const password = req.body.password;
 
 con.connect(function(err) {
   if (err) throw err;
  bcrypt.hash(password, saltRounds, function(err, hash){
     //console.log("Connected!");
     //var sql = "INSERT INTO user SET ?";
-    con.query('INSERT INTO user(user_id,username,Owner,Adderss,password) VALUES (?,?,?,?,?)',[user_id,username,Owner,Adderss,hash], function (err, result) {
+    con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,register,password) VALUES (?,?,?,?,?,?,?)',[pharmacy_name,address,email,tel_number,register_no,register,hash], function (err, result) {
     if (err) throw err;
     //console.log("1 record inserted");
     con.query('SELECT LAST_INSERT_ID() as user_id',function(err,results,fields){
