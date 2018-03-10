@@ -25,7 +25,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-//const user_id = null;
+
 
 
 // uncomment after placing your favicon in /public
@@ -54,6 +54,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, res, next){
+
+
   res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });

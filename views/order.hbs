@@ -5,27 +5,44 @@
 						   <ul>
 						  	   <h3>Our Companys</h3>
 						  	   {{#each companys}}
-							      <li><a href="/ordercompany/{{this.company_id}}">{{this.company_name}}</a></li>
-							      
-
-							   {{/each}}
+							      <li><a href="/ordercompany{{ this.company_id }}">{{this.company_name}}</a></li>
+							      {{/each}}
 							      
 						  	 </ul>
 						</div>					
 		  	         </div>
 						    <div class="header_bottom_right">					 
 						 	    <!------ Slider ------------>
-								  <div class="slider">
-							      	<div class="slider-wrapper theme-default">
-							            <div id="slider" class="nivoSlider">
-							                <img src="images/1.jpg" data-thumb="images/1.jpg" alt="" />
-							                <!--<img src="images/2.jpg" data-thumb="images/2.jpg" alt="" />
-							                <img src="images/3.jpg" data-thumb="images/3.jpg" alt="" />
-							                <img src="images/4.jpg" data-thumb="images/4.jpg" alt="" />
-							                 <img src="images/5.jpg" data-thumb="images/5.jpg" alt="" /> -->
-							            </div>
-							        </div>
-						   		</div>
+								  <!--Table-->
+<table class="table">
+
+    <!--Table head-->
+    <thead class="blue-grey lighten-4">
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Number Of Unit</th>
+            <th>Price</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        <tr>
+            
+        </tr>
+        <tr>
+            
+        </tr>
+        <tr>
+            
+        </tr>
+    </tbody>
+    <!--Table body-->
+
+</table>
 						<!------End Slider ------------>
 			         </div>
 			     <div class="clear"></div>

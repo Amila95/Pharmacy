@@ -13,12 +13,44 @@
 					<div class="grid images_3_of_2">
 						<img src="images/preview.jpg" alt="" />
 				  </div>
+				{{#each product}}
 				<div class="desc span_3_of_2">
-				{{#each company}}
-					<h2>{{this.company_name}} </h2>
-					<p>{{this.company_discription}}</p>	
-				{{/each}}				
-					
+					<h2>{{product_name}} </h2>
+					<p>{{product_details}}</p>					
+					<div class="price">
+						<p>Price: <span>{{price}}</span></p>
+					</div>
+				
+					<div class="available">
+						<ul>
+						  <li><span>Model:</span> &nbsp; {{model}}</li>
+						  <li><span>Shipping Weight:</span>&nbsp; {{weight}}</li>
+						  <li><span>Units in Stock:</span>&nbsp; {{unit_stock}}</li>
+					    </ul>
+					 {{/each}}
+
+					</div>
+				<div class="share-desc">
+				{{#each product}}
+
+				<form method="post" action="/oderlist{{product_id}}">
+
+					<div class="share">
+						<p>Number of units :</p><input  Name="units"  class="text_box" type="text" >				
+					</div>
+					&nbsp &nbsp &nbsp &nbsp
+					<button type="submit" class="btn btn-warning">Add To List</button>
+					{{/each}}	
+					</form>
+				
+					<div class="clear"></div>
+				</div>
+				 <div class="wish-list">
+				 	<ul>
+				 		<li class="wish"><a href="#">Add to Wishlist</a></li>
+				 	    <li class="compare"><a href="#">Add to Compare</a></li>
+				 	</ul>
+				 </div>
 			</div>
 			<div class="clear"></div>
 		  </div>
@@ -27,7 +59,7 @@
 			   <p>
 
 			   	{{#each products}}
-			   	<a href= "/products{{this.company_id}}{{this.product_id}}">{{this.product_name}}</a>
+			   	<a href= "/products{{this.product_id}}{{this.company_id}}">{{this.product_name}}</a>
 			   	&nbsp
 
 			   	{{/each}}

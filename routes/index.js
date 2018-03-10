@@ -34,16 +34,57 @@ router.get('/order', function(req, res, next) {
   })
 });
 
-router.get('/ordercompany/:id',function(req,res){
-  var userid = req.params.id;
-  connecton.query('SELECT * FROM products WHERE compay_id = ?'[user_id], function(err,rows){
-  if(err) throw err;
-  res.render('prean',{products:rows})
+router.get('/ordercompany:id',function(req, res ){
+  var company_id = req.params.id;
+  console.log(company_id);
+  connection.query('SELECT * FROM products WHERE company_id = ?',[company_id],function(err,row1){
+      connection.query('SELECT * FROM company WHERE company_id = ?',[company_id],function(err,row2){
+    console.log(row1);
+
+    console.log(row2);
+    res.render('prean', {products:row1 , company:row2});
   });
-  console.log(userid);
-  res.send("Id recevied");
+
+  });
+  
+  
+
+});
+
+router.get('/products:id1:id2', function(req, res){
+  var company_id = req.params.id1;
+  console.log(company_id);
+
+  var product_id = req.params.id2;
+  console.log(product_id);
+
+  connection.query('SELECT * FROM products WHERE company_id = ?',[company_id],function(err,row1){
+      connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
+        if(err){throw err;};
+    console.log(row1);
+
+    console.log(row2);
+    //res.send("bdud");
+
+    res.render('orderitem', {products:row1 , product:row2});
+  });
+
+  });
+//res.send("bdud");
 
 })
+
+router.post('/oderlist:id', function(req,res){
+  const units = req.body.units;
+  var product_id = req.params.id;
+  console.log(units);
+  console.log(product_id);
+  console.log(order_id);
+  connection.query('INSERT INTO oderlist(order_id,item_id,units) VALUES (?,?,?)',[order_id,product_id,units],function(err){
+    if(err) throw err;
+    res.redirect('/products:id1:id2');
+  });
+});
 
 
 
