@@ -28,11 +28,34 @@ router.get('/login', function(req, res, next) {
 
 router.get('/order', function(req, res, next) {
   connection.query('SELECT * FROM company',function(err,rows){
-      console.log(rows);
-      res.render('order', {companys:rows});
+      connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row1){
+        const oder_id =  (row1[0].oder_id + 1);
+        console.log(oder_id);
+        connection.query('SELECT * FROM oderlist WHERE oder_id = ?',[oder_id],function(err,row2){
+          console.log(row2);
+          res.render('order',{companys:rows , items:row2});
+        })
+      })
+
+      //console.log(rows);
+      //res.render('order', {companys:rows, });
 
   })
 });
+
+router.get('/submitOrder', function(req,res,next){
+  const user_id = req.user.user_id;
+  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1 ',function(err,row){
+    const oder_id = (row[0].oder_id+1);
+    connection.query('INSERT INTO bill(oder_id,user_id) VALUES(?,?)',[oder_id,user_id],function(err){
+      if(err) throw err;
+      res.redirect('/order');
+    
+  })
+})
+})
+
+
 
 router.get('/ordercompany:id',function(req, res ){
   var company_id = req.params.id;
@@ -75,7 +98,23 @@ router.get('/products:id1:id2', function(req, res){
 })
 
 router.post('/oderlist:id', function(req,res){
+  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  const oder_id =  (row[0].oder_id + 1);
+  console.log(oder_id);
   const units = req.body.units;
+  var product_id = req.params.id;
+  connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+    const item_name = row1[0].product_name;
+    const price = row1[0].price;
+  
+  connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+    if(err) throw err;
+    res.redirect('back');
+  })
+  });
+
+  })
+  /*const units = req.body.units;
   var product_id = req.params.id;
   console.log(units);
   console.log(product_id);
@@ -83,7 +122,7 @@ router.post('/oderlist:id', function(req,res){
   connection.query('INSERT INTO oderlist(order_id,item_id,units) VALUES (?,?,?)',[order_id,product_id,units],function(err){
     if(err) throw err;
     res.redirect('/products:id1:id2');
-  });
+  });*/
 });
 
 

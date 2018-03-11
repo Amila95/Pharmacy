@@ -47,7 +47,7 @@
 				</div>
 				 <div class="wish-list">
 				 	<ul>
-				 		<li class="wish"><a href="#">Add to Wishlist</a></li>
+				 		<li class="wish"><a href='/order'>Add to Wishlist</a></li>
 				 	    <li class="compare"><a href="#">Add to Compare</a></li>
 				 	</ul>
 				 </div>
@@ -59,7 +59,7 @@
 			   <p>
 
 			   	{{#each products}}
-			   	<a href= "/products{{this.product_id}}{{this.company_id}}">{{this.product_name}}</a>
+			   	<a href= "/products{{this.company_id}}{{this.product_id}}">{{this.product_name}}</a>
 			   	&nbsp
 
 			   	{{/each}}

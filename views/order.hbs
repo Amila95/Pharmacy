@@ -29,17 +29,21 @@
     <!--Table head-->
 
     <!--Table body-->
+    
+
     <tbody>
+    	{{#each items}}
         <tr>
-            
+           <td>{{this.item_id}}</td>
+           <td>{{this.item_name}}</td>
+           <td>{{this.units}}</td>
+           <td>{{this.price}}</td>
+
         </tr>
-        <tr>
-            
-        </tr>
-        <tr>
-            
-        </tr>
+        {{/each}}
     </tbody>
+   
+
     <!--Table body-->
 
 </table>
@@ -50,6 +54,12 @@
    		</div>
    </div>
    <!------------End Header ------------>
+   <div class="wish-list">
+	<ul>
+	<li class="wish"><a href='/submitOrder'>Add to Wishlist</a></li>
+	<li class="compare"><a href="#">Add to Compare</a></li>
+	</ul>
+	</div>
   <div class="main">
   	<div class="wrap">
       <div class="content">
