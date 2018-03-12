@@ -51,7 +51,23 @@ router.get('/submitOrder', function(req,res,next){
       if(err) throw err;
       res.redirect('/order');
     
-  })
+  });
+});
+})
+
+router.get('/updateorder:id1', function(req,res,next){
+  var product_id = req.params.id1;
+    connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
+        connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+        const oder_id = (row[0].oder_id+1);
+        console.log(oder_id);
+        connection.query('SELECT * FROM oderlist WHERE item_id = ? AND oder_id = ?',[product_id,oder_id], function(err,row1){
+          console.log(row1);
+            res.render('updateorder',{product:row2 , oder:row1});
+
+        })
+  //res.render('updateorder',{product:row2 , oder:row});
+})
 })
 })
 
@@ -105,7 +121,7 @@ router.post('/oderlist:id', function(req,res){
   var product_id = req.params.id;
   connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
     const item_name = row1[0].product_name;
-    const price = row1[0].price;
+    const price = row1[0].price * units;
   
   connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
     if(err) throw err;
@@ -114,16 +130,48 @@ router.post('/oderlist:id', function(req,res){
   });
 
   })
-  /*const units = req.body.units;
-  var product_id = req.params.id;
-  console.log(units);
-  console.log(product_id);
-  console.log(order_id);
-  connection.query('INSERT INTO oderlist(order_id,item_id,units) VALUES (?,?,?)',[order_id,product_id,units],function(err){
-    if(err) throw err;
-    res.redirect('/products:id1:id2');
-  });*/
+  
 });
+
+router.get('/deleteorder:id', function(req,res){
+  const item_id = req.params.id;
+  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  const oder_id =  (row[0].oder_id + 1);
+  connection.query('DELETE FROM oderlist WHERE item_id =? AND oder_id =?',[item_id,oder_id],function(err){
+    if(err) throw err;
+    res.redirect('/order');
+  })
+})
+})
+
+router.get('/cansaleOrder', function(req, res,next){
+  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  const oder_id =  (row[0].oder_id + 1);
+  connection.query('DELETE FROM oderlist WHERE oder_id = ?',[oder_id],function(err){
+    if(err) throw err;
+    res.redirect('/order');
+  })
+})
+})
+
+router.post('/updatelist:id', function(req,res){
+  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  const oder_id =  (row[0].oder_id + 1);
+  console.log(oder_id);
+  const units = req.body.units;
+  var product_id = req.params.id;
+  connection.query('SELECT * FROM products WHERE product_id =?',[product_id],function(err,row1){
+    const unit_price = row1[0].price;
+    const price = units*unit_price;
+    connection.query('UPDATE oderlist SET units=? , price=? WHERE oder_id =? AND item_id =?',[units,price,oder_id,product_id],function(err,result){
+    if(err) throw err;
+    res.redirect('/order');
+
+  })
+  })
+  
+})
+})
 
 
 

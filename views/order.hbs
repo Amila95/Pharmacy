@@ -38,7 +38,9 @@
            <td>{{this.item_name}}</td>
            <td>{{this.units}}</td>
            <td>{{this.price}}</td>
-
+           <td><a href="/updateorder{{this.item_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp 
+           <a href="/deleteorder{{this.item_id}}"> <button type="button" class="btn btn-danger">Delete</button> </a>
+</td>
         </tr>
         {{/each}}
     </tbody>
@@ -56,8 +58,8 @@
    <!------------End Header ------------>
    <div class="wish-list">
 	<ul>
-	<li class="wish"><a href='/submitOrder'>Add to Wishlist</a></li>
-	<li class="compare"><a href="#">Add to Compare</a></li>
+	<li class="wish"><a href='/submitOrder'>Submit</a></li>
+	<li class="compare"><a href='/cansaleOrder'>Cansale</a></li>
 	</ul>
 	</div>
   <div class="main">
