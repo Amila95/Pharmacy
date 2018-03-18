@@ -4,19 +4,88 @@ var passport = require('passport');
 var LacalStrategy = require('passport-local').Strategy;
 var connection = require('../config/connection');
 var bcrypt = require('bcrypt');
+var multer = require('multer');
+var bodyParser = require('body-parser');
 
 //var Validators = require('express-validators');
 
 const saltRounds = 10;
 //const user = false;
 /* GET home page. */
+ var Storage = multer.diskStorage({
+     destination: function(req, file, callback) {
+         callback(null, 'public/upload/');
+     },
+     filename: function(req, file, callback) {
+         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+     }
+ });
+
+ var upload = multer({
+     storage: Storage
+ }).any();
+
+ router.post('/upload', function(req, res) {
+     upload(req, res, function(err) {
+         if (err) {
+             return res.end("Something went wrong!");
+         }
+         console.log(req.files);
+        console.log(req.files[0].path);
+
+         res.render('pratice',{file:'upload/'+req.files[0].filename});
+     });
+ });
+
+
+/*var upload = multer({dest: 'public/upload/'});
+
+router.post('/upload',upload.any(), function(req, res, next){
+   res.send(req.files);
+
+})*/
+
+/*const multerConf = {
+  storage : multer.diskStorage({
+    destination :function(req,file, next){
+      next(null, './public/images');
+    },
+    filename: function(req, file, next){
+      const ext = file.minetype.split('/')[1];
+      next(null, file.fieldname + '-' + Date.now() +'-'+ ext);
+
+    }
+  }),
+  fileFliter: function(req, file, next){
+    if(! file){
+      next();
+    }
+    const image = file.minetype.startsWith('image/');
+  if(image){
+    next(null,true);
+  }else{
+    next(null,false);
+  }
+}
+}*/
+
+
+/*router.post('/upload',multer(multerConf).single('photo'),function(req,res){
+  res.send('this is post rout upload');
+})*/
+
 router.get('/', function(req, res, next) {
   console.log(req.user);
   console.log(req.isAuthenticated());
+  connection.query('SELECT * FROM products WHERE special_list = 1',function(err,rows){
+    console.log(rows);
+     res.render('index', { title: 'Express', special:rows});
+  
   //user = req.isAuthenticated();
 
-  res.render('index', { title: 'Express'});
+ 
 });
+})
 router.get('/register', function(req, res, next) {
     console.log(req.isAuthenticated());
 
@@ -144,6 +213,12 @@ router.get('/deleteorder:id', function(req,res){
 })
 })
 
+/*Router.get('/newproduct',function(req, res){
+  connection.query('SELECT * FROM products WHERE special_list = 1',function(err,rows){
+
+  })
+})*/
+
 router.get('/cansaleOrder', function(req, res,next){
   connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
   const oder_id =  (row[0].oder_id + 1);
@@ -171,6 +246,10 @@ router.post('/updatelist:id', function(req,res){
   })
   
 })
+})
+
+router.get('/uploadimage',function(req,res,next){
+  res.render('pratice');
 })
 
 
@@ -255,6 +334,8 @@ passport.deserializeUser(function(user_id, done) {
     done(null, user_id);
   
 });
+
+
 
 
 
