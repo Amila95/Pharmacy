@@ -9,6 +9,7 @@ var multer = require('multer');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 
 var app = express();
 var hbs  = require('express-handlebars');
@@ -67,6 +68,7 @@ app.use(function(req, res, next){
 });
 app.use('/', index);
 app.use('/users', users);
+app.use('/admin',admin);
 
 passport.use(new LocalStrategy(
   function(pharmacy_name, password, done) {
