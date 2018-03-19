@@ -33,7 +33,7 @@ const saltRounds = 10;
          console.log(req.files);
         console.log(req.files[0].path);
 
-         res.render('pratice',{file:'upload/'+req.files[0].filename});
+         res.render('pra/pratice',{file:'upload/'+req.files[0].filename});
      });
  });
 
@@ -249,7 +249,7 @@ router.post('/updatelist:id', function(req,res){
 })
 
 router.get('/uploadimage',function(req,res,next){
-  res.render('pratice');
+  res.render('pra/pratice');
 })
 
 
@@ -334,6 +334,15 @@ passport.deserializeUser(function(user_id, done) {
     done(null, user_id);
   
 });
+
+router.get('/listcompany', function(req, res, next){
+  connection.query('SELECT * FROM company', function(err, rows){
+    console.log(rows);
+    res.render('admin/Companies/list_company',{layout: 'admin', companies: rows});
+
+  })
+  //res.render('admin/Companies/list_company',{layout: 'admin'});
+})
 
 
 

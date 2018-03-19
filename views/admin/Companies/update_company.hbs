@@ -1,0 +1,53 @@
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">New Company</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        {{#each companies}}
+
+        <form  method="post" action="/admin/updatecompany{{this.company_id}}" >
+
+          <div class="box-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Company Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" value="{{this.company_name}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Enter Address" name="address" value="{{this.company_address}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email </label>
+              <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" value="{{this.company_email}}">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Contact Number</label>
+              <input type="text" class="form-control" id="phone_number" placeholder="Enter Contact Number" name="phone_number" value="{{this.company_contact_no}}">
+            </div>
+            <div>
+            <label for="Discreption">Discreption</label>
+            <input type="textarea" class="form-control" id="phone_number" placeholder="Enter Contact Number" name="discreption" value="{{this.company_discription}}">
+            </div>
+            
+                
+          
+
+
+            
+          
+          <!-- /.box-body -->
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+        </form>
+        {{/each}}
+      </div>
+
+  </div>
+</div>
