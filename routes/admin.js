@@ -94,4 +94,10 @@ router.post('/updatecompany:id', function(req, res, next){
 
 })
 
+router.get('/listuser', function(req, res, next){
+	connection.query('SELECT * FROM users', function(err, rows){
+		res.render('admin/Users/list_users', {layout: 'admin', users: rows})
+	})
+})
+
 module.exports = router;

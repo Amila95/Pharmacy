@@ -255,6 +255,14 @@ router.get('/uploadimage',function(req,res,next){
 
 
 router.post('/adduser',function(req,res){
+upload(req, res, function(err) {
+         if (err) {
+          consol.log('erro');
+            
+         }
+
+
+
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
@@ -272,13 +280,18 @@ const tel_number = req.body.tel_number;
 const register_no= req.body.register_no;
 const register = req.body.register;
 const password = req.body.password;
+const Lat = req.body.Lat;
+const Lon = req.body.Lon;
+const logo = 'upload/'+req.files[0].filename;
+
+
 
 con.connect(function(err) {
   if (err) throw err;
  bcrypt.hash(password, saltRounds, function(err, hash){
     //console.log("Connected!");
     //var sql = "INSERT INTO user SET ?";
-    con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,register,password) VALUES (?,?,?,?,?,?,?)',[pharmacy_name,address,email,tel_number,register_no,register,hash], function (err, result) {
+    con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,register,password,Lat,Lon,logo) VALUES (?,?,?,?,?,?,?,?,?,?)',[pharmacy_name,address,email,tel_number,register_no,register,hash,Lat,Lon,logo], function (err, result) {
     if (err) throw err;
     //console.log("1 record inserted");
     con.query('SELECT LAST_INSERT_ID() as user_id',function(err,results,fields){
@@ -298,6 +311,8 @@ con.connect(function(err) {
   });
 });
 });
+
+})
 
 router.post('/login',passport.authenticate('local',{
 	successRedirect:'/',

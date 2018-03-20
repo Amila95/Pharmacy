@@ -12,14 +12,14 @@
 				<div class="col span_2_of_3">
 				  <div class="contact-form">
 				  	<h2>{{title1}}</h2>
-					    <form method="post" action="/adduser">
+					    <form method="post" action="/adduser" enctype="multipart/form-data">
 					    	<div>
 						    	<span><label>Pharmacy Name</label></span>
 						    	<span><input name="pharmacy_name" type="text" class="textbox"></span>
 						    </div>
 						    <div>
 						    	<span><label>Address</label></span>
-						    	<span><input name="address" type="text" class="textbox"></span>
+						    	<span><input name="address" type="text" class="textbox" id="us2-address"></span>
 						    </div>
 						    <div>
 						     	<span><label>Email</label></span>
@@ -31,9 +31,9 @@
 						    </div>
 						    <div>
 						    	&nbsp
-						    	<input type="checkbox" name="register" value=1> Registered 
+						    	<input type="radio" name="register" value=1 id=1> Registered 
 						    	&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-								<input type="checkbox" name="register" value=0 checked> Not Registered<br> 
+								<input type="radio" name="register" value=0 id=1> Not Registered<br> 
 							
 						    </div>
 
@@ -46,20 +46,65 @@
 						     	<span><label>Password</label></span>
 						    	<span><input name="password" type="text" class="textbox"></span>
 						    </div>
-				<div >
-					<div class="contact_info">
-    	 				<h2>Find Us Here</h2>
-					    	  <div class="map">
-							   	    <iframe width="100%" height="175" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265&amp;output=embed"></iframe><br><small><a href="https://maps.google.co.in/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Lighthouse+Point,+FL,+United+States&amp;aq=4&amp;oq=light&amp;sll=26.275636,-80.087265&amp;sspn=0.04941,0.104628&amp;ie=UTF8&amp;hq=&amp;hnear=Lighthouse+Point,+Broward,+Florida,+United+States&amp;t=m&amp;z=14&amp;ll=26.275636,-80.087265" style="color:#888;text-align:left;font-size:0.85em">View Larger Map</a></small>
-							  </div>
+
+						    
+                        
+                    </div>
+                    <div id="us2" style="width: 1100px; height: 200px;"></div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="m-t-small">
+                        
+
+                        <div class="col-sm-1">
+                            <input hidden type="text" class="form-control" style="width: 110px" id="us2-lat" name='Lat'/>
+                        </div>
+                       
+
+                        <div class="col-sm-1">
+                            <input hidden type="text" class="form-control" style="width: 110px" id="us2-lon" name='Lon'/>
+                        </div>
+                    </div>
+                  
+                </div>
+                <script>
+                    $('#us2').locationpicker({
+                        location: {
+                            latitude: 
+                            6.9271,
+                            longitude: 
+                            79.8612
+                        },
+                        radius: 300,
+                        inputBinding: {
+                            latitudeInput: $('#us2-lat'),
+                            longitudeInput: $('#us2-lon'),
+                            radiusInput: $('#us2-radius'),
+                            locationNameInput: $('#us2-address')
+                        },
+                        enableAutocomplete: true
+                    });
+                </script>
+					
       				</div>
-      				</div>
-      				</div>
+      				<div class="form-group">
+                                      <div class="file-field">
+
+                  <label for="exampleInputFile">Choose Logo</label>
+                          <div class="file-field">
+                          <input name="myImage" type="file">
+
+                  </div>
+                </div>
+
+
+            
+          </div>
+      				
 
       				<div>
 						<span><input type="submit" value="Submit"  class="mybutton"></span>
 					</div>
-					    </form>
+				</form>
       			
 				 </div>
 			  </div>		
