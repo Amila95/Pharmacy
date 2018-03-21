@@ -96,13 +96,17 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/order', function(req, res, next) {
+  var total = 0;
   connection.query('SELECT * FROM company',function(err,rows){
-      connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row1){
+      connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row1){
         const oder_id =  (row1[0].oder_id + 1);
         console.log(oder_id);
-        connection.query('SELECT * FROM oderlist WHERE oder_id = ?',[oder_id],function(err,row2){
-          console.log(row2);
-          res.render('order',{companys:rows , items:row2});
+        connection.query('SELECT * FROM oderlist WHERE oder_id = ? ',[oder_id],function(err,row){
+          for (var i = row.length - 1; i >= 0; i--) {
+           total = total + row[i].price;
+        }
+          console.log(total)
+          res.render('order',{companys:rows , items:row , price:total});
         })
       })
 
@@ -114,9 +118,9 @@ router.get('/order', function(req, res, next) {
 
 router.get('/submitOrder', function(req,res,next){
   const user_id = req.user.user_id;
-  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1 ',function(err,row){
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1 ',function(err,row){
     const oder_id = (row[0].oder_id+1);
-    connection.query('INSERT INTO bill(oder_id,user_id) VALUES(?,?)',[oder_id,user_id],function(err){
+    connection.query('INSERT INTO recodes(oder_id,user_id,approval) VALUES(?,?,?)',[oder_id,user_id,0],function(err){
       if(err) throw err;
       res.redirect('/order');
     
@@ -127,7 +131,7 @@ router.get('/submitOrder', function(req,res,next){
 router.get('/updateorder:id1', function(req,res,next){
   var product_id = req.params.id1;
     connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
-        connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+        connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
         const oder_id = (row[0].oder_id+1);
         console.log(oder_id);
         connection.query('SELECT * FROM oderlist WHERE item_id = ? AND oder_id = ?',[product_id,oder_id], function(err,row1){
@@ -159,31 +163,29 @@ router.get('/ordercompany:id',function(req, res ){
 
 });
 
-router.get('/products:id1:id2', function(req, res){
-  var company_id = req.params.id1;
-  console.log(company_id);
+router.get('/products:id', function(req, res){
+  
 
-  var product_id = req.params.id2;
+  var product_id = req.params.id;
   console.log(product_id);
 
-  connection.query('SELECT * FROM products WHERE company_id = ?',[company_id],function(err,row1){
+ 
       connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
         if(err){throw err;};
-    console.log(row1);
+    
 
     console.log(row2);
     //res.send("bdud");
 
-    res.render('orderitem', {products:row1 , product:row2});
+    res.render('orderitem', {product:row2});
   });
 
   });
 //res.send("bdud");
 
-})
 
 router.post('/oderlist:id', function(req,res){
-  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
   const oder_id =  (row[0].oder_id + 1);
   console.log(oder_id);
   const units = req.body.units;
@@ -194,7 +196,7 @@ router.post('/oderlist:id', function(req,res){
   
   connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
     if(err) throw err;
-    res.redirect('back');
+    res.redirect('/order');
   })
   });
 
@@ -204,7 +206,7 @@ router.post('/oderlist:id', function(req,res){
 
 router.get('/deleteorder:id', function(req,res){
   const item_id = req.params.id;
-  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
   const oder_id =  (row[0].oder_id + 1);
   connection.query('DELETE FROM oderlist WHERE item_id =? AND oder_id =?',[item_id,oder_id],function(err){
     if(err) throw err;
@@ -220,7 +222,7 @@ router.get('/deleteorder:id', function(req,res){
 })*/
 
 router.get('/cansaleOrder', function(req, res,next){
-  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
   const oder_id =  (row[0].oder_id + 1);
   connection.query('DELETE FROM oderlist WHERE oder_id = ?',[oder_id],function(err){
     if(err) throw err;
@@ -230,7 +232,7 @@ router.get('/cansaleOrder', function(req, res,next){
 })
 
 router.post('/updatelist:id', function(req,res){
-  connection.query('SELECT * FROM bill ORDER BY oder_id DESC LIMIT 1',function(err,row){
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
   const oder_id =  (row[0].oder_id + 1);
   console.log(oder_id);
   const units = req.body.units;
@@ -282,7 +284,7 @@ const register = req.body.register;
 const password = req.body.password;
 const Lat = req.body.Lat;
 const Lon = req.body.Lon;
-const logo = 'upload/'+req.files[0].filename;
+const logo = '../upload/'+req.files[0].filename;
 
 
 

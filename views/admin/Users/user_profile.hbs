@@ -1,0 +1,175 @@
+<section class="content-header">
+      <h1>
+        User Profile
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Examples</a></li>
+        <li class="active">User profile</li>
+      </ol>
+    </section>
+      {{#each user}}
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src= {{this.logo}} alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{this.pharmacy_name}}</h3>
+
+              <p class="text-muted text-center">Pharmacy</p>
+
+              <ul class="list-group list-group-unbordered">
+              <li class="list-group-item">
+                  <b>User ID</b> <a class="pull-right">{{user_id}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="pull-right">{{email}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Contact No</b> <a class="pull-right">{{tel_number}}</a>
+                </li>
+                
+              </ul>
+
+              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">About </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-book margin-r-5"></i>Registation No </strong>
+
+              <p class="text-muted">
+                {{register_no}}
+              </p>
+
+              <hr>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
+
+              <p class="text-muted">{{address}}</p>
+
+              <hr>
+
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->      
+      
+      {{/each}}
+      
+<div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#activity" data-toggle="tab">Pending</a></li>
+              <li><a href="#timeline" data-toggle="tab">F-J</a></li>
+              <li><a href="#settings" data-toggle="tab">K-O</a></li>
+              <li><a href="#settings" data-toggle="tab">P-U</a></li>
+              <li><a href="#settings" data-toggle="tab">V-Z</a></li>
+            </ul>
+            <div class="tab-content">
+            {{#each oders}}       
+              <div class="activetab-pane" id="timeline">
+                <!-- The timeline -->
+                <ul class="timeline timeline-inverse">
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-blue">
+                          {{this.oder_id}}
+                        </span>
+                  </li>
+                  
+                  <li>
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
+
+                      <h3 class="timeline-header no-border"><a >Order No {{this.oder_id}} </a> 
+                      <div class="timeline-footer">
+                        <a href="/admin/view_order{{this.oder_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
+                      </div>
+                      </h3>
+                    </div>
+                  </li>
+                  
+                </ul>
+              </div>
+              {{/each}}
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="settings">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputName" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    </section>

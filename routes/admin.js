@@ -100,4 +100,38 @@ router.get('/listuser', function(req, res, next){
 	})
 })
 
+router.get('/view_user_profile:id', function(req, res,next){
+	var user_id = req.params.id;
+	connection.query('SELECT * FROM users WHERE user_id=?',[user_id], function(err, rows){
+		connection.query('SELECT * FROM recodes WHERE user_id=? AND approval=?',[user_id,0], function(err,row1){
+		res.render('admin/Users/user_profile', {layout: 'admin', user:rows, oders:row1})
+
+		})
+	})
+})
+
+router.get('/view_order:id', function(req,res,next){
+	var total = 0;
+	var oder_id = req.params.id;
+	console.log(oder_id);
+	connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,rows){
+		for (var i = rows.length - 1; i >= 0; i--) {
+			total = total + rows[i].price;
+		}
+		console.log(total);
+		res.render('admin/Users/view_oder', {layout: 'admin', oder:rows, price:total, oder_id:oder_id})
+	})
+})
+
+router.post('/approval:id',function(req,res,next){
+	var oder_id = req.params.id;
+	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
+		connection.query('INSERT INTO approval(oder_id) VALUES(?)',[oder_id], function(err,result){
+			if(err) throw err;
+
+			res.redirect('back');
+		})
+	})
+})
+
 module.exports = router;

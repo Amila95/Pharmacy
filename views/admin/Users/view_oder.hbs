@@ -1,0 +1,51 @@
+<div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">View Order Table</h3>
+
+             
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>ID</th>
+                  <th>Item Name</th>
+                  <th>Number Of Units</th>
+                  <th>Price</th>
+                  
+                </tr>
+                {{#each oder}}
+                <tr>
+                  <td>{{this.oder_id}}</td>
+                  <td>{{this.item_name}}</td>
+                  <td>{{this.units}}</td>
+                  <td>{{this.price}}</td>
+                  
+
+                  
+                </tr>
+                {{/each}}
+                <tr>
+                <td></td>
+                <th> Total Price </th>
+                <td></td>
+                <th>{{price}}</th>
+                </tr>
+                
+                <tr>
+                <td></td>
+                <th>  </th>
+                <td></td>
+                <th><a href= '/admin/approval{{this.oder_id}}'><button type="button" class="btn bg-olive margin">Approval</button></a></th>
+                </tr>
+                
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+    </div>
+</div>  
