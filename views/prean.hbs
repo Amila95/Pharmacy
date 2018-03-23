@@ -8,13 +8,14 @@
     		<div class="clear"></div>
     	</div>
    	 	<div class="section group">
+   	 	{{#each company}}
 				<div class="cont-desc span_1_of_2">
 				  <div class="product-details">				
 					<div class="grid images_3_of_2">
-						<img src="images/preview.jpg" alt="" />
+						<img src={{this.company_logo}} alt="" />
 				  </div>
 				<div class="desc span_3_of_2">
-				{{#each company}}
+				
 					<h2>{{this.company_name}} </h2>
 					<p>{{this.company_discription}}</p>	
 				{{/each}}				

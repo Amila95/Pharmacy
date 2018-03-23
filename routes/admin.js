@@ -151,7 +151,91 @@ router.get('/approval:id',function(req,res,next){
 })
 
 
+router.get('/add_product',function(req,res,next){
+	connection.query('SELECT * FROM company', function(err,rows){
+		res.render('admin/Products/add_product',{layout:'admin', company:rows});
+
+	})
+})
+
+router.post('/addproduct',function(req,res,next){
+	upload(req, res, function(err) {
+         if (err) {
+         	consol.log('erro');
+            
+         }
+    const product_name = req.body.name;
+    const company_id = req.body.company_id;
+    const product_details = req.body.product_details;
+    const price = req.body.price;
+    const model = req.body.model;
+    const weight = req.body.weight;
+    const unit_stock = req.body.unit_stock;
+    const Image = '../upload/'+req.files[0].filename;
+
+    connection.query('INSERT INTO products(product_name,company_id,product_details,price,model,weight,unit_stock,Image,special_list) VALUES(?,?,?,?,?,?,?,?,?)',[product_name,company_id,product_details,price,model,weight,unit_stock,Image,0],function(err){
+    	if(err) throw err;
+    	res.redirect('back');
+    })
+
+})
+})
+
+router.get('/listproduct',function(req,res,next){
+	connection.query('SELECT * FROM products', function(err,rows){
+		res.render('admin/Products/list_product',{layout:'admin', products:rows})
+	})
+})
+
+router.get('/view_product_profile:id',function(req,res,next){
+		var product_id = req.params.id;
+		connection.query('SELECT * FROM products WHERE product_id = ?',[product_id], function(err,rows){
+		res.render('admin/Products/profile_product', {layout:'admin',product:rows})
+	})
+})
+
+router.get('/update_product_profile:id',function(req,res,rows){
+	var product_id = req.params.id;
+	connection.query('SELECT * FROM products WHERE product_id = ?',[product_id], function(err,rows){
+		res.render('admin/Products/update_product', {layout:'admin',product:rows})
+	})
+})
+
+router.post('/updateproduct:id',function(req,res,rows){
+	
+     
+	var product_id = req.params.id;
+	const product_name = req.body.name;
+    const product_details = req.body.model;
+    const price = req.body.price;
+    const model = req.body.model;
+    const weight = req.body.weight;
+    const unit_stock = req.body.unit_stock;
+
+    
+
+    connection.query('UPDATE products SET product_name= ?,product_details= ?,price= ?,model= ?,weight= ?,unit_stock= ? WHERE product_id= ? ', [product_name,product_details,price,model,weight,unit_stock,product_id],function(err,results){
+    
+    	res.redirect('/admin/listproduct');
+
+    
+})
+})
+
+router.get('/specialproduct', function(req,res,rows){
+
+	connection.query('SELECT * FROM products', function(err,rows){
+		res.render('admin/Products/special_products',{layout:'admin',products:rows})
+	})
+})
+
+router.get('/new_product:id',function(req,res,rows){
+	var product_id = req.params.id;
+	connection.query('UPDATE products SET special_list=? WHERE product_id =?',[1,product_id]),function(err,row2){
+		if(err) throw err;
+    	res.redirect('back');
+	}
+})
 
 
-
-module.exports = router;
+module.exports = router; 

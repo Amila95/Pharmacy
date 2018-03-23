@@ -7,13 +7,14 @@
     	    </div>
     		<div class="clear"></div>
     	</div>
+    	{{#each product}}
    	 	<div class="section group">
 				<div class="cont-desc span_1_of_2">
 				  <div class="product-details">				
 					<div class="grid images_3_of_2">
-						<img src="images/preview.jpg" alt="" />
+						<img src={{Image}} alt="" />
 				  </div>
-				{{#each product}}
+				
 				<div class="desc span_3_of_2">
 					<h2>{{product_name}} </h2>
 					<p>{{product_details}}</p>					
@@ -58,65 +59,6 @@
 			 
 	   </div>
    </div>
-				<div class="rightsidebar span_3_of_1 sidebar">
-					<h2>Specials</h2>
-					 	<div class="special_movies">
-					 	   <div class="movie_poster">
-					 		  <a href="preview.html"><img src="images/end-game.jpg" alt="" /></a>
-					 		 </div>
-					 		   <div class="movie_desc">
-							    <h3><a href="preview.html">End Game</a></h3>
-								   <p><span>$620.87</span> &nbsp; $500.35</p>
-								     <span><a href="#">Add to Cart</a></span>
-								 </div>
-								<div class="clear"></div>
-					 		</div>	
-					 		<div class="special_movies">
-					 	   <div class="movie_poster">
-					 		  <a href="preview.html"><img src="images/Coraline.jpg" alt="" /></a>
-					 		 </div>
-					 		   <div class="movie_desc">
-							    <h3><a href="preview.html">Coraline</a></h3>
-								   <p><span>$620.87</span> &nbsp; $500.35</p>
-								     <span><a href="#">Add to Cart</a></span>
-								 </div>
-								<div class="clear"></div>
-					 		</div>	
-					 		<div class="special_movies">
-					 	   <div class="movie_poster">
-					 		  <a href="preview.html"><img src="images/Eclipse.jpg" alt="" /></a>
-					 		 </div>
-					 		   <div class="movie_desc">
-							    <h3><a href="preview.html">Eclipse</a></h3>
-								   <p><span>$620.87</span> &nbsp; $500.35</p>
-								     <span><a href="#">Add to Cart</a></span>
-								 </div>
-								<div class="clear"></div>
-					 		</div>	
-					 		<div class="special_movies">
-					 	   <div class="movie_poster">
-					 		  <a href="preview.html"><img src="images/Priest.jpg" alt="" /></a>
-					 		 </div>
-					 		   <div class="movie_desc">
-							    <h3><a href="preview.html">Priest 3D</a></h3>
-								   <p><span>$620.87</span> &nbsp; $500.35</p>
-								     <span><a href="#">Add to Cart</a></span>
-								 </div>
-								<div class="clear"></div>
-					 		</div>	
-					 		<div class="special_movies">
-					 	    <div class="movie_poster">
-					 		  <a href="preview.html"><img src="images/Sorority_Wars.jpg" alt="" /></a>
-					 		 </div>
-					 		   <div class="movie_desc">
-							    <h3><a href="preview.html">Sorority Wars</a></h3>
-								   <p><span>$620.87</span> &nbsp; $500.35</p>
-								     <span><a href="#">Add to Cart</a></span>
-								 </div>
-								<div class="clear"></div>
-					 		</div>			 
- 					   </div>
- 		 		 </div>
-   	 		</div>
+				
         </div>
   
