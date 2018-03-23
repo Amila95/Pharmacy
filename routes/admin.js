@@ -104,8 +104,11 @@ router.get('/view_user_profile:id', function(req, res,next){
 	var user_id = req.params.id;
 	connection.query('SELECT * FROM users WHERE user_id=?',[user_id], function(err, rows){
 		connection.query('SELECT * FROM recodes WHERE user_id=? AND approval=?',[user_id,0], function(err,row1){
-		res.render('admin/Users/user_profile', {layout: 'admin', user:rows, oders:row1})
-
+			connection.query('SELECT * FROM recodes WHERE user_id=? AND approval=?',[user_id,1], function(err,row2){
+				
+				res.render('admin/Users/user_profile', {layout: 'admin', user:rows, oders:row1, apoder:row2})
+	
+		})
 		})
 	})
 })
@@ -123,15 +126,32 @@ router.get('/view_order:id', function(req,res,next){
 	})
 })
 
-router.post('/approval:id',function(req,res,next){
+router.get('/approval:id',function(req,res,next){
+	var total = 0;
 	var oder_id = req.params.id;
 	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
-		connection.query('INSERT INTO approval(oder_id) VALUES(?)',[oder_id], function(err,result){
-			if(err) throw err;
+		connection.query('SELECT * FROM recodes WHERE oder_id=?',[oder_id], function(err,row1){
+			user_id = row1[0].user_id;
+			connection.query('SELECT * FROM Users WHERE user_id= ?',[user_id], function(err, row2){
+				connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row3){
+					for (var i = row3.length - 1; i >= 0; i--) {
+							total = total + row3[i].price;
+					}
+					connection.query('INSERT INTO approval(oder_id) VALUES(?)',[oder_id], function(err,result){
+					if(err) throw err;
+					res.render('admin/Users/invoice',{layout:'admin', oder:row1, user:row2, bill:row3, price:total});
 
-			res.redirect('back');
+				})
+			})
+		})
+		
+
 		})
 	})
 })
+
+
+
+
 
 module.exports = router;
