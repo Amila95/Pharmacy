@@ -21,17 +21,27 @@
                   <th>ID</th>
                   <th>Image</th>
                   <th>Company Name</th>
-                  <th>New Product</th>
-                  <th></th>
+                  <th>Special Products</th>
+                  <th>New Products</th>
                 </tr>
                 {{#each products}}
                 <tr>
                   <td>{{this.product_id}}</td>
                   <td><img src={{this.Image}} class="img-circle"  width="50" height="50"></td>
                   <td>{{this.product_name}}</td>
-                  <td><a href= '/admin/new_product{{this.product_id}}'><span class="label label-success">Select</span></a></td>
-                  <td><a href= '/admin/update_product_profile{{this.product_id}}'><span class="label label-primary">Update</span></a></td>
+                  {{#if this.special_list}}
+                  <td><a href= '/admin/remove_special_product{{this.product_id}}'><span class="label label-primary" type="hidden">Remove</span></a></td>
+                  
+                  {{else}}
+                  <td><a href= '/admin/special_product{{this.product_id}}'><span class="label label-success">Add To </span></a></td>
+                  {{/if}}
 
+                  {{#if this.new_list}}
+                  <td><a href= '/admin/remove_new_product{{this.product_id}}'><span class="label label-primary" type="hidden">Remove</span></a></td>
+                  
+                  {{else}}
+                  <td><a href= '/admin/new_product{{this.product_id}}'><span class="label label-success">Add To </span></a></td>
+                  {{/if}}
                   
                 </tr>
                 {{/each}}

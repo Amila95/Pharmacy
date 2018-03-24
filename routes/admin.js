@@ -229,13 +229,39 @@ router.get('/specialproduct', function(req,res,rows){
 	})
 })
 
-router.get('/new_product:id',function(req,res,rows){
+router.get('/special_product:id',function(req,res,rows){
 	var product_id = req.params.id;
-	connection.query('UPDATE products SET special_list=? WHERE product_id =?',[1,product_id]),function(err,row2){
+	connection.query('UPDATE products SET special_list=? WHERE product_id =?',[1,product_id],function(err,row2){
 		if(err) throw err;
     	res.redirect('back');
-	}
+	})
 })
 
+router.get('/remove_special_product:id',function(req,res,rows){
+	var product_id = req.params.id;
+	connection.query('UPDATE products SET special_list=? WHERE product_id =?',[0,product_id],function(err,row2){
+		if(err) throw err;
+    	res.redirect('back');
+	})
+})
+
+router.get('/new_product:id',function(req,res,rows){
+	var product_id = req.params.id;
+	connection.query('UPDATE products SET new_list=? WHERE product_id =?',[1,product_id],function(err,row2){
+		if(err) throw err;
+    	res.redirect('back');
+	})
+})
+
+router.get('/remove_new_product:id',function(req,res,rows){
+	var product_id = req.params.id;
+	connection.query('UPDATE products SET new_list=? WHERE product_id =?',[0,product_id],function(err,row2){
+		if(err) throw err;
+    	res.redirect('back');
+	})
+
+
+
+})
 
 module.exports = router; 

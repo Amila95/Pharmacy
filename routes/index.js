@@ -79,7 +79,10 @@ router.get('/', function(req, res, next) {
   console.log(req.isAuthenticated());
   connection.query('SELECT * FROM products WHERE special_list = 1',function(err,rows){
     connection.query('SELECT * FROM company', function(err, row1){
-           res.render('index', { title: 'Express', special:rows , companies:row1});
+      connection.query('SELECT* FROM products WHERE new_list=1', function(err,row2){
+          res.render('index', { title: 'Express', special:rows , companies:row1, new:row2});
+
+      })
 
     })
   
