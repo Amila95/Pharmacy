@@ -6,9 +6,10 @@
 						   <ul>
 						  	   <h3>Companies</h3>
 						  	   {{#each companies}}
-							      <li><a href="#">{{this.company_name}}</a></li>
+							      <li><a href="/viewcompany{{this.company_id}}">{{this.company_name}}</a></li>
 							     {{/each}} 
 						  	 </ul>
+						  	 
 						  	 
 						
 						
@@ -56,7 +57,7 @@
 							<p><span class="rupees">Rs {{this.price}}</span></p>
 					    </div>
 					       		<div class="add-cart">								
-									<h4><a href="preview.html">Add to Cart</a></h4>
+									<h4><a href="/viewspecial{{this.product_id}}">View</a></h4>
 							     </div>
 							 <div class="clear"></div>
 					</div>					 
@@ -85,7 +86,7 @@
 							<p><span class="rupees">Rs {{this.price}}</span></p>
 					    </div>
 					       		<div class="add-cart">								
-									<h4><a href="preview.html">Add to Cart</a></h4>
+									<h4><a href="/viewspecial{{this.product_id}}">View</a></h4>
 							     </div>
 							 <div class="clear"></div>
 					</div>					 

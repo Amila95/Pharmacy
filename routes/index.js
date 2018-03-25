@@ -366,7 +366,24 @@ router.get('/listcompany', function(req, res, next){
   //res.render('admin/Companies/list_company',{layout: 'admin'});
 })
 
+router.get('/viewspecial:id', function(req,res,next){
+  product_id = req.params.id;
+  connection.query('SELECT * FROM products WHERE product_id=?',[product_id], function(err,rows){
+    console.log(rows)
+    res.render('special',{product:rows});
+  })
+})
 
+router.get('/viewcompany:id', function(req,res,next){
+  company_id = req.params.id;
+  console.log(company_id);
+  connection.query('SELECT * FROM company WHERE company_id=?',[company_id], function(err,rows){
+    connection.query('SELECT * FROM products WHERE company_id = ?',[company_id], function(err,row1){
+      res.render('viewcompany',{company:rows,products:row1})
+    })
+    
+  })
+})
 
 
 
