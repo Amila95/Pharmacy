@@ -21,7 +21,16 @@ var Storage = multer.diskStorage({
  }).any()
 
 router.get('/', function(req, res, next) {
-  res.render('admin/basic', {title: 'Express',layout:'admin'})
+	connection.query('SELECT * FROM recodes WHERE approval = ?',[0],function(err,rows){
+		var num = rows.length;
+		connection.query('SELECT * FROM  users WHERE approval =?',[0],function(err,row1){
+			var num1 = row1.length;
+			res.render('admin/basic', {title: 'Express',layout:'admin',notification:num, oder:rows, notification1:num1,user:row1})
+		})
+		
+		
+	})
+	
 
 });
 router.get('/addcompany', function(req, res, next){
@@ -284,14 +293,32 @@ router.post('/addstock:id',function(req,res,rows){
 	
 })
 
-router.post('/changestock:id',function(req,res,rows){
+router.post('/changestock:id',function(req,res){
 	var product_id = req.params.id;
 	var stock = parseInt(req.body.stock);
 	
 		connection.query('UPDATE products SET stock=? WHERE product_id=?',[stock,product_id],function(err,row2){
 			res.redirect('/admin/stock');
 		})
+	});
+
+router.get('/newuser:id',function(req,res){
+	var user_id = req.params.id;
+	
+	connection.query('SELECT * FROM users WHERE user_id=?',[user_id], function(err,rows){
+		res.render('admin/Users/new_users',{layout:'admin', user:rows})
 	})
+});
+
+router.get('/accept:id',function(req,res){
+	var user_id = req.params.id;
+	console.log(user_id);
+	connection.query('UPDATE users SET approval=? WHERE user_id=?',[1,user_id],function(err,row2){
+		res.redirect('listuser');
+	})
+	
+	
+})
 
 
 
@@ -300,3 +327,4 @@ router.post('/changestock:id',function(req,res,rows){
 
 
 module.exports = router; 
+ 

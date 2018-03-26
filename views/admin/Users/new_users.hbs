@@ -1,0 +1,107 @@
+<section class="content-header">
+      <h1>
+        User Profile
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Examples</a></li>
+        <li class="active">User profile</li>
+      </ol>
+    </section>
+      {{#each user}}
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src= {{this.logo}} alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{this.pharmacy_name}}</h3>
+
+              <p class="text-muted text-center">Pharmacy</p>
+
+              <ul class="list-group list-group-unbordered">
+              <li class="list-group-item">
+                  <b>User ID</b> <a class="pull-right">{{user_id}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="pull-right">{{email}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Contact No</b> <a class="pull-right">{{tel_number}}</a>
+                </li>
+                
+              </ul>
+
+              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">About </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-book margin-r-5"></i>Registation No </strong>
+
+              <p class="text-muted">
+                {{register_no}}
+              </p>
+
+              <hr>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
+
+              <p class="text-muted">{{address}}</p>
+
+              <hr>
+
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->      
+      
+     
+
+<div class="col-md-9">
+
+<div id="us2" style="width: 1100px; height: 600px;"></div>
+                   
+</div>
+                <script>
+                    $('#us2').locationpicker({
+                        location: {
+                            latitude: 
+                            {{this.Lat}},
+                            longitude: 
+                            {{this.Lon}}
+                        },
+                        radius: 300,
+                        inputBinding: {
+                            latitudeInput: $('#us2-lat'),
+                            longitudeInput: $('#us2-lon'),
+                            radiusInput: $('#us2-radius'),
+                            locationNameInput: $('#')
+                        },
+                        enableAutocomplete: true
+                    });
+                </script>
+                
+               
+                
+</div>
+<div class="col-md-9" >
+
+</div>
+<div class="col-md-3">
+<a href= '/admin/accept{{user_id}}'><span class="btn btn-block btn-success">Accept</span></a>
+</div>
+ {{/each}}
