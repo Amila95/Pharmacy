@@ -21,6 +21,8 @@
                   <th>ID</th>
                   <th>Image</th>
                   <th>Product Name</th>
+                  <th>Current Units</th>
+                  
                   <th></th>
                   <th></th>
                 </tr>
@@ -29,8 +31,27 @@
                   <td>{{this.product_id}}</td>
                   <td><img src={{this.Image}} class="img-circle"  width="50" height="50"></td>
                   <td>{{this.product_name}}</td>
-                  <td><a href= '/admin/view_product_profile{{this.product_id}}'><span class="label label-success">View</span></a></td>
-                  <td><a href= '/admin/update_product_profile{{this.product_id}}'><span class="label label-primary">Update</span></a></td>
+                  <td>{{this.stock}}</td>
+                  <td>
+            
+            
+              <form   method="post" action="/admin/addstock{{this.product_id}}" >
+              <input type="text" class="col-md-3" id="name" placeholder="Add To " name="stock">
+            
+              <button type="submit" class="label label-primary" >Add To</button>
+              </form>
+            
+            
+            </td>
+                  
+                  <td>
+           
+              <form   method="post" action="/admin/changestock{{this.product_id}}" >
+              <input type="text" class="col-md-3" id="name" placeholder="Change To " name="stock">
+            
+              <button type="submit" class="label label-primary" >Change To</button>
+              </form>
+            </td>
 
                   
                 </tr>
@@ -42,6 +63,4 @@
           <!-- /.box -->
         </div>
       </div>
-    </div>
-  </div>
-</div>  
+  

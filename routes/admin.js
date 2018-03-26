@@ -264,4 +264,39 @@ router.get('/remove_new_product:id',function(req,res,rows){
 
 })
 
+router.get('/stock', function(req,res,rows){
+	connection.query('SELECT * FROM products',function(err,rows){
+		res.render('admin/Products/stock',{layout:'admin', products:rows})
+	})
+})
+
+router.post('/addstock:id',function(req,res,rows){
+	var product_id = req.params.id;
+	var add_stock = parseInt(req.body.stock);
+	var stock;
+	connection.query('SELECT * FROM products WHERE product_id=?',[product_id],function(err,row2){
+		var cur_stock = parseInt(row2[0].stock);
+		stock = add_stock + cur_stock;
+		connection.query('UPDATE products SET stock=? WHERE product_id=?',[stock,product_id],function(err,row2){
+			res.redirect('/admin/stock');
+		})
+	})
+	
+})
+
+router.post('/changestock:id',function(req,res,rows){
+	var product_id = req.params.id;
+	var stock = parseInt(req.body.stock);
+	
+		connection.query('UPDATE products SET stock=? WHERE product_id=?',[stock,product_id],function(err,row2){
+			res.redirect('/admin/stock');
+		})
+	})
+
+
+
+
+
+
+
 module.exports = router; 

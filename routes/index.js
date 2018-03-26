@@ -126,8 +126,33 @@ router.get('/submitOrder', function(req,res,next){
   connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1 ',function(err,row){
     const oder_id = (row[0].oder_id+1);
     connection.query('INSERT INTO recodes(oder_id,user_id,approval) VALUES(?,?,?)',[oder_id,user_id,0],function(err){
-      if(err) throw err;
-      res.redirect('/order');
+      connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row1){
+        console.log(row1);
+        for(var i = row1.length-1; i >= 0;i--){
+          (function(product_id,units){
+          product_id = row1[i].item_id
+          console.log(product_id)
+          units = parseInt(row1[i].units)
+          connection.query('SELECT * FROM products WHERE product_id=?',[product_id],function(err,row2){
+            console.log(product_id);
+            cur_stock = parseInt(row2[0].stock);
+            stock= cur_stock - units;
+            /*console.log(cur_stock);
+            console.log(stock);
+            console.log(units);
+            console.log(product_id);*/
+            connection.query('UPDATE products set stock=? WHERE product_id=?',[stock,product_id],function(err){
+              console.log('done');
+            });
+              
+              //res.redirect('/order');
+            })
+          
+         })() 
+        }
+        res.redirect('/order');
+      })
+      
     
   });
 });
@@ -136,12 +161,15 @@ router.get('/submitOrder', function(req,res,next){
 router.get('/updateorder:id1', function(req,res,next){
   var product_id = req.params.id1;
     connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
+      stock = parseInt(row2[0].stock);
         connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
         const oder_id = (row[0].oder_id+1);
         console.log(oder_id);
         connection.query('SELECT * FROM oderlist WHERE item_id = ? AND oder_id = ?',[product_id,oder_id], function(err,row1){
+          oder =parseInt(row1[0].units);
+          remaining = stock - oder;
           console.log(row1);
-            res.render('updateorder',{product:row2 , oder:row1});
+            res.render('updateorder',{product:row2 , oder:row1, remaining:remaining});
 
         })
   //res.render('updateorder',{product:row2 , oder:row});
@@ -154,7 +182,7 @@ router.get('/updateorder:id1', function(req,res,next){
 router.get('/ordercompany:id',function(req, res ){
   var company_id = req.params.id;
   console.log(company_id);
-  connection.query('SELECT * FROM products WHERE company_id = ?',[company_id],function(err,row1){
+  connection.query('SELECT * FROM products WHERE company_id = ? AND stock> 0',[company_id],function(err,row1){
       connection.query('SELECT * FROM company WHERE company_id = ?',[company_id],function(err,row2){
     console.log(row1);
 
@@ -169,21 +197,33 @@ router.get('/ordercompany:id',function(req, res ){
 });
 
 router.get('/products:id', function(req, res){
-  
-
   var product_id = req.params.id;
-  console.log(product_id);
+  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
+    const oder_id =  (row[0].oder_id + 1);
+    connection.query('SELECT * FROM oderlist WHERE oder_id=? AND item_id=?',[oder_id,product_id],function(err,row1){
+      if(row1.length>0){
+        cur_oder=parseInt(row1[0].units);
+        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
+          stock = parseInt(row2[0].stock);
+          remaining = stock - cur_oder;
+          res.render('orderitem',{product:row2, remaining:remaining})
+        })
+
+      }
+      else{
+        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
+        remaining = row2[0].stock;
+        if(err) throw err;
+        res.render('orderitem', {product:row2, remaining:remaining});
+  });
+
+      }
+    })
+  })
+
 
  
-      connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
-        if(err){throw err;};
-    
 
-    console.log(row2);
-    //res.send("bdud");
-
-    res.render('orderitem', {product:row2});
-  });
 
   });
 //res.send("bdud");
@@ -191,19 +231,56 @@ router.get('/products:id', function(req, res){
 
 router.post('/oderlist:id', function(req,res){
   connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
-  const oder_id =  (row[0].oder_id + 1);
-  console.log(oder_id);
-  const units = req.body.units;
-  var product_id = req.params.id;
-  connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
-    const item_name = row1[0].product_name;
-    const price = row1[0].price * units;
+    const oder_id =  (row[0].oder_id + 1);
+    console.log(oder_id);
+    const units = req.body.units;
+    var product_id = req.params.id;
+    connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
+       stock = parseInt(row2[0].stock);
+      connection.query('SELECT * FROM oderlist WHERE oder_id = ? AND item_id=?',[oder_id,product_id],function(err,row3){
+        if(row3.length>0){
+          pre_stock = parseInt(row3[0].units);
+          bill_stock = parseInt(units)+parseInt(pre_stock)
+          new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
+          console.log(new_stock);
+          if(new_stock >= 0){
+            connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+            const pre_price = row3[0].price;
+            const item_name = row1[0].product_name;
+            const price = row1[0].price * bill_stock;
+            connection.query('UPDATE oderlist SET price = ? ,units = ? WHERE oder_id=? AND item_id=?',[price,bill_stock,oder_id,product_id],function(err,result){
+              if(err) throw err;
+              res.redirect('/order');
+            })
+          })}
+            else{
+            res.redirect('back');
+          }
+        }else{
+      
+     
+      new_stock = stock - units;
+      if(new_stock >=0){
+        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+        const item_name = row1[0].product_name;
+        const price = row1[0].price * units;
   
-  connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
-    if(err) throw err;
-    res.redirect('/order');
+        connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+        if(err) throw err;
+        res.redirect('/order');
   })
   });
+      }
+      else{
+        res.redirect('back');
+      }
+    }
+    })
+    })
+  
+  
+  
+  
 
   })
   
@@ -242,6 +319,10 @@ router.post('/updatelist:id', function(req,res){
   console.log(oder_id);
   const units = req.body.units;
   var product_id = req.params.id;
+  connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
+  stock = row2[0].stock;
+  new_stock = stock - units;
+  if(new_stock >=0){
   connection.query('SELECT * FROM products WHERE product_id =?',[product_id],function(err,row1){
     const unit_price = row1[0].price;
     const price = units*unit_price;
@@ -251,7 +332,11 @@ router.post('/updatelist:id', function(req,res){
 
   })
   })
+}else{
+  res.redirect('back');
+}
   
+})
 })
 })
 

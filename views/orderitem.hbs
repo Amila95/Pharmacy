@@ -37,12 +37,16 @@
 				<form method="post" action="/oderlist{{product_id}}">
 
 					<div class="share">
-						<p>Number of units :</p><input  Name="units"  class="text_box" type="text" >				
+						<p>Number of units :</p><input  Name="units"  class="text_box" type="text" >
+						
 					</div>
 					&nbsp &nbsp &nbsp &nbsp
 					<button type="submit" class="btn btn-warning">Add To List</button>
-					{{/each}}	
+						{{/each}}
 					</form>
+				<div>
+				<p><font size="2" color="Red">Remain Product: {{this.remaining}}</font></p>
+				</div>
 				
 					<div class="clear"></div>
 				</div>
@@ -61,4 +65,6 @@
    </div>
 				
         </div>
+
+        
   
