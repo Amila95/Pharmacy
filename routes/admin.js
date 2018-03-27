@@ -320,9 +320,36 @@ router.get('/accept:id',function(req,res){
 	
 })
 
+router.get('/currentstock',function(req,res){
+	connection.query('SELECT * FROM products',function(err,rows){
+		res.render('admin/Report/current_stock',{layout:'admin',products:rows})
+	})
+})
+
+router.get('/report',function(req,res){
+	res.render('admin/Report/dailynmonthly',{layout:'admin'})
+})
+
+router.post('/daliyreport',function(req,res){
+	const date = req.body.date;
+	console.log(date);
+	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? GROUP BY oderlist.oder_id ',[date+'%'],function(err,rows){
+		console.log(rows);
+		res.render('admin/Report/daily',{layout:'admin',recodes:rows})
+	})
+})
+
+router.post('/monthlyreport',function(req,res){
+	const date1 = req.body.date1;
+	const date2 = req.body.date2;
+	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time BETWEEN  ? AND  ? GROUP BY oderlist.oder_id ',[date1,date2],function(err,rows){
+		console.log(rows);
+		res.render('admin/Report/daily',{layout:'admin',recodes:rows})
+	})
+})
 
 
-
+//SELECT SUM(oderlist.units),oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE  GROUP BY oderlist.oder_id,recodes.oder_id
 
 
 
