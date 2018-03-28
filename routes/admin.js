@@ -75,7 +75,17 @@ router.get('/listcompany', function(req, res, next){
 router.get('/view_company_profile:id', function(req, res, next){
 	var company_id = req.params.id;
 	connection.query('SELECT * FROM company WHERE company_id = ?',[company_id], function(err, rows){
-	res.render('admin/Companies/company_profile', {layout: 'admin', companies: rows})
+		connection.query('SELECT * FROM products WHERE company_id=? AND (product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ?)',[company_id,'A%','B%','C%','D%','E%','F%','G%','H%','I%'],function(err,row1){
+			connection.query('SELECT * FROM products WHERE company_id=? AND (product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? )',[company_id,'J%','K%','L%','M%','N%','O%','P%','Q%'],function(err,row2){
+				connection.query('SELECT * FROM products WHERE company_id=? AND (product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ? OR product_name LIKE ?)',[company_id,'R%','S%','T%','U%','V%','W%','X%','Y%','Z%'],function(err,row3){
+					res.render('admin/Companies/company_profile', {layout: 'admin', companies: rows, ae:row1, jq:row2,qz:row3});
+				})
+				
+				
+			})
+			
+		})
+	
 	
 	})
 })
