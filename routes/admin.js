@@ -208,9 +208,357 @@ router.get('/listproduct',function(req,res,next){
 
 router.get('/view_product_profile:id',function(req,res,next){
 		var product_id = req.params.id;
+		var mon;
+		var se2,se1,se3,se4,se5;
+		var month1,month2,month3,month4,month5;
 		connection.query('SELECT * FROM products WHERE product_id = ?',[product_id], function(err,rows){
-		res.render('admin/Products/profile_product', {layout:'admin',product:rows})
+		connection.query('SELECT * FROM recodes ORDER BY orderd_time DESC LIMIT 1',function(err,row6){
+		const date = String(row6[0].orderd_time);
+		
+		var arr = date.split(" ").map(function (date) {
+  		return String(date);
+  		
+		});
+		console.log(arr)
+		switch(arr[1]){
+			case "Jan":
+			mon = 1;
+			break;
+			case "Feb":
+			mon = 2;
+			break;
+			case "Mar":
+			mon = 3;
+			break;
+			case "Apr":
+			mon = 4;
+			break;
+			case "May":
+			mon = 5;
+			break;
+			case "Jun":
+			mon = 6;
+			break;
+			case "Jul":
+			mon = 7;
+			break;
+			case "Aug":
+			mon = 8;
+			break;
+			case "Sep":
+			mon = 9;
+			break;
+			case "Oct":
+			mon = 10;
+			break;
+			case "Nov":
+			mon = 11;
+			break;
+			case "Dec":
+			mon = 12;
+			break;
+
+		}
+		premon1 = ((mon)%12);
+		
+		switch(premon1){
+			case 0:
+			se1='-12-';
+			month1="December";
+			break;
+			case 1:
+			se1='-01-';
+			month1="January";
+			break;
+			case 2:
+			se1='-02-';
+			month1="Febaruy";
+			break;
+			case 3:
+			month1="March";
+			se1='-03-';
+			break;
+			case 4:
+			se1='-04-';
+			month1="April";
+			break;
+			case 5:
+			se1='-05-';
+			month1="May";
+			break;
+			case 6:
+			se1='-06-';
+			month1="June";
+			break;
+			case 7:
+			se1='-07-';
+			month1="July";
+			break;
+			case 8:
+			se1='-08-';
+			month1="Augest";
+			break;
+			case 9:
+			se1='-09-';
+			month1="September";
+			break;
+			case 10:
+			se1='-10-';
+			month1="Octomber";
+			break;
+			default:
+			se1='-11-';
+			month1="Novmber";
+			break;
+		}
+		premon2=((mon-1)%12);
+		switch(premon2){
+			case 0:
+			se2='-12-';
+			month2="December";
+			break;
+			case 1:
+			se2='-01-';
+			month2="January";
+			break;
+			case 2:
+			se2='-02-';
+			month2="Febaruy";
+			break;
+			case 3:
+			month2="March";
+			se2='-03-';
+			break;
+			case 4:
+			se2='-04-';
+			month2="April";
+			break;
+			case 5:
+			se2='-05-';
+			month2="May";
+			break;
+			case 6:
+			se2='-06-';
+			month2="June";
+			break;
+			case 7:
+			se2='-07-';
+			month2="July";
+			break;
+			case 8:
+			se2='-08-';
+			month2="Augest";
+			break;
+			case 9:
+			se2='-09-';
+			month2="September";
+			break;
+			case 10:
+			se2='-10-';
+			month2="Octomber";
+			break;
+			default:
+			se2='-11-';
+			month2="Novmber";
+			break;
+		}
+		premon3=((mon-2)%12);
+		switch(premon3){
+			case 0:
+			se3='-12-';
+			month3="December";
+			break;
+			case 1:
+			se3='-01-';
+			month3="January";
+			break;
+			case 2:
+			se3='-02-';
+			month3="Febaruy";
+			break;
+			case 3:
+			month3="March";
+			se3='-03-';
+			break;
+			case 4:
+			se3='-04-';
+			month3="April";
+			break;
+			case 5:
+			se3='-05-';
+			month3="May";
+			break;
+			case 6:
+			se3='-06-';
+			month3="June";
+			break;
+			case 7:
+			se3='-07-';
+			month3="July";
+			break;
+			case 8:
+			se3='-08-';
+			month3="Augest";
+			break;
+			case 9:
+			se3='-09-';
+			month3="September";
+			break;
+			case 10:
+			se3='-10-';
+			month3="Octomber";
+			break;
+			default:
+			se3='-11-';
+			month3="Novmber";
+			break;
+		}
+		premon4=((mon-3)%12);
+		switch(premon4){
+			case 0:
+			se4='-12-';
+			month4="December";
+			break;
+			case 1:
+			se4='-01-';
+			month4="January";
+			break;
+			case 2:
+			se4='-02-';
+			month4="Febaruy";
+			break;
+			case 3:
+			month4="March";
+			se4='-03-';
+			break;
+			case 4:
+			se4='-04-';
+			month4="April";
+			break;
+			case 5:
+			se4='-05-';
+			month4="May";
+			break;
+			case 6:
+			se4='-06-';
+			month4="June";
+			break;
+			case 7:
+			se4='-07-';
+			month4="July";
+			break;
+			case 8:
+			se4='-08-';
+			month4="Augest";
+			break;
+			case 9:
+			se4='-09-';
+			month4="September";
+			break;
+			case 10:
+			se4='-10-';
+			month4="Octomber";
+			break;
+			default:
+			se4='-11-';
+			month4="Novmber";
+			break;
+		}
+		premon5=((mon-4)%12);
+		switch(premon5){
+			case 0:
+			se5='-12-';
+			month5="December";
+			break;
+			case 1:
+			se5='-01-';
+			month5="January";
+			break;
+			case 2:
+			se5='-02-';
+			month5="Febaruy";
+			break;
+			case 3:
+			month5="March";
+			se5='-03-';
+			break;
+			case 4:
+			se5='-04-';
+			month5="April";
+			break;
+			case 5:
+			se5='-05-';
+			month5="May";
+			break;
+			case 6:
+			se5='-06-';
+			month5="June";
+			break;
+			case 7:
+			se5='-07-';
+			month5="July";
+			break;
+			case 8:
+			se5='-08-';
+			month5="Augest";
+			break;
+			case 9:
+			se5='-09-';
+			month5="September";
+			break;
+			case 10:
+			se5='-10-';
+			month5="Octomber";
+			break;
+			default:
+			se5='-11-';
+			month5="Novmber";
+			break;
+		}
+
+
+
+	
+	/*connection.query('SELECT * FROM recodes WHERE orderd_time LIKE ?',['%'+se+'%'],function(err,row2){
+		console.log(row2);*/
+	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name,recodes.orderd_time AS time FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se1+'%',product_id],function(err,row1){
+		connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se2+'%',product_id],function(err,row2){
+			connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se3+'%',product_id],function(err,row3){
+				connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se4+'%',product_id],function(err,row4){
+					connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se5+'%',product_id],function(err,row5){
+						console.log(row1);
+
+				console.log(se1);
+				var data ={
+					month1 :month1,
+					unit1:row1[0].units,
+					month2: month2,
+					unit2:row2[0].units,
+					month3:month3,
+					unit3:row3[0].units,
+					month4:month4,
+					unit4:row4[0].units,
+					month5:month5,
+					unit5:row5[0].units
+				}
+				
+				res.render('admin/Products/profile_product', {layout:'chart',product:rows,product1:row1,data:data})
+					})
+				
+				
+				
+				
+			})
+		})
+		
+
+		
 	})
+	})
+	
+		//res.render('admin/Products/profile_product', {layout:'admin',product:rows})
+})
+})
 })
 
 router.get('/update_product_profile:id',function(req,res,rows){
@@ -357,6 +705,187 @@ router.post('/monthlyreport',function(req,res){
 		res.render('admin/Report/daily',{layout:'admin',recodes:rows})
 	})
 })
+
+/*router.get('/report',function(req,res){
+	connection.query('SELECT * FROM recodes ORDER BY orderd_time DESC LIMIT 1',function(err,rows){
+		const date = String(rows[0].orderd_time);
+		console.log(date);
+		var arr = date.split(" ").map(function (date) {
+  		return String(date);
+		});
+		console.log(arr);
+		console.log(arr[1])
+		switch(arr[1]){
+			case "Jan":
+			mon = 1;
+			break;
+			case "Feb":
+			mon = 2;
+			break;
+			case "Mar":
+			mon = 3;
+			break;
+			case "Apr":
+			mon = 4;
+			break;
+			case "May":
+			mon = 5;
+			break;
+			case "Jun":
+			mon = 6;
+			break;
+			case "Jul":
+			mon = 7;
+			break;
+			case "Aug":
+			mon = 8;
+			break;
+			case "Sep":
+			mon = 9;
+			break;
+			case "Oct":
+			mon = 10;
+			break;
+			case "Nov":
+			mon = 11;
+			break;
+			case "Dec":
+			mon = 12;
+			break;
+
+		}
+		premon1 = ((mon)%12);
+		console.log(premon1);
+		switch(premon1){
+			case 0:
+			se1='-12-';
+			break;
+			case 1:
+			se1='-01-';
+			break;
+			case 2:
+			se1='-02-';
+			break;
+			case 3:
+			se1='-03-';
+			break;
+			case 4:
+			se1='-04-';
+			break;
+			case 5:
+			se1='-05-';
+			break;
+			case 6:
+			se1='-06-';
+			break;
+			case 7:
+			se1='-07-';
+			break;
+			case 8:
+			se1='-08-';
+			break;
+			case 9:
+			se1='-09-';
+			break;
+			case 10:
+			se1='-10-';
+			break;
+			case 11:
+			se1='-11-';
+			break;
+		}
+		premon2=((mon-2)%12);
+		switch(premon2){
+			case 0:
+			se='-12-';
+			break;
+			case 1:
+			se='-01-';
+			break;
+			case 2:
+			se='-02-';
+			break;
+			case 3:
+			se='-03-';
+			break;
+			case 4:
+			se='-04-';
+			break;
+			case 5:
+			se='-05-';
+			break;
+			case 6:
+			se='-06-';
+			break;
+			case 7:
+			se='-07-';
+			break;
+			case 8:
+			se='-08-';
+			break;
+			case 9:
+			se='-09-';
+			break;
+			case 10:
+			se='-10-';
+			break;
+			case 11:
+			se='-11-';
+			break;
+		}
+		premon3=((mon-3)%12);
+		switch(premon3){
+			case 0:
+			se='-12-';
+			break;
+			case 1:
+			se='-01-';
+			break;
+			case 2:
+			se='-02-';
+			break;
+			case 3:
+			se='-03-';
+			break;
+			case 4:
+			se='-04-';
+			break;
+			case 5:
+			se='-05-';
+			break;
+			case 6:
+			se='-06-';
+			break;
+			case 7:
+			se='-07-';
+			break;
+			case 8:
+			se='-08-';
+			break;
+			case 9:
+			se='-09-';
+			break;
+			case 10:
+			se='-10-';
+			break;
+			case 11:
+			se='-11-';
+			break;
+		}
+	
+	/*connection.query('SELECT * FROM recodes WHERE orderd_time LIKE ?',['%'+se+'%'],function(err,row2){
+		console.log(row2);
+	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? AND oderlist.item_id = ?',['%'+se1+'%',4],function(err,row2){
+		console.log(row2);
+	})
+	})
+
+})*/
+	
+
+
+	//connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes on oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time ')
+
 
 
 //SELECT SUM(oderlist.units),oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE  GROUP BY oderlist.oder_id,recodes.oder_id
