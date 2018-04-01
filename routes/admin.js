@@ -6,7 +6,9 @@ var connection = require('../config/connection');
 var bcrypt = require('bcrypt');
 var multer = require('multer');
 var bodyParser = require('body-parser');
-
+var qr = require('qr-image');
+var path = require('path'),
+    fs = require('fs');
 var Storage = multer.diskStorage({
      destination: function(req, file, callback) {
          callback(null, 'public/upload/');
@@ -21,6 +23,12 @@ var Storage = multer.diskStorage({
  }).any()
 
 router.get('/', function(req, res, next) {
+
+	/*var code = qr.image(new Date().toString(),{type:'png',size:20})
+	code.pipe(fs.createWriteStream('public/upload/'+'MyQRCODE.png'));
+	/*var code = qr.image(new Date().toString(), { type: 'svg' });
+  	res.type('svg');
+  	code.pipe(res);*/
 	connection.query('SELECT * FROM recodes WHERE approval = ?',[0],function(err,rows){
 		var num = rows.length;
 		connection.query('SELECT * FROM  users WHERE approval =?',[0],function(err,row1){
@@ -144,10 +152,31 @@ router.get('/view_order:id', function(req,res,next){
 		res.render('admin/Users/view_oder', {layout: 'admin', oder:rows, price:total, oder_id:oder_id})
 	})
 })
-
-router.get('/approval:id',function(req,res,next){
+router.get('/preview_order:id', function(req,res,next){
 	var total = 0;
 	var oder_id = req.params.id;
+	console.log(oder_id);
+	connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,rows){
+		for (var i = rows.length - 1; i >= 0; i--) {
+			total = total + rows[i].price;
+		}
+		console.log(total);
+		res.render('admin/Users/preview_oder', {layout: 'admin', oder:rows, price:total, oder_id:oder_id})
+	})
+})
+
+
+router.post('/approval:id',function(req,res,next){
+	var total = 0;
+	var oder_id = req.params.id;
+	var date = req.body.date1;
+
+	//const company_logo = '../upload/'+req.files[0].filename;
+	var code = qr.image(new Date().toString(),{type:'png',size:20})
+	code.pipe(fs.createWriteStream('public/upload/'+oder_id+'MyQRCODE1.png'));
+	var qrim = ('../upload/'+oder_id+'MyQRCODE1.png');
+	console.log(qrim);
+	
 	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
 		connection.query('SELECT * FROM recodes WHERE oder_id=?',[oder_id], function(err,row1){
 			user_id = row1[0].user_id;
@@ -156,7 +185,32 @@ router.get('/approval:id',function(req,res,next){
 					for (var i = row3.length - 1; i >= 0; i--) {
 							total = total + row3[i].price;
 					}
-					connection.query('INSERT INTO approval(oder_id) VALUES(?)',[oder_id], function(err,result){
+					connection.query('INSERT INTO approval(oder_id,Deliverdate,qrimage) VALUES(?,?,?)',[oder_id,date,qrim], function(err,result){
+					if(err) throw err;
+					res.render('admin/Users/invoice',{layout:'admin', oder:row1, user:row2, bill:row3, price:total, qrim:qrim});
+
+				})
+			})
+		})
+		
+
+		})
+	})
+})
+
+router.get('/approval:id',function(req,res,next){
+	var total = 0;
+	var oder_id = req.params.id;
+	var date = req.body.date1;
+	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
+		connection.query('SELECT * FROM recodes WHERE oder_id=?',[oder_id], function(err,row1){
+			user_id = row1[0].user_id;
+			connection.query('SELECT * FROM Users WHERE user_id= ?',[user_id], function(err, row2){
+				connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row3){
+					for (var i = row3.length - 1; i >= 0; i--) {
+							total = total + row3[i].price;
+					}
+					connection.query('INSERT INTO approval(oder_id,Deliverdate) VALUES(?,?)',[oder_id,date], function(err,result){
 					if(err) throw err;
 					res.render('admin/Users/invoice',{layout:'admin', oder:row1, user:row2, bill:row3, price:total});
 
@@ -168,7 +222,6 @@ router.get('/approval:id',function(req,res,next){
 		})
 	})
 })
-
 
 router.get('/add_product',function(req,res,next){
 	connection.query('SELECT * FROM company', function(err,rows){
