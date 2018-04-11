@@ -6,6 +6,12 @@ var connection = require('../config/connection');
 var bcrypt = require('bcrypt');
 var multer = require('multer');
 var bodyParser = require('body-parser');
+var cors = require('cors')
+var app = express()
+ 
+app.use(cors())
+
+
 
 //var Validators = require('express-validators');
 
@@ -72,6 +78,18 @@ router.post('/upload',upload.any(), function(req, res, next){
 
 /*router.post('/upload',multer(multerConf).single('photo'),function(req,res){
   res.send('this is post rout upload');
+})*/
+
+/*router.get('/',function(req,res,next){
+  res.json([
+  {
+    id: 1,
+    message:"Hello Ionic"
+  },
+  {
+    id: 2,
+    message:"This is another message"
+  }])
 })*/
 
 router.get('/', function(req, res, next) {
