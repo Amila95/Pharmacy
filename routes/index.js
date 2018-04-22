@@ -121,8 +121,8 @@ router.get('/login', function(req, res, next) {
 router.get('/order', function(req, res, next) {
   var total = 0;
   connection.query('SELECT * FROM company',function(err,rows){
-      connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row1){
-        const oder_id =  (row1[0].oder_id + 1);
+      connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row1){
+        const oder_id =  (row1[0].order_id + 1);
         console.log(oder_id);
         connection.query('SELECT * FROM oderlist WHERE oder_id = ? ',[oder_id],function(err,row){
           for (var i = row.length - 1; i >= 0; i--) {
@@ -141,9 +141,9 @@ router.get('/order', function(req, res, next) {
 
 router.get('/submitOrder', function(req,res,next){
   const user_id = req.user.user_id;
-  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1 ',function(err,row){
-    const oder_id = (row[0].oder_id+1);
-    connection.query('INSERT INTO recodes(oder_id,user_id,approval) VALUES(?,?,?)',[oder_id,user_id,0],function(err){
+  connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1 ',function(err,row){
+    const oder_id = (row[0].order_id+1);
+    connection.query('INSERT INTO payment(order_id,user_id,approval,order_date) VALUES(?,?,?,CURDATE())',[oder_id,user_id,0],function(err){
       connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row1){
         console.log(row1);
         for(var i = row1.length-1; i >= 0;i--){
@@ -180,8 +180,8 @@ router.get('/updateorder:id1', function(req,res,next){
   var product_id = req.params.id1;
     connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row2){
       stock = parseInt(row2[0].stock);
-        connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
-        const oder_id = (row[0].oder_id+1);
+        connection.query('SELECT * FROM payment ORDER BY oder_id DESC LIMIT 1',function(err,row){
+        const oder_id = (row[0].order_id+1);
         console.log(oder_id);
         connection.query('SELECT * FROM oderlist WHERE item_id = ? AND oder_id = ?',[product_id,oder_id], function(err,row1){
           oder =parseInt(row1[0].units);
@@ -216,8 +216,8 @@ router.get('/ordercompany:id',function(req, res ){
 
 router.get('/products:id', function(req, res){
   var product_id = req.params.id;
-  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
-    const oder_id =  (row[0].oder_id + 1);
+  connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
+    const oder_id =  (row[0].order_id + 1);
     connection.query('SELECT * FROM oderlist WHERE oder_id=? AND item_id=?',[oder_id,product_id],function(err,row1){
       if(row1.length>0){
         cur_oder=parseInt(row1[0].units);
@@ -248,8 +248,8 @@ router.get('/products:id', function(req, res){
 
 
 router.post('/oderlist:id', function(req,res){
-  connection.query('SELECT * FROM recodes ORDER BY oder_id DESC LIMIT 1',function(err,row){
-    const oder_id =  (row[0].oder_id + 1);
+  connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
+    const oder_id =  (row[0].order_id + 1);
     console.log(oder_id);
     const units = req.body.units;
     var product_id = req.params.id;

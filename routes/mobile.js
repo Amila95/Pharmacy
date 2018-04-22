@@ -27,7 +27,15 @@ router.get('/fornt',function(req,res,next) {
     })
 })
 
+router.get('/home',function (req,res,next) {
+    connection.query('SELECT payment.order_id, users.user_id, users.pharmacy_name, users.logo FROM users INNER JOIN payment ON payment.user_id= users.user_id WHERE payment.deliver_date= CURDATE()',function (err,rows)
+     {
+      res.json(rows)
+    })
 
+})
+
+//SELECT payment.order_id, users.user_id, users.pharmacy_name, users.logo FROM users INNER JOIN payment ON payment.user_id= users.user_id WHERE payment.deliver_date = 2014-04-14
 
 
 module.exports = router;

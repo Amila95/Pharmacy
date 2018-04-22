@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 	/*var code = qr.image(new Date().toString(), { type: 'svg' });
   	res.type('svg');
   	code.pipe(res);*/
-	connection.query('SELECT * FROM recodes WHERE approval = ?',[0],function(err,rows){
+	connection.query('SELECT * FROM payment WHERE approval = ?',[0],function(err,rows){
 		var num = rows.length;
 		connection.query('SELECT * FROM  users WHERE approval =?',[0],function(err,row1){
 			var num1 = row1.length;
@@ -130,8 +130,8 @@ router.get('/listuser', function(req, res, next){
 router.get('/view_user_profile:id', function(req, res,next){
 	var user_id = req.params.id;
 	connection.query('SELECT * FROM users WHERE user_id=?',[user_id], function(err, rows){
-		connection.query('SELECT * FROM recodes WHERE user_id=? AND approval=?',[user_id,0], function(err,row1){
-			connection.query('SELECT * FROM recodes WHERE user_id=? AND approval=?',[user_id,1], function(err,row2){
+		connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?',[user_id,0], function(err,row1){
+			connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?',[user_id,1], function(err,row2){
 				
 				res.render('admin/Users/user_profile', {layout: 'admin', user:rows, oders:row1, apoder:row2})
 	
@@ -177,8 +177,8 @@ router.post('/approval:id',function(req,res,next){
 	var qrim = ('../upload/'+oder_id+'MyQRCODE1.png');
 	console.log(qrim);
 	
-	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
-		connection.query('SELECT * FROM recodes WHERE oder_id=?',[oder_id], function(err,row1){
+	connection.query('UPDATE payment SET approval=?,approval_date= CURDATE(),deliver_date=?,qrimage=? WHERE order_id=? ',[ 1,date,qrim,oder_id], function(err,rows){
+		connection.query('SELECT * FROM payment WHERE order_id=?',[oder_id], function(err,row1){
 			user_id = row1[0].user_id;
 			connection.query('SELECT * FROM Users WHERE user_id= ?',[user_id], function(err, row2){
 				connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row3){
