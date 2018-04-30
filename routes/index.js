@@ -205,7 +205,7 @@ router.get('/ordercompany:id',function(req, res ){
     console.log(row1);
 
     console.log(row2);
-    res.render('prean', {products:row1 , company:row2});
+    res.render('orderproduct', {products:row1 , company:row2});
   });
 
   });
@@ -486,6 +486,26 @@ router.get('/viewcompany:id', function(req,res,next){
     })
     
   })
+})
+
+router.post('/searchcompany', function(req,res,next){
+    company_name = req.body.srch;
+    connection.query('SELECT * FROM company WHERE company_name LIKE ?',['%'+company_name+'%'],function(err,row){
+        if(row.length = 1){
+            console.log(row);
+            var company_id = row[0].company_id;
+            connection.query('SELECT * FROM company WHERE company_id=?',[company_id], function(err,rows){
+                connection.query('SELECT * FROM products WHERE company_id = ?',[company_id], function(err,row1){
+                    res.render('orderproduct',{company:rows,products:row1})
+                })
+
+            })
+
+        }
+        else{
+            res.redirect('/');
+        }
+    })
 })
 
 

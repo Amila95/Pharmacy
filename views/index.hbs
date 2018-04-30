@@ -5,6 +5,18 @@
 						
 						   <ul>
 						  	   <h3>Companies</h3>
+                               <li class="search_box" >
+                                   <form method="post" action="/searchcompany">
+                                       <input type="text" name="srch" id="srch" list="datalist1" />
+                                       <datalist id="datalist1">
+                                    {{#each companies}}
+                                           <option value = {{this.company_name}}/>
+
+                                        {{/each}}
+                                       </datalist>
+                                       <input type="submit" value="">
+                                   </form>
+                               </li>
 						  	   {{#each companies}}
 							      <li><a href="/viewcompany{{this.company_id}}">{{this.company_name}}</a></li>
 							     {{/each}} 

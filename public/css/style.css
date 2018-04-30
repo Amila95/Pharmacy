@@ -113,10 +113,10 @@ body {
 }
 .search_box {
 	 background: url(../images/strip-bg.gif) repeat-x #F6F6F6;
-	 border: 1px solid #D2D2D2;
+	border:1px solid #EEE;
 	position: relative;
-	float: left;
-	margin-right: 15px;
+
+
 }
 .search_box form input[type="text"] {
 	border: none;

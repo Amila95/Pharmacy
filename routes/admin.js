@@ -693,12 +693,35 @@ router.get('/stock', function(req,res,rows){
 router.post('/addstock:id',function(req,res,rows){
 	var product_id = req.params.id;
 	var add_stock = parseInt(req.body.stock);
+	var ex_date = req.body.date;
+	console.log(ex_date);
 	var stock;
 	connection.query('SELECT * FROM products WHERE product_id=?',[product_id],function(err,row2){
 		var cur_stock = parseInt(row2[0].stock);
 		stock = add_stock + cur_stock;
 		connection.query('UPDATE products SET stock=? WHERE product_id=?',[stock,product_id],function(err,row2){
-			res.redirect('/admin/stock');
+			connection.query('SELECT * FROM stock WHERE product_id=? AND ex_date',[product_id,ex_date],function (err,row3) {
+				if(row3.length > 0){
+					var cur = row3[0].qty;
+					var new_stock = cur+add_stock;
+					connection.query('UPDATE stock SET qty=? WHERE product_id=? AND ex_date=?',[new_stock,product_id,ex_date],function (err,row4){
+                            if(err) throw err;
+                            res.redirect('/admin/stock');
+					}
+
+                    )
+				}
+				else{
+                    connection.query('INSERT INTO stock(product_id,ex_date,qty) VALUES(?,?,?)',[product_id,ex_date,add_stock],function (err,row) {
+                        if(err) throw err;
+                        res.redirect('/admin/stock');
+                    })
+				}
+
+                }
+
+			)
+
 		})
 	})
 	

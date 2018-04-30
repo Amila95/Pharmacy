@@ -3,7 +3,21 @@
 					<div class="header_bottom_left">				
 						<div class="categories">
 						   <ul>
+
 						  	   <h3>Our Companys</h3>
+
+                               <li class="search_box" >
+                                   <form method="post" action="/searchcompany">
+                                       <input type="text" name="srch" id="srch" list="datalist1" />
+                                       <datalist id="datalist1">
+                                           {{#each companies}}
+                                               <option value = {{this.company_name}}/>
+
+                                           {{/each}}
+                                       </datalist>
+                                       <input type="submit" value="">
+                                   </form>
+                               </li>
 						  	   {{#each companys}}
 							      <li><a href="/ordercompany{{ this.company_id }}">{{this.company_name}}</a></li>
 							      {{/each}}

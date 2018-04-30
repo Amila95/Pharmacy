@@ -32,26 +32,30 @@
                   <td><img src={{this.Image}} class="img-circle"  width="50" height="50"></td>
                   <td>{{this.product_name}}</td>
                   <td>{{this.stock}}</td>
-                  <td>
-            
+
+
             
               <form   method="post" action="/admin/addstock{{this.product_id}}" >
-              <input type="text" class="col-md-3" id="name" placeholder="Add To " name="stock">
-            
-              <button type="submit" class="label label-primary" >Add To</button>
-              </form>
-            
-            
-            </td>
-                  
                   <td>
-           
-              <form   method="post" action="/admin/changestock{{this.product_id}}" >
-              <input type="text" class="col-md-3" id="name" placeholder="Change To " name="stock">
-            
-              <button type="submit" class="label label-primary" >Change To</button>
+                  <div>
+                      <input type="text" class="col-md-3" id="name" placeholder="Qty " name="stock">
+                  </div>
+                  </td>
+                  <td>
+                      <div>
+                          <input id="date" type="date" name="date">
+
+
+                      </div>
+                      <div>
+                          <button type="submit" class="label label-primary" >Add To</button>
+
+                      </div>
+
+                  </td>
+
+
               </form>
-            </td>
 
                   
                 </tr>
