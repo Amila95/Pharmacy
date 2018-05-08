@@ -266,7 +266,7 @@ body {
 }
 /***** Content *****/
 .content {
-	padding: 20px 0;
+	padding: 20px;
 	background: #FFF;
 }
 .content_top{
@@ -545,7 +545,7 @@ body {
 .desc {
 	display: block;
 	float: left;
-	margin: 0% 0 0% 2.6%;
+	margin: 0% 0 0% 2%;
 }
 .product-details{
 	margin:30px 0;
@@ -555,12 +555,12 @@ body {
 	padding: 1.5%;
 }
 .images_3_of_2 {
-	width: 44.2%;
+	width: 40.2%;
 	float: left;
 	text-align: center;
 }
 .span_3_of_2 {
-	width: 53.2%;
+	width: 55.5%;
 }
 .span_3_of_1 {
 	width: 25.2%;
@@ -807,9 +807,9 @@ body {
 	font-family: verdana, arial, helvetica, helve, sans-serif;
 }
 .contact-form input[type="text"], .contact-form textarea {
-	padding: 8px;
+	padding: 6px;
 	display: block;
-	width:98%;
+	width:60%;
 	background:none;
 	border:1px solid #CACACA;
 	outline: none;
@@ -819,9 +819,24 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	-webkit-appearance: none;
 }
+
+.contact-form input[type="password"], .contact-form textarea {
+	padding: 6px;
+	display: block;
+	width:60%;
+	background:none;
+	border:1px solid #CACACA;
+	outline: none;
+	color: #464646;
+	font-size:1em;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+	-webkit-appearance: none;
+}
+
 .contact-form textarea {
 	resize: none;
-	height:120px;
+	height:100px;
 }
 .mybutton {
 	font-size:1em;

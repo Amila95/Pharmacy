@@ -1,0 +1,82 @@
+<div class="main">
+    <div class="wrap">
+
+
+        <div class="section group">
+            {{#each company}}
+
+            <div class="product-details">
+
+
+
+                <h2>{{this.company_name}} </h2>
+            {{/each}}
+            <!--Table-->
+
+
+            <table class="table">
+
+                <!--Table head-->
+                <thead>
+                <tr>
+                    <th>Product </th>
+                    <th>Brand</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <!--Table head-->
+
+                <!--Table body-->
+                <tbody>
+                {{#each list}}
+                    <tr>
+                        <th class="table-primary" scope="row">{{this.product_name}}</th>
+                        <td class="table-primary">Mark</td>
+                        <td class="table-primary"></td>
+                        <td class="table-primary"><input class="col-md-3" type="text" placeholder="{{this.units}}" Name="units"></td>
+                    </tr>
+
+                    {{/each}}
+{{#each products}}
+                <tr>
+                    <th scope="row">{{this.product_name}}</th>
+                    <td>Mark</td>
+                    <td><a href= "/products{{this.product_id}}"><button type="button" class="btn btn-primary btn-rounded">View</button></a></td>
+                    <form   method="post" action="/abcdef{{product_id}}" >
+                    <td><input class="col-md-3" type="text" placeholder="Order Qty" Name="units">
+                        <button type="submit" class="label label-primary" >Add To</button>
+                    </td>
+
+                    </form>
+                </tr>
+
+{{/each}}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href='/order'><button type="button" class="btn btn-info">Back To List</button></a></td>
+                </tr>
+                </tbody>
+                <!--Table body-->
+
+            </table>
+            <!--Table-->
+
+
+        </div>
+
+
+
+
+            <div class="clear"></div>
+        </div>
+
+        </div>
+
+        </div>
+    </div>
+
+</div>
+

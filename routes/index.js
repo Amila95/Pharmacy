@@ -195,9 +195,36 @@ router.get('/updateorder:id1', function(req,res,next){
 })
 })
 
-
-
 router.get('/ordercompany:id',function(req, res ){
+    var company_id = req.params.id;
+    console.log(company_id);
+    connection.query('SELECT * FROM products WHERE company_id = ? AND stock> 0',[company_id],function(err,row1){
+        connection.query('SELECT * FROM company WHERE company_id = ?',[company_id],function(err,row2){
+            connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row4){
+                if(row4.length>0){
+                    const oder_id = (row4[0].order_id+1);
+                    connection.query('SELECT products.product_id,products.product_name,oderlist.units FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?',[company_id,oder_id],function (err,row3) {
+                        res.render('orderitemscompanies', {products:row1 , company:row2, list:row3});
+                    })
+                }else{
+                    res.render('orderitemscompanies', {products:row1 , company:row2});
+                }
+
+
+            });
+            /*console.log(row1);
+
+            console.log(row2);
+            res.render('orderitemscompanies', {products:row1 , company:row2});*/
+        });
+
+    });
+
+
+
+});
+
+/*router.get('/ordercompany:id',function(req, res ){
   var company_id = req.params.id;
   console.log(company_id);
   connection.query('SELECT * FROM products WHERE company_id = ? AND stock> 0',[company_id],function(err,row1){
@@ -205,7 +232,7 @@ router.get('/ordercompany:id',function(req, res ){
     console.log(row1);
 
     console.log(row2);
-    res.render('orderproduct', {products:row1 , company:row2});
+    res.render('orderitemscompanies', {products:row1 , company:row2});
   });
 
   });
@@ -213,6 +240,7 @@ router.get('/ordercompany:id',function(req, res ){
   
 
 });
+*/
 
 router.get('/products:id', function(req, res){
   var product_id = req.params.id;
@@ -244,9 +272,261 @@ router.get('/products:id', function(req, res){
 
 
   });
-//res.send("bdud");
+
+router.get('/abc:id',function (req,res) {
+    var product_id = req.params.id;
+    connection.query('SELECT * FROM stock WHERE product_id = ?',[product_id],function (err,row1) {
+        var low_date = row1[0].ex_date;
+        for(var i=1;i<row1.length;i++){
+            if(row1[i].ex_date<low_date){
+                low_date = row1[i].ex_date;
+            }
+        }
+        connection.query('SELECT * FROM stock WHERE ex_date = ? AND product_id = ?',[low_date,product_id],function (err,row6){
+            console.log(row6);
+        })
+    })
+})
+
+/*router.post('/oderlist:id', function(req,res){
+    connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
+        const oder_id =  (row[0].order_id + 1);
+        console.log(oder_id);
+        const units = req.body.units;
+        var product_id = req.params.id;
+        connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
+            var stock = parseInt(row2[0].stock);
+            connection.query('SELECT * FROM oderlist WHERE oder_id = ? AND item_id=?',[oder_id,product_id],function(err,row3){
+                if(row3.length>0){
+                    var pre_stock = parseInt(row3[0].units);
+                    var bill_stock = parseInt(units)+parseInt(pre_stock)
+                    var new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
+                    console.log(new_stock);
+                    if(new_stock >= 0){
+                        connection.query('SELECT * FROM stock WHERE product_id = ?',[product_id], function (err,row5) {
+                            if(row5.length===1){
+                                console.log('NUND');
+                                var st = (parseInt(row5[0].qty)-parseInt(units))
+                                console.log(st);
+
+                                var exdate = row5[0].ex_date;
+                                connection.query('UPDATE stock SET qty = ? WHERE product_id = ? AND ex_date = ?',[st,product_id,exdate],function(err,row6)
+                                {
+                                    connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                        const pre_price = row3[0].price;
+                                        const item_name = row1[0].product_name;
+                                        const price = row1[0].price * bill_stock;
+                                        connection.query('UPDATE oderlist SET price = ? ,units = ? WHERE oder_id=? AND item_id=?',[price,bill_stock,oder_id,product_id],function(err,result){
+                                            if(err) throw err;
+                                            res.redirect('/order');
+                                        })
+                                    })
+                                })
+                            }
+                            else if(row5.length>0){
+                                var low_date = row5[0].ex_date;
+                                for(var i=1;i<row5.length;i++){
+                                    if(row5[i].ex_date<low_date){
+                                        low_date = row5[i].ex_date;
+                                    }
+                                }
+                                connection.query('SELECT * FROM stock WHERE ex_date = ? AND product_id = ?',[low_date,product_id],function (err,row6){
+                                    var ex_qty=row6[0].qty;
+                                    if(units===ex_qty){
+                                        connection.query('DELETE FROM stock WHERE ex_date = ? AND product_id = ?',[low_date,product_id],function(err){
+                                            if(err) throw err;
+                                            res.redirect('/order');
+                                        })
+                                    }
+                                    else if(units>ex_qty){
+                                        var fu_qty = units-ex_qty;
+                                        connection.query('DELETE FROM stock WHERE ex_date = ? AND product_id = ?',[low_date,product_id],function(err,row7){
+                                            connection.query('SELECT * FROM stock WHERE product_id=?',[product_id],function(err,row8){
+                                                var low_date2 = row8[0].ex_date;
+                                                for(var i=1;i<row8.length;i++){
+                                                    if(row8[i].ex_date<low_date2){
+                                                        low_date2 = row8[i].ex_date;
+                                                    }
+                                                }
+                                                connection.query('SELECT * FROM stock WHERE product_id=? AND ex_date=?',[product_id,low_date2],function (err,row9) {
+                                                    var nqty=row9[0].qty;
+                                                    var now_stock = nqty-fu_qty;
+                                                    connection.query('Update stock set qty = ? WHERE product_id = ? AND ex_date = ?',[now_stock,product_id,low_date2],function (err,row) {
+                                                        res.redirect('/order');
+                                                    })
+
+                                                })
+                                            })
+                                        })
+                                    }
+                                    else{
+                                        var ext_qty=ex_qty-units;
+                                        connection.query('UPDATE stock SET qty = ? WHERE product_id = ? AND ex_date = ?',[ext_qty,product_id,low_date],function(err,row){
+                                            res.redirect('/order');
+                                        })
+                                    }
+                                })
+                                console.log(low_date);
+                                //connection.query('SELECT * FROM stock WHERE product_id=? AND ex_date IN (SELECT max(ex_date) FROM stock)',[product_id])
+                            }else{
+                                res.redirect('/order');
+                            }
+
+                        })
+                    }
+                    else{
+                        res.redirect('back');
+                    }
+                }else{
 
 
+                    new_stock = stock - units;
+                    if(new_stock >=0) {
+                        connection.query('SELECT * FROM stock WHERE product_id = ?', [product_id], function (err, row15) {
+                            if (row15.length === 0) {
+                                connection.query('SELECT * FROM products WHERE product_id = ?', [product_id], function (err, row1) {
+                                    const item_name = row1[0].product_name;
+                                    const price = row1[0].price * units;
+
+                                    connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)', [oder_id, product_id, units, item_name, price], function (err) {
+                                        if (err) throw err;
+                                        res.redirect('/order');
+                                    })
+                                });
+                            } else if(row15.length===1){
+                                var qty1 = row15[0].qty;
+                                var extra_qty = qty1-units;
+                                if(extra_qty>0){
+                                    connection.query('UPDATE stock SET qty = ? WHERE product_id = ? ',[extra_qty,product_id],function (err,row16) {
+                                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                            const item_name = row1[0].product_name;
+                                            const price = row1[0].price * units;
+
+                                            connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                                if(err) throw err;
+                                                res.redirect('/order');
+                                            })
+                                        });
+                                    })
+
+                                }
+                                else if(extra_qty ===0){
+                                    connection.query('DELETE stock WHERE product_id = ?',[product_id],function (err) {
+                                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                            const item_name = row1[0].product_name;
+                                            const price = row1[0].price * units;
+
+                                            connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                                if(err) throw err;
+                                                res.redirect('/order');
+                                            })
+                                        });
+
+                                    })
+                                }
+                                else{
+                                    connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                        const item_name = row1[0].product_name;
+                                        const price = row1[0].price * units;
+
+                                        connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                            if(err) throw err;
+                                            res.redirect('/order');
+                                        })
+                                    });
+                                }
+                            }
+                            else{
+                                var low_date5 = row15[0].ex_date;
+                                for(var i=1;i<row15.length;i++){
+                                    if(row15[i].ex_date<low_date){
+                                        low_date5 = row15[i].ex_date;
+                                    }
+                                }
+                                connection.query('SELECT * FROM stock WHERE project_id = ?, ex_date = ?',[product_id,low_date5],function(err,row15){
+                                    var th_stock=row15[0].qty;
+                                    var no_stock= units-th_stock;
+                                    if(no_stock===0){
+                                        connection.query('DELETE FROM stock WHERE product_id = ? AND ex_date = ?',[product_id,low_date5],function (err) {
+                                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                            const item_name = row1[0].product_name;
+                                            const price = row1[0].price * units;
+
+                                            connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                                if(err) throw err;
+                                                res.redirect('/order');
+                                            })
+                                        });
+
+                                    })
+                                    }
+                                    else if(no_stock>0){
+                                        connection.query('UPDATE stock set qty = ? WHERE product_id = ? AND ex_date = ?',[no_stock,product_id,low_date5],function (err) {
+
+                                                connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                                                    const item_name = row1[0].product_name;
+                                                    const price = row1[0].price * units;
+
+                                                    connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                                        if(err) throw err;
+                                                        res.redirect('/order');
+                                                    })
+                                                });
+
+                                            })
+
+
+                                    }
+                                    else{
+                                        connection.query('Delete stock WHERE product_id = ? AND ex_date = ?',[product_id,low_date5],function (err) {
+                                            var pres_stock = th_stock-units;
+                                            connection.query('SELECT * FROM stock WHERE product_id = ?',[product_id],function(err,row16){
+
+                                                if(row16.length===0){
+                                                    if(row16[0].qty>pres_stock){
+
+                                                    }
+                                                }
+                                            })
+
+                                        })
+
+                                    }
+
+                                })
+                            }
+
+                        })
+                    }
+
+
+
+                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                            const item_name = row1[0].product_name;
+                            const price = row1[0].price * units;
+
+                            connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                if(err) throw err;
+                                res.redirect('/order');
+                            })
+                        });
+                    }
+                    else{
+                        res.redirect('back');
+                    }
+                }
+            })
+        })
+
+
+
+
+
+    })
+
+});
+
+*/
 router.post('/oderlist:id', function(req,res){
   connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
     const oder_id =  (row[0].order_id + 1);
@@ -254,12 +534,12 @@ router.post('/oderlist:id', function(req,res){
     const units = req.body.units;
     var product_id = req.params.id;
     connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
-       stock = parseInt(row2[0].stock);
+       var stock = parseInt(row2[0].stock);
       connection.query('SELECT * FROM oderlist WHERE oder_id = ? AND item_id=?',[oder_id,product_id],function(err,row3){
         if(row3.length>0){
-          pre_stock = parseInt(row3[0].units);
-          bill_stock = parseInt(units)+parseInt(pre_stock)
-          new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
+          var pre_stock = parseInt(row3[0].units);
+          var bill_stock = parseInt(units)+parseInt(pre_stock)
+          var new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
           console.log(new_stock);
           if(new_stock >= 0){
             connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
@@ -303,6 +583,66 @@ router.post('/oderlist:id', function(req,res){
   })
   
 });
+
+router.post('/abcdef:id', function(req,res){
+    connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
+        const oder_id =  (row[0].order_id + 1);
+        console.log(oder_id);
+        const units = req.body.units;
+        var product_id = req.params.id;
+        connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
+
+            var stock = parseInt(row2[0].stock);
+
+            connection.query('SELECT * FROM oderlist WHERE oder_id = ? AND item_id=?',[oder_id,product_id],function(err,row3){
+                if(row3.length>0){
+                    var pre_stock = parseInt(row3[0].units);
+                    var bill_stock = parseInt(units)+parseInt(pre_stock)
+                    var new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
+                    console.log(new_stock);
+                    if(new_stock >= 0){
+                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                            const pre_price = row3[0].price;
+                            const item_name = row1[0].product_name;
+                            const price = row1[0].price * bill_stock;
+                            connection.query('UPDATE oderlist SET price = ? ,units = ? WHERE oder_id=? AND item_id=?',[price,bill_stock,oder_id,product_id],function(err,result){
+                                if(err) throw err;
+                                res.redirect('back');
+                            })
+                        })}
+                    else{
+                        res.redirect('back');
+                    }
+                }else{
+
+
+                    new_stock = stock - units;
+                    if(new_stock >=0){
+                        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
+                            const item_name = row1[0].product_name;
+                            const price = row1[0].price * units;
+
+                            connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
+                                if(err) throw err;
+                                res.redirect('/order');
+                            })
+                        });
+                    }
+                    else{
+                        res.redirect('back');
+                    }
+                }
+            })
+        })
+
+
+
+
+
+    })
+
+});
+
 
 router.get('/deleteorder:id', function(req,res){
   const item_id = req.params.id;
@@ -390,36 +730,38 @@ const tel_number = req.body.tel_number;
 const register_no= req.body.register_no;
 const register = req.body.register;
 const password = req.body.password;
+const repassword = req.body.repassword;
 const Lat = req.body.Lat;
 const Lon = req.body.Lon;
 const logo = '../upload/'+req.files[0].filename;
 
 
+if(password == repassword) {
+    con.connect(function (err) {
+        if (err) throw err;
+        bcrypt.hash(password, saltRounds, function (err, hash) {
+            //console.log("Connected!");
+            //var sql = "INSERT INTO user SET ?";
+            con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,register,password,Lat,Lon,logo) VALUES (?,?,?,?,?,?,?,?,?,?)', [pharmacy_name, address, email, tel_number, register_no, register, hash, Lat, Lon, logo], function (err, result) {
+                if (err) throw err;
+                //console.log("1 record inserted");
+                con.query('SELECT LAST_INSERT_ID() as user_id', function (err, results, fields) {
+                    if (err) throw err;
+                    const user_id = results[0];
+                    //console.log(results[0]);
+                    req.login(user_id, function (err) {
+                            res.redirect('/');
+                        }
+                    )
 
-con.connect(function(err) {
-  if (err) throw err;
- bcrypt.hash(password, saltRounds, function(err, hash){
-    //console.log("Connected!");
-    //var sql = "INSERT INTO user SET ?";
-    con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,register,password,Lat,Lon,logo) VALUES (?,?,?,?,?,?,?,?,?,?)',[pharmacy_name,address,email,tel_number,register_no,register,hash,Lat,Lon,logo], function (err, result) {
-    if (err) throw err;
-    //console.log("1 record inserted");
-    con.query('SELECT LAST_INSERT_ID() as user_id',function(err,results,fields){
-    if(err) throw err;
-    const user_id = results[0];
-    //console.log(results[0]);
-    req.login(user_id,function(err){
-    res.redirect('/');
-  }
-  )
-  
+                });
+                //res.redirect('/');
+
+            });
+            // res.render('contact', {title1:'Registration Complete'});
+        });
     });
-       //res.redirect('/');
-
-   });
-   // res.render('contact', {title1:'Registration Complete'});
-  });
-});
+}
 });
 
 })
@@ -508,6 +850,25 @@ router.post('/searchcompany', function(req,res,next){
     })
 })
 
+router.get('/search',function (req,res) {
+    connection.query('SELECT * FROM product WHERE product_name LIKE = ? ',["%"+req.query.key+"%"],function (err,rows) {
+        if (err) throw err;
+        var data=[];
+        for(i=0;i<rows.length;i++)
+        {
+            data.push(rows[i].product_name);
+        }
+        res.end(JSON.stringify(data));
+    })
+})
+router.get('/myaccount',function (req,res) {
+    const user_id = req.user.user_id;
+    console.log(user_id);
+    connection.query('SELECT * FROM users WHERE user_id = ?',[user_id],function (err,rows) {
+        res.render('account',{layout:'profile',user:rows});
+    })
+
+})
 
 
 

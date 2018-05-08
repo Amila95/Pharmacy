@@ -59,11 +59,11 @@
 	      <div class="section group">
 	      {{#each special}}
 				<div class="grid_1_of_5 images_1_of_5">
-					 <a href="preview.html"><img  src="{{this.Image}}" width="150" height="150"  ></a>
-					 
-					
+					 <img  src="{{this.Image}}" width="150" height="150"  >
 
-					 <h2><a href="preview.html">{{this.product_name}}</a></h2>
+
+
+                    <p><a href="/viewspecial{{this.product_id}}">{{this.product_name}}</a></p>
 					<div class="price-details">
 				       <div class="price-number">
 							<p><span class="rupees">Rs {{this.price}}</span></p>
@@ -92,7 +92,7 @@
 					 
 					
 
-					 <h2><a href="preview.html">{{this.product_name}}</a></h2>
+					<p><a href="/viewspecial{{this.product_id}}">{{this.product_name}}</a></p>
 					<div class="price-details">
 				       <div class="price-number">
 							<p><span class="rupees">Rs {{this.price}}</span></p>

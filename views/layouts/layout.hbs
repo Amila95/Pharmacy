@@ -16,6 +16,8 @@
  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <!-- -->
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src = "http://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typehead/4.0.2/bootstrap3-typeahead.min.js"/>
 
     <!-- Location picker -->
     <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
@@ -37,7 +39,7 @@
 							{{#if isAuthenticated}}
 							<li><a href="/order">Order</a></li>
 							<li><a href="/uploadimage">Checkout</a></li>
-							<li><a href="#">My Account</a></li>
+							<li><a href="/myaccount">My Account</a></li>
 							<li><a href="/logout">Log Out</a></li>
 							{{else}}
 							<li><a href="/register">Register</a></li>
