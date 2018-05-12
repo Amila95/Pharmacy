@@ -111,12 +111,28 @@
       </div>
       <div class="row no-print">
         <div class="col-xs-12">
-          <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-          <button onclick="window.open()" type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-          </button>
+            {{#each oder}}
+            <form   method="post" action="/upload_invoice{{this.order_id}}" enctype="multipart/form-data" >
+                <div class="form-group">
+                    <div class="btn btn-success pull-right">
+
+
+                        <div class="file-field">
+                            <input name="myImage" type="file">
+
+
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px">Submit</button>
+                    </div>
+            </form>
+                {{/each}}
           <button onclick="window.print()" type="button" class="btn btn-primary pull-right" style="margin-right: 5px" >
             <i class="fa fa-download" ></i> Generate PDF
           </button>
+
         </div>
       </div>
       <!-- /.col -->

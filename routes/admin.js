@@ -782,7 +782,12 @@ router.post('/monthlyreport',function(req,res){
 	})
 })
 
-
+router.get('/show_invoice:id',function (req,res) {
+	const order_id = req.params.id;
+	connection.query('SELECT * FROM payment WHERE order_id = ?',[order_id], function (err,row) {
+		res.render('admin/Users/view_invoice',{layout:'admin',invoice:row})
+    })
+})
 
 module.exports = router; 
  

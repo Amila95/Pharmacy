@@ -863,12 +863,63 @@ router.get('/search',function (req,res) {
 })
 router.get('/myaccount',function (req,res) {
     const user_id = req.user.user_id;
-    console.log(user_id);
-    connection.query('SELECT * FROM users WHERE user_id = ?',[user_id],function (err,rows) {
-        res.render('account',{layout:'profile',user:rows});
+    connection.query('SELECT * FROM users WHERE user_id=?',[user_id], function(err, rows){
+        connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?',[user_id,0], function(err,row1){
+            connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?',[user_id,1], function(err,row2){
+
+                res.render('account', {layout:'profile', user:rows, oders:row1, apoder:row2})
+
+            })
+        })
     })
 
+
+
 })
+
+router.get('/view_order:id', function(req,res,next){
+    var total = 0;
+    var oder_id = req.params.id;
+    console.log(oder_id);
+    connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,rows){
+        for (var i = rows.length - 1; i >= 0; i--) {
+            total = total + rows[i].price;
+        }
+        console.log(total);
+        res.render('admin/Users/preview_oder', {layout: 'profile', oder:rows, price:total, oder_id:oder_id})
+    })
+})
+router.post('/upload_invoice:id',function (req,res,next) {
+    const order_id = req.params.id;
+    upload(req, res, function(err) {
+        if (err) {
+            consol.log('erro');
+
+        }
+        const invoice = '../upload/'+req.files[0].filename;
+
+        connection.query('UPDATE payment SET invoice = ? WHERE order_id = ?',[invoice,order_id],function(err,row) {
+            connection.query('SELECT * FROM payment WHERE order_id = ?', [order_id], function (err, row3) {
+                var user_id = row3[0].user_id;
+
+                connection.query('SELECT * FROM users WHERE user_id=?', [user_id], function (err, rows) {
+                    connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?', [user_id, 0], function (err, row1) {
+                        connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?', [user_id, 1], function (err, row2) {
+
+                            res.render('admin/Users/user_profile', {
+                                layout: 'admin',
+                                user: rows,
+                                oders: row1,
+                                apoder: row2
+                            })
+
+                        })
+                    })
+                })
+            })
+        })
+})
+    })
 
 
 
