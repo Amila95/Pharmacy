@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var cors = require('cors')
+var expressValidator = require('express-validator');
+var expressSession = require('express-session');
 
 
 var index = require('./routes/index');
@@ -41,8 +43,10 @@ const saltRounds = 10;
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(cors());
+app.use(expressSession({ secret: "max", saveUninitialized: false, resave: false }));
 
 //app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));

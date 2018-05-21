@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="90fe6936-de2f-418d-bcbe-7a59c1c4b6c6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orderitem.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/orderitem.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/admin.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/admin.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/order.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/order.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/orderitemscompanies.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/orderitemscompanies.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/updateorder.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/updateorder.hbs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-141">
-              <caret line="1468" selection-start-line="1468" selection-end-line="1468" />
+            <state relative-caret-position="23868">
+              <caret line="1533" selection-start-line="1533" selection-end-line="1533" />
               <folding>
                 <element signature="e#530#775#0" />
                 <element signature="e#800#826#0" />
@@ -37,35 +39,53 @@
                 <element signature="e#2661#3118#0" />
                 <element signature="e#2811#3114#0" />
                 <element signature="e#3170#3283#0" />
-                <element signature="e#3452#4119#0" />
                 <element signature="e#4172#5476#0" />
-                <element signature="e#5532#6276#0" />
-                <element signature="e#6328#7525#0" />
-                <element signature="e#7529#7995#0" />
-                <element signature="e#8042#8959#0" />
-                <element signature="e#9011#30928#0" />
-                <element signature="e#30978#87297#0" />
-                <element signature="e#88865#90886#0" />
-                <element signature="e#90931#93456#0" />
-                <element signature="e#93508#93843#0" />
-                <element signature="e#94043#94323#0" />
-                <element signature="e#94373#95194#0" />
-                <element signature="e#95245#95277#0" />
-                <element signature="e#95322#97139#0" />
-                <element signature="e#97193#97272#0" />
-                <element signature="e#97361#97426#0" />
-                <element signature="e#97467#97696#0" />
-                <element signature="e#97745#97771#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderitem.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/orderitem.hbs">
+      <file leaf-file-name="admin.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/layouts/admin.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="49" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="54" />
+            <state relative-caret-position="2091">
+              <caret line="123" column="63" selection-start-line="123" selection-start-column="63" selection-end-line="123" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routes/admin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="434">
+              <caret line="793" column="26" selection-start-line="793" selection-start-column="26" selection-end-line="793" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="updateorder.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/updateorder.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="867">
+              <caret line="51" column="91" selection-start-line="51" selection-start-column="91" selection-end-line="51" selection-end-column="91" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="orderitemscompanies.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/orderitemscompanies.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/order.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -91,12 +111,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/views/layouts/admin.hbs" />
         <option value="$PROJECT_DIR$/routes/mobile.js" />
         <option value="$PROJECT_DIR$/views/admin/Products/stock.hbs" />
         <option value="$PROJECT_DIR$/views/orderproduct.hbs" />
         <option value="$PROJECT_DIR$/views/special.hbs" />
-        <option value="$PROJECT_DIR$/views/order.hbs" />
         <option value="$PROJECT_DIR$/views/contact.hbs" />
         <option value="$PROJECT_DIR$/views/index.hbs" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
@@ -105,11 +123,14 @@
         <option value="$PROJECT_DIR$/views/account.hbs" />
         <option value="$PROJECT_DIR$/views/admin/Users/invoice.hbs" />
         <option value="$PROJECT_DIR$/views/admin/Users/user_profile.hbs" />
-        <option value="$PROJECT_DIR$/routes/admin.js" />
         <option value="$PROJECT_DIR$/views/admin/Users/view_invoice.hbs" />
-        <option value="$PROJECT_DIR$/views/orderitemscompanies.hbs" />
         <option value="$PROJECT_DIR$/views/orderitem.hbs" />
+        <option value="$PROJECT_DIR$/views/order.hbs" />
+        <option value="$PROJECT_DIR$/views/updateorder.hbs" />
+        <option value="$PROJECT_DIR$/views/orderitemscompanies.hbs" />
         <option value="$PROJECT_DIR$/routes/index.js" />
+        <option value="$PROJECT_DIR$/views/layouts/admin.hbs" />
+        <option value="$PROJECT_DIR$/routes/admin.js" />
       </list>
     </option>
   </component>
@@ -135,6 +156,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -147,16 +169,10 @@
               <item name="Pharmacy" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="routes" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="Pharmacy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Pharmacy" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -250,15 +266,19 @@
       <workItem from="1526263937214" duration="22000" />
       <workItem from="1526265011389" duration="1562000" />
       <workItem from="1526266818746" duration="1777000" />
+      <workItem from="1526335376410" duration="1707000" />
+      <workItem from="1526352825610" duration="1706000" />
+      <workItem from="1526354607558" duration="1848000" />
+      <workItem from="1526377136974" duration="1660000" />
+      <workItem from="1526378894194" duration="1507000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134647000" />
+    <option name="totallyTimeSpent" value="143075000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
@@ -267,7 +287,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32817337" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10892587" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11649016" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -286,19 +306,19 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21354167" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32817337" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32972136" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32972136" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="3" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -310,7 +330,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -502,13 +522,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/layouts/admin.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="716" column="6" lean-forward="true" selection-start-line="635" selection-end-line="733" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/layouts/profile.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3063">
@@ -520,13 +533,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="774" selection-start-line="774" selection-end-line="776" />
         </state>
       </provider>
     </entry>
@@ -598,13 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/order.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-855">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/prean.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -626,11 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/updateorder.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/orderproduct.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -638,24 +632,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/orderitemscompanies.hbs">
+    <entry file="file://$PROJECT_DIR$/views/orderitem.hbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="81" selection-start-line="46" selection-start-column="81" selection-end-line="46" selection-end-column="81" />
+        <state relative-caret-position="386">
+          <caret line="36" column="49" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/orderitem.hbs">
+    <entry file="file://$PROJECT_DIR$/views/order.hbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="49" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="54" />
+        <state relative-caret-position="663">
+          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/orderitemscompanies.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/updateorder.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="51" column="91" selection-start-line="51" selection-start-column="91" selection-end-line="51" selection-end-column="91" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-141">
-          <caret line="1468" selection-start-line="1468" selection-end-line="1468" />
+        <state relative-caret-position="23868">
+          <caret line="1533" selection-start-line="1533" selection-end-line="1533" />
           <folding>
             <element signature="e#530#775#0" />
             <element signature="e#800#826#0" />
@@ -668,26 +676,22 @@
             <element signature="e#2661#3118#0" />
             <element signature="e#2811#3114#0" />
             <element signature="e#3170#3283#0" />
-            <element signature="e#3452#4119#0" />
             <element signature="e#4172#5476#0" />
-            <element signature="e#5532#6276#0" />
-            <element signature="e#6328#7525#0" />
-            <element signature="e#7529#7995#0" />
-            <element signature="e#8042#8959#0" />
-            <element signature="e#9011#30928#0" />
-            <element signature="e#30978#87297#0" />
-            <element signature="e#88865#90886#0" />
-            <element signature="e#90931#93456#0" />
-            <element signature="e#93508#93843#0" />
-            <element signature="e#94043#94323#0" />
-            <element signature="e#94373#95194#0" />
-            <element signature="e#95245#95277#0" />
-            <element signature="e#95322#97139#0" />
-            <element signature="e#97193#97272#0" />
-            <element signature="e#97361#97426#0" />
-            <element signature="e#97467#97696#0" />
-            <element signature="e#97745#97771#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/admin.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2091">
+          <caret line="123" column="63" selection-start-line="123" selection-start-column="63" selection-end-line="123" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="793" column="26" selection-start-line="793" selection-start-column="26" selection-end-line="793" selection-end-column="26" />
         </state>
       </provider>
     </entry>

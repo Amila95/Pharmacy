@@ -789,5 +789,23 @@ router.get('/show_invoice:id',function (req,res) {
     })
 })
 
+router.get('/viewallorder',function (req,res) {
+    connection.query("SELECT payment.order_id,users.pharmacy_name,users.address,users.logo FROM payment INNER JOIN users ON payment.user_id= users.user_id WHERE payment.approval = 0 AND payment.order_date = CURDATE()", function (err, rows) {
+        connection.query("SELECT payment.order_id,users.pharmacy_name,users.address,users.logo FROM payment INNER JOIN users ON payment.user_id= users.user_id WHERE payment.approval = 0 AND payment.order_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -1 day) AND DATE_ADD(CURDATE(), INTERVAL -2 day)", function (err, row1) {
+            connection.query("SELECT payment.order_id,payment.order_date,users.pharmacy_name,users.address,users.logo FROM payment INNER JOIN users ON payment.user_id= users.user_id WHERE payment.approval = 0 AND payment.order_date BETWEEN DATE_ADD(CURDATE(), INTERVAL 1-DAYOFWEEK(CURDATE()) DAY) AND DATE_ADD(CURDATE(), INTERVAL 4-DAYOFWEEK(CURDATE()) DAY)", function (err, row2) {
+                connection.query("SELECT payment.order_id,users.pharmacy_name,users.address,users.logo FROM payment INNER JOIN users ON payment.user_id= users.user_id WHERE payment.approval = 0 AND payment.order_date BETWEEN DATE_ADD(CURDATE(), INTERVAL -15 day) AND DATE_ADD(CURDATE(), INTERVAL -7 day)", function (err, row3) {
+                    res.render('admin/Notification/orderlist', { layout: 'admin', order: rows, order1: row1, order2: row2, order3: row3 })
+                })
+               
+            })
+           
+        })
+        
+	})
+})
+
+
+
+
 module.exports = router; 
  

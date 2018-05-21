@@ -9,11 +9,12 @@
     	</div>
    	 	<div class="section group">
 				<div class="cont-desc span_1_of_2">
+				{{#each product}}
 				  <div class="product-details">				
 					<div class="grid images_3_of_2">
-						<img src="images/preview.jpg" alt="" />
+						<img src={{Image}} alt="" />
 				  </div>
-				{{#each product}}
+
 				<div class="desc span_3_of_2">
 					<h2>{{product_name}} </h2>
 					<p>{{product_details}}</p>					

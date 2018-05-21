@@ -1,118 +1,151 @@
 
- <div class="main">
- 	<div class="wrap">
-     <div class="content">
-     	<div class="content_top">
-    		<div class="back-links">
-    		<p><a href="index.html">Home</a> &gt;&gt;&gt;&gt; <a href="#" class="active">Registaion Form</a></p>
-    	    </div>
-    		<div class="clear"></div>
-    	</div>
-    	<div class="section group">
-				<div class="col span_2_of_3">
-				  <div class="contact-form">
-				  	<h2>{{title1}}</h2>
-					    <form method="post" action="/adduser" enctype="multipart/form-data">
-					    	<div>
-						    	<span><label>Pharmacy Name</label></span>
-						    	<span><input name="pharmacy_name" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>Address</label></span>
-						    	<span><input name="address" type="text" class="textbox" id="us2-address"></span>
-						    </div>
-						    <div>
-						     	<span><label>Email</label></span>
-						    	<span><input name="email" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						     	<span><label>Tel Number</label></span>
-						    	<span><input name="tel_number" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	&nbsp
-						    	<input type="radio" name="register" value=1 id=1> Registered 
-						    	&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-								<input type="radio" name="register" value=0 id=1> Not Registered<br> 
-							
-						    </div>
+<div class="main">
+    <div class="wrap">
+        <div class="content">
 
-						    <div>
-						     	<span><label>Register No(If Registered)</label></span>
-						    	<span><input name="register_no" type="text" class="textbox"></span>
-						    </div>
-						
-						    <div>
-						     	<span><label>Password</label></span>
-						    	<span><input name="password" type="password" class="textbox"></span>
-						    </div>
+            <div class="section group">
+                <div class="col span_2_of_3">
+                    <div class="contact-form">
+                        <h2>{{title1}}</h2>
+                        <form method="post" action="/adduser" enctype="multipart/form-data">
                             <div>
-                                <span><label>Re Enter Password</label></span>
-                                <span><input name="repassword" type="password" class="textbox"></span>
+
+                                <span><label>Pharmacy Name</label></span>
+                                {{#if err_pharmacy}}
+                                <span><input name="pharmacy_name" type="text1" class="textbox" value={{this.pharmacy_name}}></span>
+                                <p><font size="3" color="red">{{this.err_pharmacy}} </font></p>
+
+                                {{else}}
+                                <span><input name="pharmacy_name" type="text" class="textbox" value={{this.pharmacy_name}}></span>
+                                {{/if}}
+                            </div>
+                            <div>
+                                <span><label>Address</label></span>
+                                {{#if err_address}}
+                                <span><input name="address" type="text1" class="textbox" id="us2-address" value={{this.address}}></span>
+                                <p><font size="3" color="red">{{this.err_address}}</font></p>
+                                {{else}}
+                                <span><input name="address" type="text" class="textbox" id="us2-address" value={{this.address}}></span>
+                                {{/if}}
+
+
+                            </div>
+                            <div>
+                                <span><label>Email</label></span>
+                                {{#if err_email}}
+
+                                <span><input name="email" type="text1" class="textbox" value={{this.email}}></span>
+                                <p><font size="3" color="red">{{this.err_email}}</font></p>
+                                {{else}}
+                                <span><input name="email" type="text" class="textbox" value={{this.email}}></span>
+
+                                {{/if}}
+
+                            </div>
+                            <div>
+                                <span><label>Tel Number</label></span>
+                                {{#if err_tel}}
+
+                                <span><input name="tel_number" type="text1" class="textbox" value={{this.tel_number}}></span>
+                                <p><font size="3" color="red">{{this.err_tel}}</font></p>
+                                {{else}}
+                                <span><input name="tel_number" type="text" class="textbox" value={{this.tel_number}}></span>
                             </div>
 
-						    
-                        
+                            {{/if}}
 
-                    <div id="us2" style="width: 1100px; height: 200px;"></div>
-                    <div class="clearfix">&nbsp;</div>
-                    <div class="m-t-small">
-                        
+                            <div>
+                                <span><label>Register No</label></span>
+                                {{#if err_reg}}
 
-                        <div class="col-sm-1">
-                            <input hidden type="text" class="form-control" style="width: 110px" id="us2-lat" name='Lat'/>
-                        </div>
-                       
+                                <span><input name="register_no" type="text1" class="textbox" value={{this.register_no}}></span>
+                                <p><font size="3" color="red">{{this.err_reg}}</font></p>
+                                {{else}}
+                                <span><input name="register_no" type="text" class="textbox" value={{this.register_no}}></span>
 
-                        <div class="col-sm-1">
-                            <input hidden type="text" class="form-control" style="width: 110px" id="us2-lon" name='Lon'/>
-                        </div>
+                                {{/if}}
+                            </div>
+
+                            <div>
+                                <span><label>Password</label></span>
+                                {{#if err_password}}
+                                <span><input name="password" type="password1" class="textbox"></span>
+                                <p><font size="3" color="red">{{this.err_reg}}</font></p>
+                                {{else}}
+                                <span><input name="password" type="password" class="textbox"></span>
+
+                                {{/if}}
+                            </div>
+                            <div>
+                                <span><label>Re Enter Password</label></span>
+                                {{#if err_re}}
+                                <span><input name="repassword" type="password1" class="textbox"></span>
+                                <p><font size="3" color="red">{{this.err_re}}</font></p>
+                                {{else}}
+                                <span><input name="repassword" type="password" class="textbox"></span>
+
+                                {{/if}}
+                            </div>
+
+
+                            <div id="us2" style="width: 700px; height: 200px;"></div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="m-t-small">
+
+                                <div class="col-sm-1">
+                                    <input hidden type="text" class="form-control" style="width: 110px" id="us2-lat" name='Lat' />
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <input hidden type="text" class="form-control" style="width: 110px" id="us2-lon" name='Lon' />
+                                </div>
+                            </div>
+
+                            <script>
+                                $('#us2').locationpicker({
+                                    location: {
+                                        latitude:
+                                            6.9271,
+                                        longitude:
+                                            79.8612
+                                    },
+                                    radius: 300,
+                                    inputBinding: {
+                                        latitudeInput: $('#us2-lat'),
+                                        longitudeInput: $('#us2-lon'),
+                                        radiusInput: $('#us2-radius'),
+                                        locationNameInput: $('#')
+                                    },
+                                    enableAutocomplete: true
+                                });
+                            </script>
+
+
+                            <div class="form-group">
+                                <div class="file-field">
+                                    <label for="exampleInputFile">Choose Logo</label>
+                                    <div class="file-field">
+                                        <input name="myImage" type="file" value={{this.logo}}>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div>
+                                <span><input type="submit" value="Submit" class="mybutton"></span>
+                            </div>
+                        </form>
+
                     </div>
-                  
-
-                <script>
-                    $('#us2').locationpicker({
-                        location: {
-                            latitude: 
-                            6.9271,
-                            longitude: 
-                            79.8612
-                        },
-                        radius: 300,
-                        inputBinding: {
-                            latitudeInput: $('#us2-lat'),
-                            longitudeInput: $('#us2-lon'),
-                            radiusInput: $('#us2-radius'),
-                            locationNameInput: $('#')
-                        },
-                        enableAutocomplete: true
-                    });
-                </script>
-					
-      				</div>
-      				<div class="form-group">
-                                      <div class="file-field">
-
-                  <label for="exampleInputFile">Choose Logo</label>
-                          <div class="file-field">
-                          <input name="myImage" type="file">
-
-                  </div>
                 </div>
-
-
-            
-          </div>
-      				
-
-      				<div>
-						<span><input type="submit" value="Submit"  class="mybutton"></span>
-					</div>
-				</form>
-      			
-				 </div>
-			  </div>		
-         </div> 
+            </div>
+        </div>
+        <button onclick="myFunction()">Try it</button>
+        <script>
+function myFunction() {
+    alert("Hello! I am an alert box!");
+}
+</script>
     </div>
- </div>
-   
+    </div>

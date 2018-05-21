@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Responsive Hover Table</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+
+                        <th>Logo</th>
+                        <th>Pharmacy Name</th>
+                        <th>Order ID</th>
+
+                        <th>Address</th>
+                        <th></th>
+                    </tr>
+                    {{#if order}}
+                    <tr>
+                        <th>Today</th>
+                    </tr>
+
+                    {{#each order}}
+                    <tr>
+                        <td><img src={{this.logo}} class="img-circle" width="50" height="50"></td>
+                        <td>{{this.pharmacy_name}}</td>
+                        <td>{{this.order_id}} </td>
+
+                        <td>{{this.address}}</td>
+                        <td><a href='/admin/view_order{{this.order_id}}'><span class="label label-primary">View</span></a></td>
+
+
+                    </tr>
+
+                    {{/each}}
+                    {{/if}}
+                    {{#if order1}}
+                    <tr>
+                        <th>Yersday</th>
+                    </tr>
+
+                    {{#each order1}}
+                    <tr>
+                        <td><img src={{this.logo}} class="img-circle" width="50" height="50"></td>
+                        <td>{{this.pharmacy_name}}</td>
+                        <td>{{this.order_id}} </td>
+
+                        <td>{{this.address}}</td>
+                        <td><a href='/admin/update_company_profile{{this.company_id}}'><span class="label label-primary">View</span></a></td>
+
+
+                    </tr>
+                    {{/each}}
+                    {{/if}}
+                    {{#if order2}}
+                    <tr>
+                        <th>This Week</th>
+                    </tr>
+
+                    {{#each order2}}
+
+                    <tr>
+                        <td><img src={{this.logo}} class="img-circle" width="50" height="50"></td>
+                        <td>{{this.pharmacy_name}}</td>
+                        <td>{{this.order_id}} </td>
+
+                        <td>{{this.address}}</td>
+                        <td><a href='/admin/update_company_profile{{this.company_id}}'><span class="label label-primary">View</span></a></td>
+
+
+                    </tr>
+
+                    {{/each}}
+                    {{/if}}
+                    {{#if order3}}
+                    <tr>
+                        <th>Agos</th>
+                    </tr>
+
+                    {{#each order3}}
+                    <tr>
+                        <td><img src={{this.logo}} class="img-circle" width="50" height="50"></td>
+                        <td>{{this.pharmacy_name}}</td>
+                        <td>{{this.order_id}} </td>
+
+                        <td>{{this.address}}</td>
+                        <td><a href='/admin/update_company_profile{{this.company_id}}'><span class="label label-primary">View</span></a></td>
+
+
+                    </tr>
+                    {{/each}}
+                    {{/if}}
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+    

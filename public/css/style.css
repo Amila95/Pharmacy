@@ -1128,4 +1128,33 @@ body {
     text-align: center;
     float: none!important;
 	}
+
+   
 }
+input[type=text1] {
+    padding: 6px;
+    display: block;
+    width: 60%;
+    background: none;
+    border: 1px solid red;
+    outline: none;
+    color: #464646;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-appearance: none;
+}
+input[type=password1] {
+   padding: 6px;
+    display: block;
+    width: 60%;
+    background: none;
+    border: 1px solid red;
+    outline: none;
+    color: #464646;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-appearance: none;
+}
+

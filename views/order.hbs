@@ -33,11 +33,11 @@
     <!--Table head-->
     <thead class="blue-grey lighten-4">
         <tr>
-            <th>Item ID</th>
             <th>Item Name</th>
+            <th>Brand</th>
             <th>Number Of Unit</th>
             <th>Price</th>
-            <th>#</th>
+            <th></th>
         </tr>
     </thead>
     <!--Table head-->
@@ -48,11 +48,12 @@
     <tbody>
     	{{#each items}}
         <tr>
-           <td>{{this.item_id}}</td>
            <td>{{this.item_name}}</td>
+           <td>{{this.brand}}</td>
            <td>{{this.units}}</td>
            <td>{{this.price}}</td>
-           <td><a href="/updateorder{{this.item_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp 
+           <td><a href="/updateorder{{this.item_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+
            <a href="/deleteorder{{this.item_id}}"> <button type="button" class="btn btn-danger">Delete</button> </a>
 </td>
         </tr>
@@ -81,7 +82,12 @@
    </div>
    <!------------End Header ------------>
    <div class="wish-list">
-	<ul>
+	<ul >
+	<li > &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</li>
+	<li >&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</li>
+	<li >&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</li>
+	<li >&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</li>
+	<li >&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</li>
 	<li class="wish"><a href='/submitOrder'>Submit</a></li>
 	<li class="compare"><a href='/cansaleOrder'>Cansale</a></li>
 	</ul>
