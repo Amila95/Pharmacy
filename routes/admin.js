@@ -31,9 +31,13 @@ router.get('/', function(req, res, next) {
   	code.pipe(res);*/
 	connection.query('SELECT * FROM payment WHERE approval = ?',[0],function(err,rows){
 		var num = rows.length;
-		connection.query('SELECT * FROM  users WHERE approval =?',[0],function(err,row1){
-			var num1 = row1.length;
-			res.render('admin/basic', {title: 'Express',layout:'admin',notification:num, oder:rows, notification1:num1,user:row1})
+        connection.query('SELECT * FROM  users WHERE approval =?', [0], function (err, row1) {
+            connection.query('SELECT users.user_id, users.pharmacy_name, users.logo ,discuss.type, discuss.subject, discuss.details, discuss.dis_id FROM users INNER JOIN discuss ON users.user_id = discuss.user_id WHERE view = 0', function (err, row2) {
+                var num1 = row1.length;
+                var num2 = row2.length;
+                res.render('admin/basic', { title: 'Express', layout: 'admin', notification: num, oder: rows, notification1: num1, user: row1,message:row2,nummessage:num2})
+            })
+			
 		})
 		
 		
@@ -144,7 +148,7 @@ router.get('/view_order:id', function(req,res,next){
 	var total = 0;
 	var oder_id = req.params.id;
 	console.log(oder_id);
-	connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,rows){
+    connection.query('SELECT products.product_name, products.brand, products.price AS unit_price, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = ?',[oder_id], function(err,rows){
 		for (var i = rows.length - 1; i >= 0; i--) {
 			total = total + rows[i].price;
 		}
@@ -170,26 +174,27 @@ router.post('/approval:id',function(req,res,next){
 	var total = 0;
 	var oder_id = req.params.id;
 	var date = req.body.date1;
-
+    var dis = req.body.dis;
 	//const company_logo = '../upload/'+req.files[0].filename;
 	var code = qr.image(new Date().toString(),{type:'png',size:20})
 	code.pipe(fs.createWriteStream('public/upload/'+oder_id+'MyQRCODE1.png'));
 	var qrim = ('../upload/'+oder_id+'MyQRCODE1.png');
 	console.log(qrim);
-	
-	connection.query('UPDATE payment SET approval=?,approval_date= CURDATE(),deliver_date=?,qrimage=? WHERE order_id=? ',[ 1,date,qrim,oder_id], function(err,rows){
+
+    connection.query('UPDATE payment SET approval=?,approval_date= CURDATE(),deliver_date=?,qrimage=?,discount=? WHERE order_id=? ', [1, date, qrim, dis, oder_id], function (err, rows) {
 		connection.query('SELECT * FROM payment WHERE order_id=?',[oder_id], function(err,row1){
-			user_id = row1[0].user_id;
+            user_id = row1[0].user_id;
+            discount = row1[0].discount;
 			connection.query('SELECT * FROM Users WHERE user_id= ?',[user_id], function(err, row2){
-				connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row3){
+                connection.query('SELECT products.product_name, products.brand, products.price AS unit_price, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = ?',[oder_id], function(err,row3){
 					for (var i = row3.length - 1; i >= 0; i--) {
 							total = total + row3[i].price;
-					}
-					connection.query('INSERT INTO approval(oder_id,Deliverdate,qrimage) VALUES(?,?,?)',[oder_id,date,qrim], function(err,result){
-					if(err) throw err;
-					res.render('admin/Users/invoice',{layout:'admin', oder:row1, user:row2, bill:row3, price:total, qrim:qrim});
+                    }
+                    discount_price = (total * discount) / 100;
+                    total = total - discount_price;
+                    res.render('admin/Users/invoice', { layout: 'admin', oder: row1, user: row2, bill: row3, price: total, qrim: qrim, discount_price: discount_price});
 
-				})
+				
 			})
 		})
 		
@@ -201,22 +206,24 @@ router.post('/approval:id',function(req,res,next){
 router.get('/approval:id',function(req,res,next){
 	var total = 0;
 	var oder_id = req.params.id;
-	var date = req.body.date1;
-	connection.query('UPDATE recodes SET approval=? WHERE oder_id=? ',[ 1,oder_id], function(err,rows){
-		connection.query('SELECT * FROM recodes WHERE oder_id=?',[oder_id], function(err,row1){
+	//var date = req.body.date1;
+	
+		connection.query('SELECT * FROM payment WHERE order_id=?',[oder_id], function(err,row1){
 			user_id = row1[0].user_id;
 			connection.query('SELECT * FROM Users WHERE user_id= ?',[user_id], function(err, row2){
-				connection.query('SELECT * FROM oderlist WHERE oder_id=?',[oder_id], function(err,row3){
-					for (var i = row3.length - 1; i >= 0; i--) {
+                connection.query('SELECT products.product_name, products.brand, products.price AS unit_price, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = ?',[oder_id], function(err,row3){
+                    console.log(row3);
+                    for (var i = row3.length - 1; i >= 0; i--) {
 							total = total + row3[i].price;
-					}
-					connection.query('INSERT INTO approval(oder_id,Deliverdate) VALUES(?,?)',[oder_id,date], function(err,result){
+                    }
+                    
+					
 					if(err) throw err;
 					res.render('admin/Users/invoice',{layout:'admin', oder:row1, user:row2, bill:row3, price:total});
 
-				})
+				
 			})
-		})
+		
 		
 
 		})
@@ -700,8 +707,8 @@ router.post('/addstock:id',function(req,res,rows){
 		var cur_stock = parseInt(row2[0].stock);
 		stock = add_stock + cur_stock;
 		connection.query('UPDATE products SET stock=? WHERE product_id=?',[stock,product_id],function(err,row2){
-			connection.query('SELECT * FROM stock WHERE product_id=? AND ex_date=?',[product_id,ex_date],function (err,row3) {
-				if(row3.length > 0){
+            connection.query('SELECT * FROM stock WHERE product_id=? AND ex_date=?', [product_id, ex_date], function (err, roww) {
+                if (roww.length>0) {
 					var cur = row3[0].qty;
 					var new_stock = cur+add_stock;
 					connection.query('UPDATE stock SET qty=? WHERE product_id=? AND ex_date=?',[new_stock,product_id,ex_date],function (err,row4){
@@ -804,6 +811,25 @@ router.get('/viewallorder',function (req,res) {
 	})
 })
 
+router.get('/message:id', function (req, res) {
+    const dis_id = req.params.id;
+    connection.query('SELECT users.user_id, users.pharmacy_name, users.logo ,discuss.type, discuss.subject, discuss.details, discuss.dis_id, discuss.sent_date FROM users INNER JOIN discuss ON users.user_id = discuss.user_id WHERE dis_id = ?', [dis_id], function (err, row2) {
+        connection.query('UPDATE discuss SET view = 1 WHERE dis_id = ?', [dis_id], function (err, row) {
+            res.render('admin/Notification/message', { title: 'Express', layout: 'admin', message: row2 });
+        })
+
+       
+    })
+})
+
+router.post('/reply:id', function (req, res) {
+    reply_id = req.params.id;
+    var rep = req.body.rep;
+    connection.query('UPDATE discuss SET Reply = ? WHERE dis_id = ? ', [rep, reply_id], function (err, row2) {
+        res.redirect('back');
+    })
+})
+   
 
 
 

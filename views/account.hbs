@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>
-        User Profile
+        My Profile
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -23,7 +23,7 @@
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>User ID</b> <a class="pull-right">{{user_id}}</a>
+                            <b>User ID</b> <a class="pull-right">{{this.pharmacy_name}}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Email</b> <a class="pull-right">{{email}}</a>
@@ -31,40 +31,23 @@
                         <li class="list-group-item">
                             <b>Contact No</b> <a class="pull-right">{{tel_number}}</a>
                         </li>
+                        <li class="list-group-item">
+                            <b>Registation No</b> <a class="pull-right">{{register_no}}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Address</b> <a class="pull-right">{{address}}</a>
+                        </li>
 
                     </ul>
 
-                    <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                    <a href="/updatedetails{{user_id}}" class="btn btn-primary btn-block"><b>Change</b></a>
                 </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
 
             <!-- About Me Box -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">About </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <strong><i class="fa fa-book margin-r-5"></i>Registation No </strong>
-
-                    <p class="text-muted">
-                        {{register_no}}
-                    </p>
-
-                    <hr>
-
-                    <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
-
-                    <p class="text-muted">{{address}}</p>
-
-                    <hr>
-
-
-                </div>
-                <!-- /.box-body -->
-            </div>
+           
             <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -76,39 +59,40 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
                 <li><a href="#settings" data-toggle="tab">Previous Oders</a></li>
-                <li><a href="#settings" data-toggle="tab">K-O</a></li>
-                <li><a href="#settings" data-toggle="tab">P-U</a></li>
-                <li><a href="#settings" data-toggle="tab">V-Z</a></li>
+                <li><a href="#discussion" data-toggle="tab">Discussion</a></li>
+                <li><a href="#settings" data-toggle="tab"></a></li>
+                <li><a href="#settings" data-toggle="tab"></a></li>
             </ul>
             <div class="tab-content">
 
                 <div class="active tab-pane" id="pending">
                     {{#each oders}}
-                        <!-- The timeline -->
-                        <ul class="timeline timeline-inverse">
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-blue">
-                            {{this.order_id}}
-                        </span>
-                            </li>
+                    <!-- The timeline -->
+                    <ul class="timeline timeline-inverse">
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <span class="bg-blue">
+                                {{this.order_id}}
+                            </span>
+                        </li>
 
-                            <li>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
+                        <li>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
 
-                                    <h3 class="timeline-header no-border"><a >Order No {{this.order_id}} </a>
-                                        <div class="timeline-footer">
-                                            <a href="/view_order{{this.order_id}}" class="btn btn-info btn-flat btn-xs">View order</a>
-                                            &nbsp;&nbsp;
-                                            <a href="/update_order{{this.order_id}}" class="btn btn-success btn-flat btn-xs">Update order</a>
+                                <h3 class="timeline-header no-border">
+                                    <a>Order No {{this.order_id}} </a>
+                                    <div class="timeline-footer">
+                                        <a href="/view_order{{this.order_id}}" class="btn btn-info btn-flat btn-xs">View order</a>
+                                        &nbsp;&nbsp;
+                                        <a href="/update_order{{this.order_id}}" class="btn btn-success btn-flat btn-xs">Update order</a>
 
-                                        </div>
-                                    </h3>
-                                </div>
-                            </li>
+                                    </div>
+                                </h3>
+                            </div>
+                        </li>
 
-                        </ul>
+                    </ul>
                     {{/each}}
                 </div>
 
@@ -116,44 +100,74 @@
 
                 <div class="tab-pane" id="settings">
                     {{#each apoder}}
-                        <!-- The timeline -->
-                        <ul class="timeline timeline-inverse">
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-blue">
-                            {{this.order_id}}
-                        </span>
-                            </li>
+                    <!-- The timeline -->
+                    <ul class="timeline timeline-inverse">
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <span class="bg-blue">
+                                {{this.order_id}}
+                            </span>
+                        </li>
 
-                            <li>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
+                        <li>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
 
-                                    <h3 class="timeline-header no-border"><a >Order No {{this.order_id}} </a>
-                                        <div class="timeline-footer">
-                                            <a href="/view_order{{this.order_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
-                                        </div>
-                                    </h3>
-                                </div>
-                            </li>
-
-
-                            <li>
-                                <i class="fa fa-user bg-aqua"></i>
-
-                                <div class="timeline-item">
-
-                                    <h3 class="timeline-header no-border"> Approval the oder and send invoice
+                                <h3 class="timeline-header no-border">
+                                    <a>Order No {{this.order_id}} </a>
+                                    <div class="timeline-footer">
+                                        <a href="/view_order{{this.order_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
+                                        &nbsp;&nbsp;
                                         <a href="/admin/approval{{this.order_id}}" class="btn btn-success btn-flat btn-xs">Show Invoice</a>
-                                    </h3>
-                                </div>
-                            </li>
+                                    </div>
+                                </h3>
+                            </div>
+                        </li>
 
-                        </ul>
+
+
+
+                    </ul>
                     {{/each}}
 
                 </div>
+
                 <!-- /.tab-pane -->
+                <div class="tab-pane" id="discussion">
+                    {{#each discuss}}
+                    <!-- The timeline -->
+                    <ul class="timeline timeline-inverse">
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <span class="bg-blue">
+                                {{this.dis_id}}
+                            </span>
+                        </li>
+
+                        <li>
+                            <div class="timeline-item">
+                                <span class="time">{{this.type}}</i> </span>
+
+                                <h3 class="timeline-header no-border">
+                                    <a>Discuss No {{this.dis_id}} </a>
+                                    <a></a>
+                                    
+                                    <div class="timeline-footer">
+                                        <a href="/viewreply{{this.dis_id}}" class="btn btn-warning btn-flat btn-xs">More</a>
+                                        &nbsp;&nbsp;
+                                        
+                                    </div>
+                                </h3>
+                            </div>
+                        </li>
+
+
+
+
+                    </ul>
+                    {{/each}}
+
+                </div>
             </div>
             <!-- /.tab-content -->
         </div>

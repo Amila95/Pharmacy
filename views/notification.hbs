@@ -1,0 +1,64 @@
+<div class="tab-pane" id="settings">
+	
+	<!-- The timeline -->
+    <ul class="timeline timeline-inverse">
+        {{#each noti}}
+        <!-- timeline time label -->
+        <li class="time-label">
+            <span class="bg-blue">
+
+            </span>
+        </li>
+
+        <li>
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i></span>
+
+                <h3 class="timeline-header no-border">
+                    <a>Approval Order {{order_id}}</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a>Deliver On {{this.deliver_date}}</a>
+                    <div class="timeline-footer">
+                        <a href="/appvieworder{{order_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
+                        &nbsp;&nbsp;
+                        <a href="/admin/approval{{order_id}}" class="btn btn-success btn-flat btn-xs">Show Invoice</a>
+                    </div>
+                </h3>
+            </div>
+
+        </li>
+
+
+
+        {{/each}}
+        {{#each dis}}
+        <li class="time-label">
+            <span class="bg-blue">
+
+            </span>
+        </li>
+
+        <li>
+            <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i></span>
+
+                <h3 class="timeline-header no-border">
+                    <a>Reply Your Message </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    
+                    <div class="timeline-footer">
+                        <a href="/viewreply{{dis_id}}" class="btn btn-warning btn-flat btn-xs">View Reply</a>
+                        &nbsp;&nbsp;
+                        <a href="/admin/approval" class="btn btn-success btn-flat btn-xs">Show Invoice</a>
+                    </div>
+                </h3>
+            </div>
+
+        </li>
+        {{/each}}
+    </ul>
+	
+
+</div>

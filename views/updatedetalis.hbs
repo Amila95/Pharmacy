@@ -1,0 +1,69 @@
+
+<div class="main">
+    <div class="wrap">
+        <div class="content">
+
+            <div class="section group">
+                <div class="col span_2_of_3">
+                    <div class="contact-form">
+                        <h2>Update Details</h2>
+                        {{#each user}}
+                        <form method="post" action="/updateusers{{this.user_id}}" >
+
+                            <div>
+
+                                <span><label>Pharmacy Name</label></span>
+
+                                <span><input name="name" id="name" type="text" class="textbox" value={{this.pharmacy_name}}></span>
+
+                            </div>
+                            <div>
+                                <span><label>Address</label></span>
+
+                                <span><input name="address" type="text" class="textbox" id="us2-address" value={{this.address}}></span>
+
+
+
+                            </div>
+                            <div>
+                                <span><label>Email</label></span>
+
+                                <span><input name="email" type="text" class="textbox" value={{this.email}}></span>
+
+
+
+                            </div>
+                            <div>
+                                <span><label>Tel Number</label></span>
+
+
+
+                                <span><input name="tel_number" type="text" class="textbox" value={{this.tel_number}}></span>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div>
+                                <span><input type="submit" value="Update" class="mybutton"></span>
+                            </div>
+                            {{/each}}
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

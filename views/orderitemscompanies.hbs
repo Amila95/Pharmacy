@@ -21,6 +21,7 @@
                 <tr>
                     <th>Product </th>
                     <th>Brand</th>
+                    <th>Batch ID</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -33,7 +34,8 @@
                     <tr>
                         <th class="table-primary" scope="row">{{this.product_name}}</th>
                         <td class="table-primary">{{this.brand}}</td>
-                        <td class="table-primary"></td>
+                        <td class="table-primary"> {{this.batch_id}}</td>
+                        
                         <td class="table-primary"><input class="col-md-3" type="text" placeholder="{{this.units}}" Name="units"></td>
                     </tr>
 
@@ -41,7 +43,8 @@
 {{#each products}}
                 <tr>
                     <th scope="row">{{this.product_name}}</th>
-                    <td>Mark</td>
+                    <td>{{this.brand}}</td>
+
                     <td><a href= "/products{{this.product_id}}"><button type="button" class="btn btn-primary btn-rounded">View</button></a></td>
                     <form   method="post" action="/oderlist{{product_id}}" >
                     <td><input class="col-md-3" type="text" placeholder="Order Qty" Name="units">

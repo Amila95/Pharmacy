@@ -1,0 +1,66 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- /.col -->
+            <div class="col-md-9">
+                {{#each message}}
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">{{this.type}}</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+
+                        <div class="mailbox-read-info">
+                            <h5>{{this.subject}}</h5>
+                            <h6>
+                                From: {{this.pharmacy_name}}
+                                <span class="mailbox-read-time float-right">{{this.sent_date}}</span>
+                            </h6>
+                        </div>
+                        <!-- /.mailbox-read-info -->
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
+                            <i class="fa fa-print"></i>
+                        </button>
+
+                    </div>
+                    <!-- /.mailbox-controls -->
+                    <div class="mailbox-read-message">
+
+                        <p>
+                            {{this.details}}
+                        </p>
+
+                    </div>
+                    <!-- /.mailbox-read-message -->
+                    
+                </div>
+                <!-- /.card-body -->
+                <!-- /.card-footer -->
+                <div>
+                    <h5>Reply</h5>
+                    <form method="post" action="/admin/reply{{this.dis_id}}">
+                    <textarea rows="4" cols="50" name="rep">
+
+</textarea>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
+                        </form>
+                        <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                    </div>
+                    {{/each}}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+</section>

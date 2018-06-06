@@ -1,0 +1,63 @@
+
+<div class="main">
+    <div class="wrap">
+        <div class="content">
+
+            <div class="section group">
+                <div class="col span_2_of_3">
+                    <div class="contact-form">
+                        <h2>Discussion From</h2>
+                        {{#each reply}}
+
+                        
+
+                        <div>
+
+                            <span><label>Subject</label></span>
+
+                            <span><input name="subject" id="name" type="text" class="textbox" value={{this.subject}}></span>
+
+                        </div>
+
+                        <div>
+                            <span><label>Details</label></span>
+
+                            <span><textarea name="userMsg">{{this.details}} </textarea></span>
+
+
+
+                        </div>
+                        {{#if Reply}}
+                        <div>
+                            <span><label>Reply</label></span>
+
+                            <span><textarea name="userMsg"> {{this.Reply}}</textarea></span>
+
+
+
+                        </div>
+                        {{/if}}
+
+                {{/each}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

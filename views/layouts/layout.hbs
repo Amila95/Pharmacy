@@ -61,10 +61,12 @@
                 <div class="account_desc">
                     <ul>
                         {{#if isAuthenticated}}
+                        <li><a href="/notification">Notification</a></li>
                         <li><a href="/order">Order</a></li>
-                        <li><a href="/uploadimage">Checkout</a></li>
+                        <li><a href="/complain">Discussion</a></li>
                         <li><a href="/myaccount">My Account</a></li>
                         <li><a href="/logout">Log Out</a></li>
+
                         {{else}}
                         <li><a href="/register">Register</a></li>
                         <li><a href="/login">Login</a></li>

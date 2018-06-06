@@ -1,53 +1,147 @@
 <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
+    <div class="col-xs-12">
+        <div class="box">
             <div class="box-header">
-              <h3 class="box-title">View Order Table</h3>
+                <h3 class="box-title">View Order Table</h3>
 
-             
+
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>Item Name</th>
-                  <th>Number Of Units</th>
-                  <th>Price</th>
-                  
-                </tr>
-                {{#each oder}}
-                <tr>
-                  <td>{{this.oder_id}}</td>
-                  <td>{{this.item_name}}</td>
-                  <td>{{this.units}}</td>
-                  <td>{{this.price}}</td>
-                  
+                <table class="table table-hover">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Brand</th>
+                        <th>Batch ID</th>
+                        <th>EX Date</th>
+                        <th>Unit Price</th>
+                        <th>No Of Units</th>
+                        <th>Price</th>
 
-                  
-                </tr>
-                {{/each}}
-                <tr>
-                <td></td>
-                <th> Total Price </th>
-                <td></td>
-                <th>{{price}}</th>
-                </tr>
-                
-                <tr>
-                <td></td>
-                <th> Deliver Day </th>
-                <td><form   method="post" action="/admin/approval{{this.oder_id}}" >
-              <input class="md-col-3" type="text" class="form-control pull-right" id="datemask" name="date1"></td>
-                <th><button type="submit" class="label label-primary" >Approval</button>
-              </form></th>
-                </tr>
-                
-              </table>
+
+                    </tr>
+                    {{#each oder}}
+                    <tr>
+                        <td>{{this.product_name}}</td>
+                        <td>{{this.brand}}</td>
+                        <td>{{this.batch_No}}</td>
+                        <td>{{this.ex_date}}</td>
+                        <td>{{this.unit_price}}</td>
+                        <td>{{this.units}}</td>
+                        <td>{{this.price}}</td>
+
+
+
+                    </tr>
+                    {{/each}}
+                    <tr>
+
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th> Total Amount </th>
+                        <td></td>
+
+                        <td></td>
+                        <th>{{price}}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+
+                        <form method="post" action="/admin/approval{{this.oder_id}}">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th> Discount(%) </th>
+                            <td></td>
+                            <td></td>
+                            <th> <input id="edValue" type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()" style="width: 50px" name="dis"><br></th>
+                            <td></td>
+                    </tr>
+                    <tr>
+
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th> Discount Value </th>
+                        <td></td>
+                        <td></td>
+                        <th> <span id="lblValue">0 </span></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th> Total Price </th>
+                        <td></td>
+                        <td></td>
+                        <th> <span id="lblValue1">{{price}} </span></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th> Deliver Day </th>
+                        <td></td>
+                        <td></td>
+                        <th> <input id="date" type="date" name="date1"></th>
+                        
+                    </tr>
+                    <tr>
+
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th> </th>
+                        <td></td>
+                        <td></td>
+                        <th><button type="submit" class="label label-primary">Approval</button></th>
+                        <td></td>
+                    </tr>
+                    </from>
+                    <!--</form>
+    <tr>
+        <td></td>
+        <th> Deliver Day </th>
+        <td>
+            <form method="post" action="/admin/approval{{this.oder_id}}">
+                <input class="md-col-3" type="text" class="form-control pull-right" id="datemask" name="date1">
+        </td>
+        <th>
+            <button type="submit" class="label label-primary">Approval</button>
+            </form>
+        </th>
+    </tr>
+        -->
+
+                </table>
             </div>
             <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+        </div>
+        <!-- /.box -->
 
     </div>
+    <script>
+    function edValueKeyPress() {
+        var edValue = document.getElementById("edValue");
+        var s = (edValue.value * {{ price}})/100;
+        var total = {{ price }} - s;  
+            var lblValue = document.getElementById("lblValue");
+        lblValue.innerText = s;
+        var lblValue1 = document.getElementById("lblValue1");
+        lblValue1.innerText = total;
+
+            //var s = $("#edValue").val();
+            //$("#lblValue").text(s);
+        }
+    </script>
 </div>  

@@ -35,6 +35,9 @@
         <tr>
             <th>Item Name</th>
             <th>Brand</th>
+            <th>Batch ID</th>
+            <th>Ex Date</th>
+            <th>Unit Price</th>
             <th>Number Of Unit</th>
             <th>Price</th>
             <th></th>
@@ -48,13 +51,16 @@
     <tbody>
     	{{#each items}}
         <tr>
-           <td>{{this.item_name}}</td>
+            <td>{{this.product_name}}</td>
            <td>{{this.brand}}</td>
+           <td>{{this.batch_No}}</td>
+            <td>{{this.ex_date}}</td>
+            <td>{{this.price}}</td>
            <td>{{this.units}}</td>
            <td>{{this.price}}</td>
-           <td><a href="/updateorder{{this.item_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+           <td><a href="/updateorder{{this.product_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 
-           <a href="/deleteorder{{this.item_id}}"> <button type="button" class="btn btn-danger">Delete</button> </a>
+           <a href="/deleteorder{{this.product_id}}"> <button type="button" class="btn btn-danger">Delete</button> </a>
 </td>
         </tr>
         {{/each}}
