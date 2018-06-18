@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Responsive Hover Table</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>logo</th>
+                        <th>Name</th>
+                        <th>Registaion Number</th>
+                        <th>Address</th>
+                        <th></th>
+                    </tr>
+                    {{#each member}}
+                    <tr>
+
+                        <td><img src={{this.logo}} class="img-circle" width="50" height="50"></td>
+                        <td>{{this.pharmacy_name}}</td>
+                        <td>{{this.register_no}}</td>
+                        <td>{{this.address}}</td>
+                        <td><a href='/admin/newuser{{this.user_id}}'><span class="label label-success">View</span></a></td>
+                       
+
+
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+    </div>
+  </div>
+</div>

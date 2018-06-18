@@ -829,6 +829,14 @@ router.post('/reply:id', function (req, res) {
         res.redirect('back');
     })
 })
+
+router.get('/viewallmember', function (req, res) {
+    connection.query('SELECT * FROM users WHERE approval = 0', function (err, row) {
+        res.render('admin/Notification/memberlist', { layout: 'admin',member:row })
+    })
+    
+})
+
    
 
 

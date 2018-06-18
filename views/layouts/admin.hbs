@@ -102,15 +102,15 @@
               <span class="label label-warning">{{notification1}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">{{notification1}} new users</li>
+              <li class="header"><a href="/admin/viewallmember">{{notification1}} new users</a></li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   {{#each user}}
                   <li>
-                    <a href='/admin/newuser{{user_id}}'>
-                      <i class="fa fa-users text-aqua"></i> {{pharmacy_name}} new members joined today
-                    </a>
+                      <a href='/admin/newuser{{user_id}}'>
+                          <i class="fa fa-users text-aqua"></i>   new {{pharmacy_name}} members joined today
+                      </a>
                   </li>
                   {{/each}}
                 </ul>

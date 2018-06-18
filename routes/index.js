@@ -1715,7 +1715,7 @@ router.post('/adduser', function (req, res) {
 
 })
 
-router.post('/login', passport.authenticate('local', {
+/*router.post('/login', passport.authenticate('local', {
     successRedirect: '/index',
     failureRedirect: '/login',
     //failureFlash:true
@@ -1723,7 +1723,24 @@ router.post('/login', passport.authenticate('local', {
     function (req, res) {
         res.redirect('/');
     }
-);
+);*/
+router.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    //failureFlash:true
+}),
+    
+    function (req, res) {
+        console.log(req.user.user_id);
+        if (req.user.user_id === 8) {
+            //console.log("hmm");
+            res.redirect('/admin');
+        }
+        else{
+           // console.log("ok");
+           res.redirect('/index');
+        }
+    }
+)
 router.get('/logout', function (req, res) {
     req.logout();
     req.session.destroy();
