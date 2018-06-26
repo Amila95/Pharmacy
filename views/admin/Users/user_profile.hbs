@@ -2,11 +2,7 @@
       <h1>
         User Profile
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">User profile</li>
-      </ol>
+      
     </section>
       {{#each user}}
       <div class="row">
@@ -34,7 +30,7 @@
                 
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+             
             </div>
             <!-- /.box-body -->
           </div>
@@ -73,13 +69,13 @@
       
 <div class="col-md-9">
           <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
-              <li><a href="#settings" data-toggle="tab">Previous Oders</a></li>
-              <li><a href="#settings" data-toggle="tab">K-O</a></li>
-              <li><a href="#settings" data-toggle="tab">P-U</a></li>
-              <li><a href="#settings" data-toggle="tab">V-Z</a></li>
-            </ul>
+              <ul class="nav nav-tabs">
+                  <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
+                  <li><a href="#settings" data-toggle="tab">Previous Oders</a></li>
+                   <li><a href="#discussion" data-toggle="tab">Disscus</a></li>
+     <!--<li><a href="#settings" data-toggle="tab">P-U</a></li>
+     <li><a href="#settings" data-toggle="tab">V-Z</a></li>-->
+              </ul>
             <div class="tab-content">
                    
             <div class="active tab-pane" id="pending">
@@ -95,7 +91,7 @@
                   
                   <li>
                     <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
+                      <span class="time"><i class="fa fa-clock-o"></i> {{this.order_date}}</span>
 
                       <h3 class="timeline-header no-border"><a >Order No {{this.order_id}} </a>
                       <div class="timeline-footer">
@@ -111,45 +107,75 @@
               
               <!-- /.tab-pane -->
             
-              <div class="tab-pane" id="settings">
+            <div class="tab-pane" id="settings">
                 {{#each apoder}}
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
-                  <!-- timeline time label -->
-                  <li class="time-label">
+                    <!-- timeline time label -->
+                    <li class="time-label">
                         <span class="bg-blue">
-                          {{this.order_id}}
+                            {{this.order_id}}
                         </span>
-                  </li>
-                  
-                  <li>
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> {{this.orderd_time}}</span>
+                    </li>
 
-                      <h3 class="timeline-header no-border"><a >Order No {{this.order_id}} </a>
-                      <div class="timeline-footer">
-                        <a href="/admin/preview_order{{this.order_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
-                      </div>
-                      </h3>
-                    </div>
-                  </li>
-                  
-                  
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
+                    <li>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> {{this.order_date}}</span>
 
-                    <div class="timeline-item">
-                      
-                      <h3 class="timeline-header no-border"> Approval the oder and send invoice
-                      <a href="/admin/show_invoice{{this.order_id}}" class="btn btn-success btn-flat btn-xs">Show Invoice</a>
-                      </h3>
-                    </div>
-                  </li>
-                  
+                            <h3 class="timeline-header no-border">
+                                <a>Order No {{this.order_id}} </a>
+                                <div class="timeline-footer">
+                                    <a href="/admin/preview_order{{this.order_id}}" class="btn btn-warning btn-flat btn-xs">View order</a>
+                                    <a href="/admin/show_invoice{{this.order_id}}" class="btn btn-success btn-flat btn-xs">Show Invoice</a>
+
+                                </div>
+                            </h3>
+                        </div>
+                    </li>
+
+
+
+
                 </ul>
-              {{/each}}
-                  
-              </div>
+                {{/each}}
+                </div>
+                <div class="tab-pane" id="discussion">
+                    {{#each discuss}}
+                    <!-- The timeline -->
+                    <ul class="timeline timeline-inverse">
+                        <!-- timeline time label -->
+                        <li class="time-label">
+                            <span class="bg-blue">
+                                {{this.dis_id}}
+                            </span>
+                        </li>
+
+                        <li>
+                            <div class="timeline-item">
+                                <span class="time">{{this.type}}</i> </span>
+
+                                <h3 class="timeline-header no-border">
+                                    <a>Discuss No {{this.dis_id}} </a>
+                                    <a></a>
+
+                                    <div class="timeline-footer">
+                                        <a href="/viewreply{{this.dis_id}}" class="btn btn-warning btn-flat btn-xs">More</a>
+                                        &nbsp;&nbsp;
+
+                                    </div>
+                                </h3>
+                            </div>
+                        </li>
+
+
+
+
+                    </ul>
+                    {{/each}}
+
+                </div>
+
+            </div>
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->

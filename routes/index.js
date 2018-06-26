@@ -6,6 +6,7 @@ var connection = require('../config/connection');
 var bcrypt = require('bcryptjs');
 var multer = require('multer');
 var bodyParser = require('body-parser');
+//var jsonUtils = require("./../json_utils");
 var cors = require('cors')
 var app = express()
 
@@ -1829,9 +1830,9 @@ router.get('/search', function (req, res) {
 router.get('/myaccount', function (req, res) {
     const user_id = req.user.user_id;
     connection.query('SELECT * FROM users WHERE user_id=?', [user_id], function (err, rows) {
-        connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?', [user_id, 0], function (err, row1) {
-            connection.query('SELECT * FROM payment WHERE user_id=? AND approval=?', [user_id, 1], function (err, row2) {
-                connection.query('SELECT * FROM discuss WHERE user_id = ? ', [user_id], function (err, row3) {
+        connection.query('SELECT * FROM payment WHERE user_id=? AND approval=? ORDER BY order_id DESC', [user_id, 0], function (err, row1) {
+            connection.query('SELECT * FROM payment WHERE user_id=? AND approval=? ORDER BY order_id DESC', [user_id, 1], function (err, row2) {
+                connection.query('SELECT * FROM discuss WHERE user_id = ? ORDER BY dis_id DESC', [user_id], function (err, row3) {
                     res.render('account', { layout: 'profile', user: rows, oders: row1, apoder: row2 , discuss:row3})
                 })
 
