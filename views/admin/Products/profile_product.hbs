@@ -24,6 +24,26 @@
                 <li class="list-group-item">
                   <b>Company Id</b> <a class="pull-right">{{company_id}}</a>
                 </li>
+                  <li class="list-group-item">
+                      <b>Model</b> <a class="pull-right">{{model}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Weight</b> <a class="pull-right">{{weight}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Unit Stock</b> <a class="pull-right">{{unit_stock}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Price</b> <a class="pull-right">{{price}}</a>
+                  </li>
+
+                  <li class="list-group-item">
+                      <b>PriceReorder Level</b> <a class="pull-right">{{reorder}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Ex Priode</b> <a class="pull-right">{{ex_time}}</a>
+                  </li>
+
                 
                 
               </ul>
@@ -34,51 +54,10 @@
           </div>
           <!-- /.box -->
 
-          <!-- About Me Box -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">About </h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Model</strong>
 
-              <p class="text-muted">
-                {{model}}
-              </p>
-
-              <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Weight</strong>
-
-              <p class="text-muted">{{weight}}</p>
-
-              <hr>
-
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Unit Stock</strong>
-
-              <p class="text-muted">{{unit_stock}}</p>
-
-              <hr>
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Price</strong>
-
-              <p class="text-muted">{{price}}</p>
-
-      
-              <hr>
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Discription</strong>
-
-              <p class="text-muted">{{product_details}}</p>
-
-              
-
-              
-            </div>
-            <!-- /.box-body -->
-          </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->      
+        <!-- /.col -->
       
       {{/each}}
       
@@ -106,6 +85,56 @@
             </div>
             <!-- /.box-body -->
           </div>
+
+
+            <!-- /.box-header -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Product Stock</h3>
+
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Batch No</th>
+                                    <th>Exdate</th>
+                                    <th>Qty</th>
+
+                                    <!-- <th>Sent Date</th>-->
+                                    <th></th>
+                                </tr>
+                                {{#each stock}}
+                                    <tr>
+
+                                        <td>{{this.batch_No}}</td>
+                                        <td>{{this.ex_date}}</td>
+                                        <td>{{this.qty}}</td>
+
+
+
+
+
+                                    </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
           <!-- /.box -->
 
         

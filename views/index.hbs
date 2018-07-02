@@ -1,22 +1,43 @@
 
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.search-box input[type="text"]').on("keyup input", function(){
+            /* Get input value on change */
+            var inputVal = $(this).val();
+            var resultDropdown = $(this).siblings(".result");
+            if(inputVal.length){
+                $.get("/search"+ inputVal).done(function(data){
+                    // Display the returned data in browser
+                    /*dataarry =JSON.parse(data);
+                    for(i=0;i<dataarry.length;i++){
+                        console.log(dataarry[i]);
+                        resultDropdown.html(dataarry[i]);
+                    }*/
+                    resultDropdown.html(JSON.parse(data));
+                });
+            } else{
+                resultDropdown.empty();
+            }
+        });
+
+        // Set search input value on click of result item
+        $(document).on("click", ".result p", function(){
+            $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+            $(this).parent(".result").empty();
+        });
+    });
+</script>
 				<div class="header_bottom">
 					<div class="header_bottom_left">				
 						<div class="categories">
 						
 						   <ul>
 						  	   <h3>Companies</h3>
-                               <li class="search_box" >
-                                   <form method="post" action="/searchcompany">
-                                       <input type="text" name="srch" id="srch" list="datalist1" />
-                                       <datalist id="datalist1">
-                                    {{#each companies}}
-                                           <option value = {{this.company_name}}/>
-
-                                        {{/each}}
-                                       </datalist>
-                                       <input type="submit" value="">
-                                   </form>
-                               </li>
+                               <div class="search-box">
+                                   <input type="text" autocomplete="off" placeholder="Search ..." />
+                                   <div class="result"></div>
+                               </div>
 						  	   {{#each companies}}
 							      <li><a href="/viewcompany{{this.company_id}}">{{this.company_name}}</a></li>
 							     {{/each}} 

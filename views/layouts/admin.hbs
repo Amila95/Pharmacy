@@ -60,37 +60,101 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                    <i class="fa fa-adjust"></i>
+                    <span class="label label-success">{{extime}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header"><a href="/admin/viewexpride"> {{extime}} Product came Expried</a></li>
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            {{#each exiteam}}
+                                <li>
+                                    <!-- start message -->
+
+                                    <a href="/admin/message{{this.product_id}}">
+                                        <div class="pull-left">
+                                            <img src={{this.Image}} class="img-circle" alt="User Image">
+                                        </div>
+                                        <h4>
+                                            {{this.product_name}}
+
+                                        </h4>
+
+                                    </a>
+                                </li>
+                            {{/each}}
+                            <!-- end message -->
+                        </ul>
+                    </li>
+                    <li class="footer"><a href="#">See All Messages</a></li>
+                </ul>
+            </li>
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                    <i class="fa fa-ban"></i>
+                    <span class="label label-success">{{reorder}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header"><a href="/admin/viewreorder"> {{reorder}} Product came reordered</a></li>
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            {{#each redata}}
+                                <li>
+                                    <!-- start message -->
+
+                                    <a href="/admin/message{{this.product_id}}">
+                                        <div class="pull-left">
+                                            <img src={{this.Image}} class="img-circle" alt="User Image">
+                                        </div>
+                                        <h4>
+                                            {{this.product_name}}
+
+                                        </h4>
+
+                                    </a>
+                                </li>
+                            {{/each}}
+                            <!-- end message -->
+                        </ul>
+                    </li>
+                    <li class="footer"><a href="#">See All Messages</a></li>
+                </ul>
+            </li>
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">{{nummessage}}</span>
+                <i class="fa fa-envelope-o"></i>
+                <span class="label label-success">{{nummessage}}</span>
             </a>
             <ul class="dropdown-menu">
                 <li class="header"><a href="/admin/viewallmessage">You have {{nummessage}} messages</a></li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                  <ul class="menu">
-                      {{#each message}}
-                      <li>
-                          <!-- start message -->
+                <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                        {{#each message}}
+                            <li>
+                                <!-- start message -->
 
-                          <a href="/admin/message{{this.dis_id}}">
-                              <div class="pull-left">
-                                  <img src={{this.logo}} class="img-circle" alt="User Image">
-                              </div>
-                              <h4>
-                                  {{this.pharmacy_name}}
-                                  <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                              </h4>
-                              <p>{{this.type}}</p>
-                          </a>
-                      </li>
-                      {{/each}}
-                      <!-- end message -->
-                  </ul>
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+                                <a href="/admin/message{{this.dis_id}}">
+                                    <div class="pull-left">
+                                        <img src={{this.logo}} class="img-circle" alt="User Image">
+                                    </div>
+                                    <h4>
+                                        {{this.pharmacy_name}}
+                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                    </h4>
+                                    <p>{{this.type}}</p>
+                                </a>
+                            </li>
+                        {{/each}}
+                        <!-- end message -->
+                    </ul>
+                </li>
+                <li class="footer"><a href="#">See All Messages</a></li>
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->

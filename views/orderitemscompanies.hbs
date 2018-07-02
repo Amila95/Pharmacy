@@ -1,3 +1,33 @@
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.search-box input[type="text"]').on("keyup input", function(){
+            /* Get input value on change */
+            var inputVal = $(this).val();
+            var resultDropdown = $(this).siblings(".result");
+            if(inputVal.length){
+                $.get("/item"+ inputVal).done(function(data){
+                    // Display the returned data in browser
+                    /*dataarry =JSON.parse(data);
+                    for(i=0;i<dataarry.length;i++){
+                        console.log(dataarry[i]);
+                        resultDropdown.html(dataarry[i]);
+                    }*/
+                    resultDropdown.html(JSON.parse(data));
+                });
+            } else{
+                resultDropdown.empty();
+            }
+        });
+
+        // Set search input value on click of result item
+        $(document).on("click", ".result p", function(){
+            $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
+            $(this).parent(".result").empty();
+        });
+    });
+</script>
 <div class="main">
     <div class="wrap">
 
@@ -8,8 +38,16 @@
             <div class="product-details">
 
 
-
                 <h2>{{this.company_name}} </h2>
+
+                <form method="post" action="/searchproduct{{this.company_id}}">
+                    <div class="search-box">
+                        <input type="text" autocomplete="off" placeholder="Search ..."  name="srch"/>
+                        <div class="result"></div>
+                    </div>
+                    <input type="submit" value="">
+                </form>
+
             {{/each}}
             <!--Table-->
 
@@ -27,6 +65,7 @@
                 </tr>
                 </thead>
                 <!--Table head-->
+
 
                 <!--Table body-->
                 <tbody>

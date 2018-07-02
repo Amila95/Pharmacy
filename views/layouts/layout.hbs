@@ -15,6 +15,7 @@
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
     <!-- -->
     <!-- Location picker -->
     <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
@@ -44,6 +45,45 @@
         .dropdown:hover .dropdown-content {
             display: block;
             color: red;
+        }
+    </style>
+    <style type="text/css">
+        body{
+            font-family: Arail, sans-serif;
+        }
+        /* Formatting search box */
+        .search-box{
+            width: 300px;
+            position: relative;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .search-box input[type="text"]{
+            height: 32px;
+            padding: 5px 10px;
+            border: 1px solid #CCCCCC;
+            font-size: 14px;
+        }
+        .result{
+            position: absolute;
+            z-index: 999;
+            top: 100%;
+            left: 0;
+        }
+        .search-box input[type="text"], .result{
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* Formatting result items */
+        .result p{
+            margin: 2px;
+            padding: 7px 10px;
+            border: 1px solid #CCCCCC;
+            border-top: none;
+            cursor: pointer;
+        }
+        .result p:hover{
+            background: #f2f2f2;
         }
     </style>
 </head>

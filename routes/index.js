@@ -139,6 +139,8 @@ router.get('/login', function (req, res, next) {
 
 router.get('/order', function (req, res, next) {
     var total = 0;
+    var name = "amila";
+    var company = [];
     connection.query('SELECT * FROM company', function (err, rows) {
         connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row1) {
             const oder_id = (row1[0].order_id + 1);
@@ -147,8 +149,11 @@ router.get('/order', function (req, res, next) {
                 for (var i = row.length - 1; i >= 0; i--) {
                     total = total + row[i].price;
                 }
+                for (i = 0; i = rows.lenght; i++) {
+                    company.push(rows[i].company_name);
+                }
                 console.log(total)
-                res.render('order', { companys: rows, items: row, price: total });
+                res.render('order', { companys: JSON.stringify(company), items: row, price: total ,company:rows});
             })
         })
 
@@ -1817,16 +1822,64 @@ router.post('/searchcompany', function (req, res, next) {
     })
 })
 
-router.get('/search', function (req, res) {
-    connection.query('SELECT * FROM product WHERE product_name LIKE = ? ', ["%" + req.query.key + "%"], function (err, rows) {
+router.get('/search:id',function(req,res){
+    connection.query('SELECT company_name from company where company_name like "%'+req.params.id+'%"', function(err, rows, fields) {
         if (err) throw err;
-        var data = [];
-        for (i = 0; i < rows.length; i++) {
-            data.push(rows[i].product_name);
+        console.log(req.params.id);
+        var data=[];
+        for(i=0;i<rows.length;i++)
+        {
+            data.push(rows[i].company_name);
+            //res.write((rows[i].company_name));
         }
+        /*for(i=0;i<data.length;i++){
+            res.write(JSON.stringify(data[i]));
+        }*/
+        console.log(JSON.stringify(data));
         res.end(JSON.stringify(data));
-    })
+        /*i = data.length;
+        while(i){
+            console.log((data[i-1]));
+
+            res.end((data[i-1]));
+            //res.end(JSON.stringify(data[1]));
+            i=i-1;
+
+       }*/
+    });
+
+
 })
+
+router.get('/item:id',function(req,res){
+    connection.query('SELECT product_name from products where product_name like "'+req.params.id+'%"', function(err, rows, fields) {
+        if (err) throw err;
+        console.log(req.params.id);
+        var data=[];
+        for(i=0;i<rows.length;i++)
+        {
+            data.push(rows[i].product_name);
+            //res.write((rows[i].company_name));
+        }
+        /*for(i=0;i<data.length;i++){
+            res.write(JSON.stringify(data[i]));
+        }*/
+        console.log(JSON.stringify(data));
+        res.end(JSON.stringify(data));
+        /*i = data.length;
+        while(i){
+            console.log((data[i-1]));
+
+            res.end((data[i-1]));
+            //res.end(JSON.stringify(data[1]));
+            i=i-1;
+
+       }*/
+    });
+
+
+});
+
 router.get('/myaccount', function (req, res) {
     const user_id = req.user.user_id;
     connection.query('SELECT * FROM users WHERE user_id=?', [user_id], function (err, rows) {
@@ -2049,6 +2102,49 @@ router.get('/appvieworder:id', function (req, res, next) {
         })
        
     })
+})
+
+/*router.get('/search', function (req, res) {
+    connection.query('SELECT company_name from company where company_name like "%' + req.query.key + '%"',
+        function (err, rows, fields) {
+            if (err) throw err;
+            var data = [];
+            for (i = 0; i < rows.length; i++) {
+                data.push(rows[i].company_name);
+            }
+            res.end(JSON.stringify(data));
+        });
+});*/
+
+router.post('/searchproduct:id',function (req,res,next) {
+    var company_id = req.params.id;
+    var product_name = req.body.srch;
+    console.log(product_name);
+    connection.query('SELECT * FROM products WHERE company_id = ? AND stock> 0 AND product_name like "%' +req.body.srch+'%"',[company_id],function (err,row1) {
+        connection.query('SELECT * FROM company WHERE company_id = ?', [company_id], function (err, row2) {
+            connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row4) {
+                console.log(row1);
+                if (row4.length > 0) {
+                    const oder_id = (row4[0].order_id + 1);
+                    connection.query('SELECT products.product_id,products.product_name,oderlist.units, oderlist.batch_id , products.brand FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?', [company_id, oder_id], function (err, row3) {
+                        res.render('orderitemscompanies', { products: row1, company: row2, list: row3 });
+                    })
+                } else {
+                    res.render('orderitemscompanies', { products: row1, company: row2 });
+                }
+
+
+            });
+            /*console.log(row1);
+
+            console.log(row2);
+            res.render('orderitemscompanies', {products:row1 , company:row2});*/
+        });
+
+
+
+    })
+
 })
 
 module.exports = router;
