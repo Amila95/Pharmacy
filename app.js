@@ -33,7 +33,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 
