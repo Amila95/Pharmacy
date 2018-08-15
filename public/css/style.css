@@ -226,7 +226,7 @@ body {
 }
 .header_bottom_left{
 	float:left;
-	width:25%;
+	width:20%;
 }
 .categories{
 	border:1px solid #EEE;
@@ -261,7 +261,7 @@ body {
 }
 .header_bottom_right{
 	float:left;
-	width:74%;
+	width:80%;
 	padding-left:1%;
 }
 /***** Content *****/
@@ -301,6 +301,7 @@ body {
 }
 .images_1_of_5 {
 	width: 15.72%;
+    height:300px;
 	padding:1.5%; 
 	text-align: center;
 	position: relative;
@@ -964,7 +965,7 @@ body {
 		float:none;
 		width:100%;
 		padding-left:0;
-		margin-top:10px;
+		margin-top:0px;
 	}
 	.header_bottom_left{
 		float:none;

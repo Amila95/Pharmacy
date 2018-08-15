@@ -4,7 +4,7 @@
     }
     /* Formatting search box */
     .search-box{
-        width: 300px;
+        width: 265px;
         position: relative;
         display: inline-block;
         font-size: 14px;
@@ -86,17 +86,21 @@
             <input type="submit" value="">
         </form>
     </li>-->
-   <!-- <form autocomplete="off" action="/action_page.php">
+                <!-- <form autocomplete="off" action="/action_page.php">
         <div class="autocomplete" style="width:300px;">
             <input id="myInput" type="text" name="myCountry" placeholder="Country">
         </div>
         <input type="submit">
     </form>-->
-                <div class="search-box">
-                    <input type="text" autocomplete="off" placeholder="Search ..." />
-                    <div class="result"></div>
-                </div>
-
+                
+                <form method="post" action="/searchcompany">
+                    <div class="search-box">
+                        <input type="text" autocomplete="off" placeholder="Search ..." name="srch"/>
+                        <div class="result"></div>
+                    </div>
+                    
+                </form>
+                
                 {{#each company}}
                 <li><a href="/ordercompany{{ this.company_id }}">{{this.company_name}}</a></li>
                 {{/each}}
@@ -112,13 +116,13 @@
             <!--Table head-->
             <thead class="blue-grey lighten-4">
                 <tr>
-                    <th>Item Name</th>
-                    <th>Brand</th>
-                    <th>Batch ID</th>
-                    <th>Ex Date</th>
-                    <th>Unit Price</th>
-                    <th>Number Of Unit</th>
-                    <th>Price</th>
+                    <th ><strong>Item Name</thalign="center">
+                    <th><strong>Brand</th>
+                    <th><strong>Batch ID</th>
+                    <th><strong>Ex Date</th>
+                    <th><strong>Unit Price</th>
+                    <th><strong>Units</th>
+                    <th><strong>Price</th>
                     <th></th>
                 </tr>
             </thead>
@@ -129,26 +133,31 @@
             <tbody>
                 {{#each items}}
                 <tr>
-                    <td>{{this.product_name}}</td>
-                    <td>{{this.brand}}</td>
-                    <td>{{this.batch_No}}</td>
-                    <td>{{this.ex_date}}</td>
-                    <td>{{this.price}}</td>
-                    <td>{{this.units}}</td>
-                    <td>{{this.price}}</td>
+                    <td><small>{{this.product_name}}</small></td>
+                    <td><small>{{this.brand}}</small></td>
+                    <td align="center"><small>{{this.batch_No}}</small></td>
+                    <td><small>{{this.ex_date}}</small></td>
+                    <td align="center"><small>{{this.unitprice}}</small></td>
+                    <td align="center"><small>{{this.units}}</small></td>
+                    <td><small>{{this.price}}</small></td>
                     <td>
-                        <a href="/updateorder{{this.product_id}}"> <button type="button" class="btn btn-primary">Update</button></a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                        <a href="/updateorder{{this.product_id}}"> <button type="button" class="btn  btn-primary btn-sm">Update</button></a> &nbsp &nbsp  
 
-                        <a href="/deleteorder{{this.product_id}}"> <button type="button" class="btn btn-danger">Delete</button> </a>
+                        <a href="/deleteorder{{this.product_id}}"> <button type="button" class="btn btn-danger btn-sm">Delete</button> </a>
                     </td>
                 </tr>
                 {{/each}}
 
                 <tr>
+                    <th><b><strong>Total Price</th>
                     <th></th>
-                    <th>Total Price</th>
                     <th></th>
-                    <th>{{price}}</th>
+
+                    <th></th>
+
+                    <th></th>
+                    <th></th>
+                    <th><b><strong>{{price}}</th>
                     <th></th>
                 </tr>
 
@@ -163,8 +172,7 @@
     </div>
     <div class="clear"></div>
 </div>
-   		</div>
-   </div>
+   		
 <!------------End Header ------------>
 <div class="wish-list">
     <ul>

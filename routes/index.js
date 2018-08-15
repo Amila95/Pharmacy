@@ -45,53 +45,7 @@ router.post('/upload', function (req, res) {
 });
 
 
-/*var upload = multer({dest: 'public/upload/'});
 
-router.post('/upload',upload.any(), function(req, res, next){
-   res.send(req.files);
-
-})*/
-
-/*const multerConf = {
-  storage : multer.diskStorage({
-    destination :function(req,file, next){
-      next(null, './public/images');
-    },
-    filename: function(req, file, next){
-      const ext = file.minetype.split('/')[1];
-      next(null, file.fieldname + '-' + Date.now() +'-'+ ext);
-
-    }
-  }),
-  fileFliter: function(req, file, next){
-    if(! file){
-      next();
-    }
-    const image = file.minetype.startsWith('image/');
-  if(image){
-    next(null,true);
-  }else{
-    next(null,false);
-  }
-}
-}*/
-
-
-/*router.post('/upload',multer(multerConf).single('photo'),function(req,res){
-  res.send('this is post rout upload');
-})*/
-
-/*router.get('/',function(req,res,next){
-  res.json([
-  {
-    id: 1,
-    message:"Hello Ionic"
-  },
-  {
-    id: 2,
-    message:"This is another message"
-  }])
-})*/
 
 router.get('/', function (req, res, next) {
     console.log(req.user);
@@ -100,6 +54,7 @@ router.get('/', function (req, res, next) {
         connection.query('SELECT * FROM company', function (err, row1) {
             connection.query('SELECT* FROM products WHERE new_list=1', function (err, row2) {
                 res.render('home', { title: 'Express', special: rows, companies: row1, new: row2 });
+
 
             })
 
@@ -110,13 +65,29 @@ router.get('/', function (req, res, next) {
 
     });
 })
-router.get('/index', function (req, res, next) {
-    console.log(req.user);
-    console.log(req.isAuthenticated());
-    connection.query('SELECT * FROM products WHERE special_list = 1', function (err, rows) {
+router.get('/index', function (req, res, next) { 
+    user_id = req.user.user_id;
+    console.log(user_id);
+    //console.log(req.isAuthenticated());*/
+    connection.query('SELECT * FROM products WHERE special_list = 1', function (err, row4) {
+            console.log(row4.length);
+            
         connection.query('SELECT * FROM company', function (err, row1) {
             connection.query('SELECT* FROM products WHERE new_list=1', function (err, row2) {
-                res.render('index', { title: 'Express', special: rows, companies: row1, new: row2 });
+                connection.query('SELECT * FROM payment WHERE approval = 1 AND seen = 0 AND user_id = ?', [user_id], function (err,row) {
+                   connection.query('SELECT * FROM discuss WHERE reply IS NOT null AND reply_seen = 0 AND user_id = ? ', [user_id], function (err, row1) {  
+                        
+                        console.log(row);
+                        //var num1 = row5.lenght;
+                        console.log(row.lenght);
+                        //console.log(row3.lenght);
+                        noti = row.length + row1.length;
+                        console.log(noti);
+                        res.render('pharmacy/home', { title: 'Express', special: row4, companies: row1, new: row2, noti:noti });
+                    })
+
+                })
+               
 
             })
 
@@ -145,7 +116,7 @@ router.get('/order', function (req, res, next) {
         connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row1) {
             const oder_id = (row1[0].order_id + 1);
             console.log(oder_id);
-            connection.query('SELECT products.product_id, products.product_name, products.brand, products.price, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = ?', [oder_id], function (err, row) {
+            connection.query('SELECT products.product_id, products.product_name, products.brand, products.price AS unitprice, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = ?', [oder_id], function (err, row) {
                 for (var i = row.length - 1; i >= 0; i--) {
                     total = total + row[i].price;
                 }
@@ -228,7 +199,7 @@ router.get('/ordercompany:id', function (req, res) {
             connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row4) {
                 if (row4.length > 0) {
                     const oder_id = (row4[0].order_id + 1);
-                    connection.query('SELECT products.product_id,products.product_name,oderlist.units, oderlist.batch_id , products.brand FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?', [company_id, oder_id], function (err, row3) {
+                    connection.query('SELECT products.product_id,products.product_name,products.model,oderlist.units, oderlist.batch_id , products.brand FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?', [company_id, oder_id], function (err, row3) {
                         res.render('orderitemscompanies', { products: row1, company: row2, list: row3 });
                     })
                 } else {
@@ -249,23 +220,6 @@ router.get('/ordercompany:id', function (req, res) {
 
 });
 
-/*router.get('/ordercompany:id',function(req, res ){
-  var company_id = req.params.id;
-  console.log(company_id);
-  connection.query('SELECT * FROM products WHERE company_id = ? AND stock> 0',[company_id],function(err,row1){
-      connection.query('SELECT * FROM company WHERE company_id = ?',[company_id],function(err,row2){
-    console.log(row1);
-
-    console.log(row2);
-    res.render('orderitemscompanies', {products:row1 , company:row2});
-  });
-
-  });
-
-
-
-});
-*/
 
 router.get('/products:id', function (req, res) {
     var product_id = req.params.id;
@@ -1411,68 +1365,6 @@ router.post('/orderitem:id', function (req, res) {
     })
 })
 
-
-
-
-
-
-/*router.post('/oderlist:id', function(req,res){
-  connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1',function(err,row){
-    const oder_id =  (row[0].order_id + 1);
-    console.log(oder_id);
-    const units = req.body.units;
-    var product_id = req.params.id;
-    connection.query('SELECT * FROM  products WHERE product_id = ?',[product_id],function(err,row2){
-       var stock = parseInt(row2[0].stock);
-      connection.query('SELECT * FROM oderlist WHERE oder_id = ? AND item_id=?',[oder_id,product_id],function(err,row3){
-        if(row3.length>0){
-          var pre_stock = parseInt(row3[0].units);
-          var bill_stock = parseInt(units)+parseInt(pre_stock)
-          var new_stock = parseInt(stock) -(parseInt(units)+parseInt(pre_stock));
-          console.log(new_stock);
-          if(new_stock >= 0){
-            connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
-            const pre_price = row3[0].price;
-            const item_name = row1[0].product_name;
-            const price = row1[0].price * bill_stock;
-            connection.query('UPDATE oderlist SET price = ? ,units = ? WHERE oder_id=? AND item_id=?',[price,bill_stock,oder_id,product_id],function(err,result){
-              if(err) throw err;
-              res.redirect('/order');
-            })
-          })}
-            else{
-            res.redirect('back');
-          }
-        }else{
-
-
-      new_stock = stock - units;
-      if(new_stock >=0){
-        connection.query('SELECT * FROM products WHERE product_id = ?',[product_id],function(err,row1){
-        const item_name = row1[0].product_name;
-        const price = row1[0].price * units;
-
-        connection.query('INSERT INTO oderlist(oder_id,item_id,units,item_name,price) VALUES (?,?,?,?,?)',[oder_id,product_id,units,item_name,price],function(err){
-        if(err) throw err;
-        res.redirect('/order');
-  })
-  });
-      }
-      else{
-        res.redirect('back');
-      }
-    }
-    })
-    })
-
-
-
-
-
-  })
-
-});*/
-
 router.post('/abcdef:id', function (req, res) {
     connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row) {
         const oder_id = (row[0].order_id + 1);
@@ -1536,7 +1428,7 @@ router.post('/abcdef:id', function (req, res) {
 
 router.get('/deleteorder:id', function (req, res) {
     const item_id = req.params.id;
-    connection.query('SELECT * FROM payment ORDER BY oder_id DESC LIMIT 1', function (err, row) {
+    connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row) {
         const oder_id = (row[0].order_id + 1);
         connection.query('DELETE FROM oderlist WHERE item_id =? AND oder_id =?', [item_id, oder_id], function (err) {
             if (err) throw err;
@@ -1545,11 +1437,6 @@ router.get('/deleteorder:id', function (req, res) {
     })
 })
 
-/*Router.get('/newproduct',function(req, res){
-  connection.query('SELECT * FROM products WHERE special_list = 1',function(err,rows){
-
-  })
-})*/
 
 router.get('/cansaleOrder', function (req, res, next) {
     connection.query('SELECT * FROM payment ORDER BY order_id DESC LIMIT 1', function (err, row) {
@@ -1803,14 +1690,17 @@ router.get('/viewcompany:id', function (req, res, next) {
 })
 
 router.post('/searchcompany', function (req, res, next) {
-    company_name = req.body.srch;
-    connection.query('SELECT * FROM company WHERE company_name LIKE ?', ['%' + company_name + '%'], function (err, row) {
+    var company_name = req.body.srch;
+    console.log(company_name);
+    connection.query('SELECT * FROM company WHERE company_name LIKE ?', [ '%'+company_name + '%'], function (err, row) {
         if (row.length = 1) {
             console.log(row);
             var company_id = row[0].company_id;
             connection.query('SELECT * FROM company WHERE company_id=?', [company_id], function (err, rows) {
                 connection.query('SELECT * FROM products WHERE company_id = ?', [company_id], function (err, row1) {
-                    res.render('orderproduct', { company: rows, products: row1 })
+                    //res.render('orderitemscompanies', { company: rows, products: row1 })
+                    res.redirect('/ordercompany' + rows[0].company_id);
+                   
                 })
 
             })
@@ -1884,8 +1774,8 @@ router.get('/myaccount', function (req, res) {
     const user_id = req.user.user_id;
     connection.query('SELECT * FROM users WHERE user_id=?', [user_id], function (err, rows) {
         connection.query('SELECT * FROM payment WHERE user_id=? AND approval=? ORDER BY order_id DESC', [user_id, 0], function (err, row1) {
-            connection.query('SELECT * FROM payment WHERE user_id=? AND approval=? ORDER BY order_id DESC', [user_id, 1], function (err, row2) {
-                connection.query('SELECT * FROM discuss WHERE user_id = ? ORDER BY dis_id DESC', [user_id], function (err, row3) {
+            connection.query('SELECT * FROM payment WHERE user_id=? AND approval=? ORDER BY order_id DESC LIMIT 8', [user_id, 1], function (err, row2) {
+                connection.query('SELECT * FROM discuss WHERE user_id = ? ORDER BY dis_id DESC LIMIT 8', [user_id], function (err, row3) {
                     res.render('account', { layout: 'profile', user: rows, oders: row1, apoder: row2 , discuss:row3})
                 })
 
@@ -2126,7 +2016,7 @@ router.post('/searchproduct:id',function (req,res,next) {
                 console.log(row1);
                 if (row4.length > 0) {
                     const oder_id = (row4[0].order_id + 1);
-                    connection.query('SELECT products.product_id,products.product_name,oderlist.units, oderlist.batch_id , products.brand FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?', [company_id, oder_id], function (err, row3) {
+                    connection.query('SELECT products.product_id,products.product_name,products.model,oderlist.units, oderlist.batch_id , products.brand FROM products INNER JOIN oderlist ON products.product_id = oderlist.item_id WHERE products.company_id = ? AND oderlist.oder_id=?', [company_id, oder_id], function (err, row3) {
                         res.render('orderitemscompanies', { products: row1, company: row2, list: row3 });
                     })
                 } else {
@@ -2146,6 +2036,8 @@ router.post('/searchproduct:id',function (req,res,next) {
     })
 
 })
+
+
 
 module.exports = router;
 //SELECT products.product_name, products.brand, products.price, oderlist.units, oderlist.price, stock.ex_date, stock.batch_No FROM products, oderlist, stock WHERE stock.batch_No = oderlist.batch_id AND products.product_id = oderlist.item_id AND oderlist.oder_id = 101

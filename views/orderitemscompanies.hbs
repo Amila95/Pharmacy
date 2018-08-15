@@ -28,97 +28,100 @@
         });
     });
 </script>
-<div class="main">
-    <div class="wrap">
+
+    <div class="main">
+        <div class="wrap">
 
 
-        <div class="section group">
-            {{#each company}}
+            <div class="section group">
+                {{#each company}}
 
-            <div class="product-details">
-
-
-                <h2>{{this.company_name}} </h2>
-
-                <form method="post" action="/searchproduct{{this.company_id}}">
-                    <div class="search-box">
-                        <input type="text" autocomplete="off" placeholder="Search ..."  name="srch"/>
-                        <div class="result"></div>
-                    </div>
-                    <input type="submit" value="">
-                </form>
-
-            {{/each}}
-            <!--Table-->
+                <div class="product-details">
 
 
-            <table class="table">
+                    <h2>{{this.company_name}} </h2>
 
-                <!--Table head-->
-                <thead>
-                <tr>
-                    <th>Product </th>
-                    <th>Brand</th>
-                    <th>Batch ID</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-                <!--Table head-->
-
-
-                <!--Table body-->
-                <tbody>
-                {{#each list}}
-                    <tr>
-                        <th class="table-primary" scope="row">{{this.product_name}}</th>
-                        <td class="table-primary">{{this.brand}}</td>
-                        <td class="table-primary"> {{this.batch_id}}</td>
-                        
-                        <td class="table-primary"><input class="col-md-3" type="text" placeholder="{{this.units}}" Name="units"></td>
-                    </tr>
+                    <form method="post" action="/searchproduct{{this.company_id}}">
+                        <div class="search-box">
+                            <input type="text" autocomplete="off" placeholder="Search ..." name="srch" />
+                            <div class="result"></div>
+                        </div>
+                        <!-- <input type="submit" value="">-->
+                    </form>
 
                     {{/each}}
-{{#each products}}
-                <tr>
-                    <th scope="row">{{this.product_name}}</th>
-                    <td>{{this.brand}}</td>
+                    <!--Table-->
+                    </br>
+                    <table class="table">
 
-                    <td><a href= "/products{{this.product_id}}"><button type="button" class="btn btn-primary btn-rounded">View</button></a></td>
-                    <form   method="post" action="/oderlist{{product_id}}" >
-                    <td><input class="col-md-3" type="text" placeholder="Order Qty" Name="units">
-                        <button type="submit" class="label label-primary" >Add To</button>
-                    </td>
+                        <!--Table head-->
+                        <thead>
+                            <tr>
+                                <th>Product </th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Batch ID</th>
+                                <th></th>
 
-                    </form>
-                </tr>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+                        <!--Table body-->
+                        <tbody>
+                            {{#each list}}
+                            <tr>
+                                <th class="table-primary" scope="row">{{this.product_name}}</th>
+                                <td class="table-primary">{{this.brand}}</td>
+                                <td class="table-primary">{{this.model}}</tdclass="table-primary">
+                                <td class="table-primary"> {{this.batch_id}}</td>
 
-{{/each}}
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><a href='/order'><button type="button" class="btn btn-info">Back To List</button></a></td>
-                </tr>
-                </tbody>
-                <!--Table body-->
+                                <td class="table-primary"><input class="col-md-3" type="text" placeholder="{{this.units}}" Name="units"></td>
+                            </tr>
 
-            </table>
-            <!--Table-->
+                            {{/each}}
+                            {{#each products}}
+                            <tr>
+                                <th scope="row"><small>{{this.product_name}}</small></th>
+                                <td>{{this.brand}}</td>
+                                <td>{{this.model}}</td>
+                                <td><a href="/products{{this.product_id}}"><button type="button" class="btn btn-primary btn-rounded btn-sm">View</button></a></td>
 
+                                <form method="post" action="/oderlist{{product_id}}">
+                                    <td>
+                                        <input class="col-md-3" type="text" placeholder="Order Qty" Name="units">
+                                        <button type="submit" class="label label-primary btn-sm">Add To</button>
+                                    </td>
+
+                                </form>
+                            </tr>
+
+                            {{/each}}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href='/order'><button type="button" class="btn btn-info">Back To List</button></a></td>
+                            </tr>
+                        </tbody>
+                        <!--Table body-->
+
+                    </table>
+                    <!--Table-->
+
+
+                </div>
+
+
+
+
+                <div class="clear"></div>
+            </div>
 
         </div>
 
-
-
-
-            <div class="clear"></div>
-        </div>
-
-        </div>
-
-        </div>
     </div>
 
-</div>
+   
+
 
