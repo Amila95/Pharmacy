@@ -32,6 +32,7 @@ connection.query('SELECT first_name from TABLE NAME where first_name like "%'+re
 	});
 });
 
-var server=app.listen(3000,function(){
-console.log("We have started our server on port 3000");
+app.listen(4000, () => {
+    console.log(App listening on port ${ PORT });
+    console.log('Press Ctrl+C to quit.');
 });
