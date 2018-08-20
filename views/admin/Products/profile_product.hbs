@@ -70,7 +70,7 @@
           <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Bar Chart</h3>
+              <h3 class="box-title">Sales Details</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -111,22 +111,25 @@
                                     <th>Batch No</th>
                                     <th>Exdate</th>
                                     <th>Qty</th>
+                                    <th></th>
 
                                     <!-- <th>Sent Date</th>-->
                                     <th></th>
                                 </tr>
                                 {{#each stock}}
-                                    <tr>
+                                <tr>
 
-                                        <td>{{this.batch_No}}</td>
-                                        <td>{{this.ex_date}}</td>
-                                        <td>{{this.qty}}</td>
+                                    <td>{{this.batch_No}}</td>
+                                    <td>{{this.ex_date}}</td>
+                                    <td>{{this.qty}}</td>
+                                    
+                                    <td><a href='/admin/delete_batch{{this.batch_No}}'><span class="label label-danger">Delete</span></a></td>
 
 
 
 
 
-                                    </tr>
+                                </tr>
                                 {{/each}}
                             </table>
                         </div>

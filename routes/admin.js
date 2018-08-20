@@ -807,7 +807,7 @@ router.get('/report',function(req,res){
 router.post('/daliyreport',function(req,res){
 	const date = req.body.date;
 	console.log(date);
-	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time LIKE ? GROUP BY oderlist.oder_id ',[date+'%'],function(err,rows){
+    connection.query('SELECT SUM(oderlist.units) AS units, oderlist.item_id, oderlist.item_name FROM oderlist INNER JOIN payment ON oderlist.oder_id = payment.order_id WHERE payment.order_date LIKE ? GROUP BY oderlist.item_id',[date+'%'],function(err,rows){
 		console.log(rows);
 		res.render('admin/Report/daily',{layout:'admin',recodes:rows})
 	})
@@ -815,8 +815,10 @@ router.post('/daliyreport',function(req,res){
 
 router.post('/monthlyreport',function(req,res){
 	const date1 = req.body.date1;
-	const date2 = req.body.date2;
-	connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN recodes ON oderlist.oder_id=recodes.oder_id WHERE recodes.orderd_time BETWEEN  ? AND  ? GROUP BY oderlist.oder_id ',[date1,date2],function(err,rows){
+    const date2 = req.body.date2;
+    console.log(date1);
+    console.log(date2);
+    connection.query('SELECT SUM(oderlist.units) AS units,oderlist.item_id,oderlist.item_name FROM oderlist INNER JOIN payment ON oderlist.oder_id=payment.order_id WHERE payment.order_date BETWEEN ? AND ? GROUP BY oderlist.item_id',[date1,date2],function(err,rows){
 		console.log(rows);
 		res.render('admin/Report/daily',{layout:'admin',recodes:rows})
 	})
@@ -879,11 +881,24 @@ router.get('/viewreorder',function (req,res) {
 
    
 router.get('/viewexpride',function (req,res) {
-    connection.query('SELECT stock.batch_No, stock.ex_date,stock.qty,products.product_name,products.Image,products.company_id FROM stock INNER JOIN products ON stock.product_id=products.product_id WHERE stock.ex_date < DATE_ADD(curdate(), INTERVAL 30 DAY) AND available = 1',function (err,row) {
+    connection.query('SELECT stock.batch_No, stock.ex_date,stock.qty,products.product_name,products.Image,products.company_id,products.product_id FROM stock INNER JOIN products ON stock.product_id=products.product_id WHERE stock.ex_date < DATE_ADD(curdate(), INTERVAL 30 DAY) AND available = 1',function (err,row) {
         res.render('admin/Notification/exdate', { layout: 'admin', member: row })
     })
 })
 
+router.get('/delete_batch:id', function (req, res) {
+    batch_id = req.params.id;
+    console.log(batch_id);
+    console.log("abnmv");
+    connection.query('UPDATE stock SET available = ? WHERE batch_No = ? ',[0, batch_id], function (err, rows) {
+        res.redirect('back');
+    })
+})
+
+
 
 module.exports = router; 
- 
+
+//SELECT SUM(oderlist.units) AS units, oderlist.item_id, oderlist.item_name FROM oderlist INNER JOIN payment ON oderlist.oder_id = payment.order_id WHERE payment.order_date LIKE '2018-08-19' GROUP BY oderlist.oder_id
+//SELECT SUM(oderlist.units) AS units, oderlist.item_id, oderlist.item_name FROM oderlist INNER JOIN payment ON oderlist.oder_id = payment.order_id WHERE payment.order_date LIKE '2018-08-19' GROUP BY oderlist.oder_id
+//SELECT SUM(oderlist.units) AS units, oderlist.item_id, oderlist.item_name FROM oderlist INNER JOIN payment ON oderlist.oder_id = payment.order_id WHERE payment.order_date LIKE '2018-08-19' GROUP BY oderlist.item_id

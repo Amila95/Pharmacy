@@ -3,47 +3,67 @@
             <div class="box-header">
               <h3 class="box-title">Reports</h3>
             </div>
+              Daliy Report
             <div class="box-body">
               <!-- Date -->
-            <form method="post" action="/admin/daliyreport">
-              <div class="form-group">
-                <label>Date:</label>
+                <form method="post" action="/admin/daliyreport">
+                    
+                        <div class="form-group">
 
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="datemask" name="date">
-                </div>
-                <!-- /.input group -->
-              </div>
-              <!-- /.form group -->
-              
-              <div class="col-md-10" ></div>
+                            <label>Date:</label>
+
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <!--<input type="text" class="form-control pull-right" id="datemask" name="date">-->
+                                <div>
+                                    <input id="date" type="date" name="date">
 
 
-              <div class="col-md-2">
-              <button type="submit" class="btn btn-block btn-primary" >Submit</button>
-              </div>
-            </form>
+                                </div>
+                           
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                    <!-- /.form group -->
+
+                    <div class="col-md-10"></div>
+
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-block btn-primary">Genarate Report</button>
+                    </div>
+                </form>
+                Monthly Report
             <form method="post" action="/admin/monthlyreport">
               <div class="form-group">
-                <label>Date:</label>
+                <label>From Date:</label>
 
                 <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="datemask" name="date1">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <!--input type="text" class="form-control pull-right" id="datemask" name="date1">-->
+                    <div>
+                        <input id="date1" type="date" name="date1">
+
+
+                    </div>
                 </div>
 
-                <label>Date:</label>
+                <label>To Date:</label>
 
                 <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="datemask2" name="date2">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <!-- <input type="text" class="form-control pull-right" id="datemask2" name="date2">-->
+                    <div>
+                        <input id="date2" type="date" name="date2">
+
+
+                    </div>
                 </div>
 
                 <!-- /.input group -->
@@ -54,7 +74,7 @@
 
 
               <div class="col-md-2">
-              <button type="submit" class="btn btn-block btn-primary" >Submit</button>
+                  <button type="submit" class="btn btn-block btn-primary">Genarate Report</button>
               </div>
             </form>
 

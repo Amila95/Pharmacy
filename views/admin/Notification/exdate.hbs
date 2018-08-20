@@ -27,20 +27,22 @@
                                     <th>Ex Date</th>
                                     <!-- <th>Sent Date</th>-->
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 {{#each member}}
-                                    <tr>
+                                <tr>
 
-                                        <td><img src={{this.Image}} class="img-circle" width="50" height="50"></td>
-                                        <td>{{this.product_name}}</td>
-                                        <td>{{this.batch_No}}</td>
-                                        <td>{{this.qty}}</td>
-                                        <td>{{this.ex_date}}</td>
-                                        <td><a href='/admin/message{{this.dis_id}}'><span class="label label-success">View</span></a></td>
+                                    <td><img src={{this.Image}} class="img-circle" width="50" height="50"></td>
+                                    <td>{{this.product_name}}</td>
+                                    <td>{{this.batch_No}}</td>
+                                    <td>{{this.qty}}</td>
+                                    <td>{{this.ex_date}}</td>
+                                    <td><a href='/admin/view_product_profile{{this.product_id}}'><span class="label label-primary">View</span></a></td>
+                                    <td><a href='/admin/delete_batch{{this.batch_No}}'><span class="label label-danger">Remove</span></a></td>
 
 
 
-                                    </tr>
+                                </tr>
                                 {{/each}}
                             </table>
                         </div>
