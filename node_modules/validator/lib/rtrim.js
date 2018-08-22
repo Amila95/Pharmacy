@@ -16,7 +16,9 @@ function rtrim(str, chars) {
   var pattern = chars ? new RegExp('[' + chars + ']') : /\s/;
 
   var idx = str.length - 1;
-  for (; idx >= 0 && pattern.test(str[idx]); idx--) {}
+  while (idx >= 0 && pattern.test(str[idx])) {
+    idx--;
+  }
 
   return idx < str.length ? str.substr(0, idx + 1) : str;
 }

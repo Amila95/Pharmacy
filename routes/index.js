@@ -105,7 +105,8 @@ router.get('/register', function (req, res, next) {
     res.render('contact', { title: 'Express', title1: 'Registration' });
 });
 router.get('/login', function (req, res, next) {
-    res.render('login', { title: 'Express', title1: 'Registration' ,layout:'profile' });
+    //message: 'The email you entered is incorrect';
+    res.render('login', { title: 'Express', title1: 'Registration', layout: 'profile' });
 });
 
 router.get('/order', function (req, res, next) {
@@ -1620,7 +1621,8 @@ router.post('/adduser', function (req, res) {
 );*/
 router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
-    //failureFlash:true
+    failureFlash: true ,
+    message: 'The email you entered is incorrect'
 }),
     
     function (req, res) {

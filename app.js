@@ -8,6 +8,7 @@ var multer = require('multer');
 var cors = require('cors')
 var expressValidator = require('express-validator');
 var expressSession = require('express-session');
+const flash = require('connect-flash');
 
 
 var index = require('./routes/index');
@@ -76,7 +77,13 @@ app.use(function(req, res, next){
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin',admin);
-app.use('/mobile',mobile);
+app.use('/mobile', mobile);
+
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
 
 passport.use(new LocalStrategy(
   function(pharmacy_name, password, done) {
