@@ -1577,8 +1577,9 @@ router.post('/adduser', function (req, res) {
                     //var sql = "INSERT INTO user SET ?";
                     con.query('INSERT INTO users(pharmacy_name,address,email,tel_number,register_no,password,Lat,Lon,logo) VALUES (?,?,?,?,?,?,?,?,?)', [pharmacy_name, address, email, tel_number, register_no, hash, Lat, Lon, logo], function (err, result) {
                         if (err) throw err;
+                        res.render('comformation');
                         //console.log("1 record inserted");
-                        con.query('SELECT LAST_INSERT_ID() as user_id', function (err, results, fields) {
+                        /*con.query('SELECT LAST_INSERT_ID() as user_id', function (err, results, fields) {
                             if (err) throw err;
                             const user_id = results[0];
                             //console.log(results[0]);
@@ -1588,7 +1589,7 @@ router.post('/adduser', function (req, res) {
                             }
                             )
 
-                        });
+                        });*/
                         //res.redirect('/');
 
                     });
@@ -1623,15 +1624,22 @@ router.post('/login', passport.authenticate('local', {
 }),
     
     function (req, res) {
-        console.log(req.user.user_id);
-        if (req.user.user_id === 8) {
-            //console.log("hmm");
-            res.redirect('/admin');
-        }
-        else{
-           // console.log("ok");
-           res.redirect('/index');
-        }
+        connection.query('SELECT approval from users WHERE user_id = ?', [req.user.user_id], function (err, row) {
+            if (row[0].approval == 1) {
+                console.log(req.user.user_id);
+                if (req.user.user_id === 8) {
+                    //console.log("hmm");
+                    res.redirect('/admin');
+                }
+                else {
+                    // console.log("ok");
+                    res.redirect('/index');
+                }
+            } else {
+                res.render('comformation');
+            }
+        })
+        
     }
 )
 router.get('/logout', function (req, res) {
