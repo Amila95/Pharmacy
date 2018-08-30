@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\views",
+    "\\views\\admin",
+    "\\views\\admin\\Users"
   ],
+  "SelectedNode": "\\views\\admin\\Users\\new_users.hbs",
   "PreviewInSolutionExplorer": false
 }

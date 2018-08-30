@@ -95,7 +95,7 @@
       </div>
       <!-- /.col -->
       <div class="col-xs-6">
-        <p class="lead">Deliver Due 2/22/2014</p>
+          
 
         <div class="table-responsive">
           <table class="table">
@@ -118,31 +118,33 @@
         </div>
       </div>
       <div class="row no-print">
-        <div class="col-xs-12">
-            {{#each oder}}
-            <form   method="post" action="/upload_invoice{{this.order_id}}" enctype="multipart/form-data" >
-                <div class="form-group">
-                    <div class="btn btn-success pull-right">
+          <div class="col-xs-12">
+              <!--
+    {{#each oder}}
+    <form   method="post" action="/upload_invoice{{this.order_id}}" enctype="multipart/form-data" >
+        <div class="form-group">
+            <div class="btn btn-success pull-right">
 
 
-                        <div class="file-field">
-                            <input name="myImage" type="file">
+                <div class="file-field">
+                    <input name="myImage" type="file">
 
 
-                        </div>
+                </div>
 
 
 
-                        <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px">Submit</button>
-                    </div>
-                    </div>
-            </form>
-                {{/each}}
-          <button onclick="window.print()" type="button" class="btn btn-primary pull-right" style="margin-right: 5px" >
-            <i class="fa fa-download" ></i> Generate PDF
-          </button>
+                <button type="submit" class="btn btn-success pull-right" style="margin-right: 5px">Submit</button>
+            </div>
+            </div>
+    </form>
+        {{/each}}
+        -->
+              <button onclick="window.print()" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                  <i class="fa fa-download"></i> Generate PDF
+              </button>
 
-        </div>
+          </div>
       </div>
       <!-- /.col -->
     </div>

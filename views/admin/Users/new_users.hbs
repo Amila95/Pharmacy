@@ -2,11 +2,7 @@
       <h1>
         User Profile
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Examples</a></li>
-        <li class="active">User profile</li>
-      </ol>
+      
     </section>
       {{#each user}}
       <div class="row">
@@ -22,19 +18,22 @@
               <p class="text-muted text-center">Pharmacy</p>
 
               <ul class="list-group list-group-unbordered">
-              <li class="list-group-item">
-                  <b>User ID</b> <a class="pull-right">{{user_id}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Email</b> <a class="pull-right">{{email}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Contact No</b> <a class="pull-right">{{tel_number}}</a>
-                </li>
-                
+                  <li class="list-group-item">
+                      <b>User ID</b> <a class="pull-right">{{user_id}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Registation No</b> <a class="pull-right">{{register_no}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Email</b> <a class="pull-right">{{email}}</a>
+                  </li>
+                  <li class="list-group-item">
+                      <b>Contact No</b> <a class="pull-right">{{tel_number}}</a>
+                  </li>
+
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              
             </div>
             <!-- /.box-body -->
           </div>

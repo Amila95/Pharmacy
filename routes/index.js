@@ -1883,7 +1883,7 @@ router.get('/update_order:id', function (req, res, next) {
                     total = total + row[i].price;
                 }
                 console.log(total)
-                res.render('order', { companys: rows, items: row, price: total });
+                res.render('order', { company: rows, items: row, price: total });
             })
         })
 
@@ -1905,7 +1905,8 @@ router.get('/sameorder:id', function (req, res, next) {
                     total = total + row[i].price;
                 }
                 console.log(total)
-                res.render('order', { companys: rows, items: row, price: total });
+                console.log(rows);
+                res.render('order', { company: rows, items: row, price: total });
             })
         })
 
@@ -1918,6 +1919,10 @@ router.get('/sameorder:id', function (req, res, next) {
 
 router.get('/back', function (req, res, next) {
     res.redirect('/myaccount');
+})
+
+router.get('/backnoti', function (req, res, next) {
+    res.redirect('/notification');
 })
 
 router.get('/updatedetails:id', function (req, res, next) {

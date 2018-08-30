@@ -35,6 +35,16 @@ router.get('/home',function (req,res,next) {
 
 })
 
+router.get('/location', function (req, res, next) {
+    connection.query('SELECT users.Lat, users.Lon FROM users INNER JOIN payment ON payment.user_id= users.user_id WHERE payment.deliver_date= CURDATE()', function (err, rows) {
+        console.log(rows);
+        res.json(rows)
+    })
+
+})
+//Chat Conversation End
+
+
 //SELECT payment.order_id, users.user_id, users.pharmacy_name, users.logo FROM users INNER JOIN payment ON payment.user_id= users.user_id WHERE payment.deliver_date = 2014-04-14
 
 

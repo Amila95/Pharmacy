@@ -78,7 +78,7 @@
         <form method="post" action="/searchcompany">
             <input type="text" name="srch" id="srch" list="datalist1" />
             <datalist id="datalist1">
-                {{#each companies}}
+                {{#each company}}
                     <option value = {{this.company_name}}/>
 
                 {{/each}}
@@ -92,15 +92,15 @@
         </div>
         <input type="submit">
     </form>-->
-                
+
                 <form method="post" action="/searchcompany">
                     <div class="search-box">
-                        <input type="text" autocomplete="off" placeholder="Search ..." name="srch"/>
+                        <input type="text" autocomplete="off" placeholder="Search ..." name="srch" />
                         <div class="result"></div>
                     </div>
-                    
+
                 </form>
-                
+
                 {{#each company}}
                 <li><a href="/ordercompany{{ this.company_id }}">{{this.company_name}}</a></li>
                 {{/each}}
